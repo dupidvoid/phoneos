@@ -144,7 +144,7 @@ $("#scr").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="msg"
 $("#scr").addEventListener("change",e=>{if(e.target.id!=="img"||!e.target.files[0])return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);setWp({t:"i",u:c.toDataURL("image/jpeg",.8)})};im.src=r.result};r.readAsDataURL(e.target.files[0])});
 let subbed=false;
 function subs(){if(subbed||!db||!S.me)return;subbed=true;
-  db.collection("contacts").where("owner☑️","==",S.me).onSnapshot(s=>{S.contacts=docs(s).map(x=>x.user);updChat()},()=>{});
+  db.collection("contacts").where("owner","==",S.me).onSnapshot(s=>{S.contacts=docs(s).map(x=>x.user);updChat()},()=>{});
   db.collection("msgs").where("to","==",S.me).onSnapshot(s=>{S.inbox={};docs(s).forEach(x=>S.inbox[x.id]=x);updChat()},()=>{});
   db.collection("msgs").where("from","==",S.me).onSnapshot(s=>{S.outbox={};docs(s).forEach(x=>S.outbox[x.id]=x);updChat()},()=>{});}
 setInterval(()=>{const c=$(".clk");if(c)c.textContent=hm()},15000);
@@ -152,4 +152,6 @@ render();
 (async()=>{try{if(window.firebase&&FIREBASE_CONFIG.apiKey!=="YOUR_API_KEY"){firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.firestore();S.online=true;
   auth.onAuthStateChanged(async u=>{if(!u||S.me)return;uid=u.uid;try{const d=docs(await db.collection("accounts").where("uid","==",uid).get());if(d.length){S.me=d[0].id;subs();render()}}catch(e){}});}}catch(e){}
   render()})();
-</script></body></html>
+</script>
+</body>
+</html>
