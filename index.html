@@ -51,14 +51,16 @@ h4{margin:16px 0 4px;font-size:13px;color:var(--mut);text-transform:uppercase;le
 </style></head><body>
 <div class="phone"><div class="notch"></div><div class="scr" id="scr"></div></div>
 <script>
+// Password Stuff
 const PASS="19723";
-// 1) Paste your Firebase web config here (see README.md)
+//End of Password Stuff
+
 const FIREBASE_CONFIG={apiKey:"AIzaSyAJMqSu4uKXkwYVyBFDoj2y8RxgI9A6Sgw",authDomain:"phoneosmy-8336d.firebaseapp.com",projectId:"phoneosmy-8336d",appId:"1:218936377234:web:b5ed3895099473b9338b4b"};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const PRESETS=[["#4facfe","#00f2fe",160],["#ff6a88","#ff99ac",135],["#7f00ff","#e100ff",150],["#232526","#414345",160],["#f7971e","#ffd200",135],["#11998e","#38ef7d",150]];
-const STORE=[{id:"calc",n:"Calculator",e:"➗",c:"#ff9f0a",d:"Quick maths"},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down"},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything"}];
+const STORE=[{id:"calc",n:"Calculator",e:"➗",c:"#ff9f0a",d:"Quick maths"},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down"},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything"}];
 let S={locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
 let db=null,auth=null,uid=null,swT=null;
 const bg=w=>w.t==="img"?`url("${w.u}") center/cover`:`linear-gradient(${w.a}deg,${w.c1},${w.c2})`;
@@ -131,7 +133,7 @@ async function act(a,v){
     if(!u||u===S.me){S.err="Enter someone else’s username.";return render()}
     try{const d=await db.doc("accounts/"+u).get();const ex=typeof d.exists==="function"?d.exists():d.exists;
       if(!ex){S.err="No user called “"+u+"”.";return render()}
-      await db.doc("contacts/"+S.me+"__"+u).set({owner:S.me,user:u})}catch(e){S.err="Couldn’t add contact."}
+      await db.doc("contacts/"+S.me+"__"+u).set({owner:S.me,user:u})}catch(e){S.err="Couldn’t add contact. Did you spell it right?"}
     render()}
   else if(a==="delc"){try{await db.doc("contacts/"+S.me+"__"+v).delete()}catch(e){}}
   else if(a==="send"){const i=$("#msg"),t=i.value.trim();if(!t)return;i.value="";try{await db.collection("msgs").add({convo:key(S.me,S.sub),from:S.me,to:S.sub,text:t.slice(0,1000),ts:Date.now()})}catch(e){i.value=t}}
