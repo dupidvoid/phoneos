@@ -58,7 +58,7 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const PRESETS=[["#4facfe","#00f2fe",160],["#ff6a88","#ff99ac",135],["#7f00ff","#e100ff",150],["#232526","#414345",160],["#f7971e","#ffd200",135],["#11998e","#38ef7d",150]];
-const STORE=[{id:"calc",n:"Calculator",e:"🧮",c:"#ff9f0a",d:"Quick maths"},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down"},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything"}];
+const STORE=[{id:"calc",n:"Calculator",e:"➗",c:"#ff9f0a",d:"Quick maths"},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down"},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything"}];
 let S={locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
 let db=null,auth=null,uid=null,swT=null;
 const bg=w=>w.t==="img"?`url("${w.u}") center/cover`:`linear-gradient(${w.a}deg,${w.c1},${w.c2})`;
@@ -67,7 +67,7 @@ const now=()=>new Date();
 const hm=()=>now().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
 const msgs=()=>Object.values({...S.inbox,...S.outbox}).sort((a,b)=>a.ts-b.ts);
 const key=(a,b)=>[a,b].sort().join("__");
-const bar=()=>`<div class="bar"><span class="clk">${hm()}</span><span>${S.online?"●":"○"} 5G</span></div>`;
+const bar=()=>`<div class="bar"><span class="clk">${hm()}</span><span>${S.online?"●":"○"} 4G</span></div>`;
 const pill=()=>`<div class="pill" data-a="home"></div>`;
 function head(t,left,right){return `<div class="h"><span>${left||""}</span><span>${t}</span><span>${right||""}</span></div>`}
 function render(){
@@ -76,7 +76,7 @@ function render(){
     el.innerHTML=`${bar()}<div class="fill lock"><div class="t">${hm()}</div><div class="d">${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"long"})}</div><div style="margin-top:50px">Enter Passcode</div><div class="dots" id="dots">${[0,1,2,3,4].map(i=>`<i class="${i<S.pin.length?"on":""}"></i>`).join("")}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(k=>k===""?"<span></span>":`<button data-a="key" data-v="${k}">${k}</button>`).join("")}</div></div>`;return}
   if(!S.app){
     const extra=S.inst.map(id=>STORE.find(a=>a.id===id)).filter(Boolean);
-    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${esc(S.me)}</div>`:""}</div><div class="grid">${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👤","#8e8e93")}${ic("store","App Store","🅰️","#0a84ff")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
+    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${esc(S.me)}</div>`:""}</div><div class="grid">${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👥","#8e8e93")}${ic("store","App Store","🌐","#0a84ff")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
   const A=S.app,back=`<button data-a="home">‹ Home</button>`;let inner="";
   if(["messages","contacts"].includes(A)&&!S.me)inner=gate(back);
   else if(A==="messages")inner=S.sub?chatView():msgList(back);
