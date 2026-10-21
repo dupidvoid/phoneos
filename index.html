@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>MyPhone | MP </title><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><meta name="color-scheme" content="light dark">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#e6e8ee;--fg:#111;--card:#fff;--line:#d9dbe1;--mut:#777;--blue:#0a84ff}
@@ -48,20 +49,27 @@ input,textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px solid 
 .err{color:#ff453a;font-size:13px;min-height:18px}.calc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.calc button{padding:16px;border-radius:14px;background:var(--line);font-size:20px;color:var(--fg)}
 .disp{font-size:38px;text-align:right;padding:16px 4px;min-height:80px;word-break:break-all}
 h4{margin:16px 0 4px;font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.vt{width:15px;height:15px;vertical-align:-2px;margin-left:4px}
+.body{position:relative}.b img,.b video{max-width:100%;border-radius:12px;display:block}.b .x{opacity:.5;font-size:11px;cursor:pointer;display:block;text-align:right}
+.att{display:grid;place-items:center;width:38px;height:38px;cursor:pointer;font-size:20px}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}.pg img,.pg video{width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer}
+.gb{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;width:min(100%,300px);aspect-ratio:1;margin:12px auto}.gb i{background:rgba(128,128,128,.22);border-radius:5px}
+.gt{display:flex;justify-content:space-around;align-items:center;min-height:100px}.gp{display:grid;gap:2px;grid-auto-rows:22px;touch-action:none;cursor:grab;min-width:30px}.gp i{border-radius:4px}
+.gh{position:fixed;display:grid;gap:2px;grid-template-columns:repeat(var(--n),var(--s));grid-auto-rows:var(--s);pointer-events:none;z-index:99;opacity:.9}.gh i{border-radius:5px}
+.go{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.65);color:#fff}
 </style></head><body>
 <div class="phone"><div class="notch"></div><div class="scr" id="scr"></div></div>
 <script>
-// Password Stuff
 const PASS="19723";
-//End of Password Stuff
-
+const ADMIN="owner"; // your own username: only this account can verify people
+// 1) Paste your Firebase web config here (see README.md)
 const FIREBASE_CONFIG={apiKey:"AIzaSyAJMqSu4uKXkwYVyBFDoj2y8RxgI9A6Sgw",authDomain:"phoneosmy-8336d.firebaseapp.com",projectId:"phoneosmy-8336d",appId:"1:218936377234:web:b5ed3895099473b9338b4b"};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const PRESETS=[["#4facfe","#00f2fe",160],["#ff6a88","#ff99ac",135],["#7f00ff","#e100ff",150],["#232526","#414345",160],["#f7971e","#ffd200",135],["#11998e","#38ef7d",150]];
-const STORE=[{id:"calc",n:"Calculator",e:"➗",c:"#ff9f0a",d:"Quick maths."},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down."},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything."}];
-let S={locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
+const STORE=[{id:"blast",n:"Block Smash",e:"🧱",c:"#bf5af2",d:"Drag blocks, clear lines"},{id:"calc",n:"Calculator",e:"🧮",c:"#ff9f0a",d:"Quick maths"},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down"},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything"}];
+let S={ver:{},clr:false,ph:[],locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
 let db=null,auth=null,uid=null,swT=null;
 const bg=w=>w.t==="img"?`url("${w.u}") center/cover`:`linear-gradient(${w.a}deg,${w.c1},${w.c2})`;
 const docs=r=>(r.docs||[]).map(x=>({id:x.id,...x.data()}));
@@ -69,7 +77,7 @@ const now=()=>new Date();
 const hm=()=>now().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
 const msgs=()=>Object.values({...S.inbox,...S.outbox}).sort((a,b)=>a.ts-b.ts);
 const key=(a,b)=>[a,b].sort().join("__");
-const bar=()=>`<div class="bar"><span class="clk">${hm()}</span><span>${S.online?"●":"○"} 4G</span></div>`;
+const bar=()=>`<div class="bar"><span class="clk">${hm()}</span><span>${S.online?"●":"○"} 5G</span></div>`;
 const pill=()=>`<div class="pill" data-a="home"></div>`;
 function head(t,left,right){return `<div class="h"><span>${left||""}</span><span>${t}</span><span>${right||""}</span></div>`}
 function render(){
@@ -78,38 +86,40 @@ function render(){
     el.innerHTML=`${bar()}<div class="fill lock"><div class="t">${hm()}</div><div class="d">${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"long"})}</div><div style="margin-top:50px">Enter Passcode</div><div class="dots" id="dots">${[0,1,2,3,4].map(i=>`<i class="${i<S.pin.length?"on":""}"></i>`).join("")}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(k=>k===""?"<span></span>":`<button data-a="key" data-v="${k}">${k}</button>`).join("")}</div></div>`;return}
   if(!S.app){
     const extra=S.inst.map(id=>STORE.find(a=>a.id===id)).filter(Boolean);
-    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${esc(S.me)}</div>`:""}</div><div class="grid">${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👥","#8e8e93")}${ic("store","App Store","🌐","#0a84ff")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
+    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${nm(S.me)}</div>`:""}</div><div class="grid">${ic("store","App Store","🅰️","#0a84ff")}${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👤","#8e8e93")}${ic("photos","Photos","🖼️","#ff375f")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
   const A=S.app,back=`<button data-a="home">‹ Home</button>`;let inner="";
   if(["messages","contacts"].includes(A)&&!S.me)inner=gate(back);
   else if(A==="messages")inner=S.sub?chatView():msgList(back);
   else if(A==="contacts")inner=contactsView(back);
   else if(A==="store")inner=head("App Store",back)+`<div class="body">${STORE.map(a=>`<div class="row"><div class="av" style="background:${a.c}">${a.e}</div><div class="grow"><b>${a.n}</b><div class="mut">${a.d}</div></div>${S.inst.includes(a.id)?`<button class="btn s g" data-a="uninst" data-v="${a.id}">Remove</button>`:`<button class="btn s" data-a="inst" data-v="${a.id}">Get</button>`}</div>`).join("")}</div>`;
   else if(A==="settings")inner=settings(back);
+  else if(A==="blast")inner=head("Block Smash",back,`<button data-a="gnew">New</button>`)+`<div class="body" style="text-align:center"><div>Score <b id="gs">0</b> · Best <b id="gbst">0</b></div><div class="gb" id="gb"></div><div class="gt" id="gt"></div><div class="go" id="go"><div><h2>Game over</h2><button class="btn" data-a="gnew">Play again</button></div></div></div>`;
+  else if(A==="photos")inner=S.sub?pview():head("Photos",back,`<label style="color:var(--blue);cursor:pointer">＋ Add<input type="file" id="phin" accept="image/*,video/*" multiple hidden></label>`)+`<div class="body"><div class="pg">${S.ph.map(p=>p.type.startsWith("video")?`<video src="${p.u}" data-a="pview" data-v="${p.id}" muted></video>`:`<img src="${p.u}" data-a="pview" data-v="${p.id}">`).join("")}</div>${S.ph.length?"":`<p class="mut" style="text-align:center">No photos yet. Tap ＋ Add to upload photos, GIFs or videos from your files.</p>`}</div>`;
   else if(A==="calc")inner=head("Calculator",back)+`<div class="body"><div class="disp">${esc(S.calc||"0")}</div><div class="calc">${["7","8","9","/","4","5","6","*","1","2","3","-","0",".","=","+","C","(",")","⌫"].map(k=>`<button data-a="ck" data-v="${k}">${k}</button>`).join("")}</div></div>`;
   else if(A==="notes")inner=head("Notes",back)+`<div class="body"><textarea id="note" rows="16" placeholder="Write something…">${esc(ls.g("mp_note",""))}</textarea></div>`;
   else if(A==="watch")inner=head("Stopwatch",back)+`<div class="body"><div class="disp" id="swd">${fmt()}</div><button class="btn" data-a="swgo">${S.sw.on?"Stop":"Start"}</button><button class="btn g" data-a="swreset">Reset</button></div>`;
   el.innerHTML=`${bar()}<div class="app">${inner}</div>${pill()}`;
-  const c=$("#chatbox");if(c)c.scrollTop=c.scrollHeight;
+  const c=$("#chatbox");if(c)c.scrollTop=c.scrollHeight;if(A==="blast")gdraw();
 }
 const ic=(id,n,e,c)=>`<button class="ic" data-a="open" data-v="${id}"><b style="background:${c}">${e}</b>${n}</button>`;
 function gate(back){return head("Account",back)+`<div class="body"><p><b>Sign up or log in</b></p><p class="mut">${db?"Pick a username and password. Friends add you in Contacts by typing your username.":"Backend not set up yet. See the README."}</p>${db?`<input id="un" placeholder="username (a-z, 0-9, _)" maxlength="16" autocapitalize="off"><input id="pw" type="password" placeholder="password (6+ characters)"><div class="err">${esc(S.err)}</div><button class="btn" data-a="signup">Sign up</button><button class="btn g" data-a="login">Log in</button>`:""}</div>`}
 function msgList(back){
   const m=msgs(),partners=new Set(S.contacts);m.forEach(x=>partners.add(x.from===S.me?x.to:x.from));
   const rows=[...partners].map(p=>{const l=m.filter(x=>x.convo===key(S.me,p)).pop();return {p,l}}).sort((a,b)=>(b.l?b.l.ts:0)-(a.l?a.l.ts:0));
-  return head("Messages",back)+`<div class="body">${rows.length?rows.map(({p,l})=>`<button class="row" data-a="chat" data-v="${esc(p)}"><div class="av">${esc(p[0].toUpperCase())}</div><div class="grow"><b>${esc(p)}</b><div class="mut ell">${l?esc(l.text):"No messages yet"}</div></div></button>`).join(""):`<p class="mut">No chats yet. Add someone in Contacts first.</p>`}</div>`}
-function chatBody(){return msgs().filter(x=>x.convo===key(S.me,S.sub)).map(x=>`<div class="b ${x.from===S.me?"me":"th"}">${esc(x.text)}</div>`).join("")||`<p class="mut" style="text-align:center">Say hi 👋</p>`}
-function chatView(){return head(esc(S.sub),`<button data-a="chats">‹ Chats</button>`)+`<div class="body chat" id="chatbox">${chatBody()}</div><div class="send"><input id="msg" placeholder="iMessage" autocomplete="off"><button data-a="send">↑</button></div>`}
-function contactsView(back){return head("Contacts",back)+`<div class="body"><input id="cu" placeholder="Add by username" autocapitalize="off"><div class="err">${esc(S.err)}</div><button class="btn" data-a="addc">Add contact</button>${S.contacts.sort().map(c=>`<div class="row"><div class="av">${esc(c[0].toUpperCase())}</div><div class="grow"><b>${esc(c)}</b></div><button class="btn s" data-a="chat" data-v="${esc(c)}">Message</button><button class="btn s g" data-a="delc" data-v="${esc(c)}">✕</button></div>`).join("")}</div>`}
-function settings(back){const w=S.wp;return head("Settings",back)+`<div class="body"><h4>Account</h4><div class="row"><div class="grow">${S.me?"@"+esc(S.me):"Not signed in"}</div></div><h4>Wallpaper</h4><div class="sw">${PRESETS.map((p,i)=>`<button data-a="preset" data-v="${i}" style="background:linear-gradient(${p[2]}deg,${p[0]},${p[1]})"></button>`).join("")}</div><h4>Custom gradient</h4><div style="display:flex;gap:10px;align-items:center"><input type="color" id="c1" value="${w.c1||"#4facfe"}" data-a="wp"><input type="color" id="c2" value="${w.c2||"#00f2fe"}" data-a="wp"></div><div class="mut">Angle</div><input type="range" id="ang" min="0" max="360" value="${w.a||160}" data-a="wp"><h4>Photo</h4><input type="file" id="img" accept="image/*"><button class="btn g" data-a="wpreset">Reset wallpaper</button><button class="btn" data-a="lock">Lock phone</button></div>`}
+  return head("Messages",back)+`<div class="body">${rows.length?rows.map(({p,l})=>`<button class="row" data-a="chat" data-v="${esc(p)}"><div class="av">${esc(p[0].toUpperCase())}</div><div class="grow"><b>${nm(p)}</b><div class="mut ell">${l?(l.mt?(l.mt==="video"?"🎞️ Video":"📷 Photo"):esc(l.text)):"No messages yet"}</div></div></button>`).join(""):`<p class="mut">No chats yet. Add someone in Contacts first.</p>`}</div>`}
+function chatBody(){return msgs().filter(x=>x.convo===key(S.me,S.sub)).map(x=>{const m=/^data:(image|video)\/[a-z0-9.+-]+;base64,[A-Za-z0-9+\/=]+$/.test(x.media||"")?x.media:"";return `<div class="b ${x.from===S.me?"me":"th"}">${m?(x.mt==="video"?`<video src="${m}" controls playsinline preload="metadata"></video>`:`<img src="${m}">`):""}${x.text?`<div>${esc(x.text)}</div>`:""}<span class="x" data-a="delm" data-v="${x.id}">🗑</span></div>`}).join("")||`<p class="mut" style="text-align:center">Say hi 👋</p>`}
+function chatView(){return head(nm(S.sub),`<button data-a="chats">‹ Chats</button>`,`<button data-a="clr">${S.clr?"Sure?":"Clear"}</button>`)+`<div class="body chat" id="chatbox">${chatBody()}</div><div class="err" id="terr" style="padding:0 14px"></div><div class="send"><label class="att">📎<input type="file" id="att" accept="image/*,video/*" hidden></label><input id="msg" placeholder="iMessage" autocomplete="off"><button data-a="send">↑</button></div>`}
+function contactsView(back){return head("Contacts",back)+`<div class="body"><input id="cu" placeholder="Add by username" autocapitalize="off"><div class="err">${esc(S.err)}</div><button class="btn" data-a="addc">Add contact</button>${S.contacts.sort().map(c=>`<div class="row"><div class="av">${esc(c[0].toUpperCase())}</div><div class="grow"><b>${nm(c)}</b></div><button class="btn s" data-a="chat" data-v="${esc(c)}">Message</button><button class="btn s g" data-a="delc" data-v="${esc(c)}">✕</button></div>`).join("")}</div>`}
+function settings(back){const w=S.wp;return head("Settings",back)+`<div class="body"><h4>Account</h4><div class="row"><div class="grow">${S.me?"@"+nm(S.me):"Not signed in"}</div></div>${S.me&&S.me===ADMIN?`<h4>Verification (admin)</h4><input id="vu" placeholder="username" autocapitalize="off"><div style="display:flex;gap:8px"><button class="btn" data-a="vgo">Verify ✓</button><button class="btn g" data-a="vno">Remove</button></div>`:""}<h4>Wallpaper</h4><div class="sw">${PRESETS.map((p,i)=>`<button data-a="preset" data-v="${i}" style="background:linear-gradient(${p[2]}deg,${p[0]},${p[1]})"></button>`).join("")}</div><h4>Custom gradient</h4><div style="display:flex;gap:10px;align-items:center"><input type="color" id="c1" value="${w.c1||"#4facfe"}" data-a="wp"><input type="color" id="c2" value="${w.c2||"#00f2fe"}" data-a="wp"></div><div class="mut">Angle</div><input type="range" id="ang" min="0" max="360" value="${w.a||160}" data-a="wp"><h4>Photo</h4><input type="file" id="img" accept="image/*"><button class="btn g" data-a="wpreset">Reset wallpaper</button><button class="btn" data-a="lock">Lock phone</button></div>`}
 const fmt=()=>{const t=S.sw.t+(S.sw.on?Date.now()-S.sw.s:0);return (t/1000).toFixed(2)+"s"};
 function setWp(w){S.wp=w;ls.s("mp_wp",w);$("#scr").style.background=bg(w)}
 function evalCalc(){try{if(!/^[0-9+\-*/.() ]+$/.test(S.calc))return;const r=Function(`"use strict";return(${S.calc})`)();S.calc=String(+(+r).toPrecision(12))}catch(e){S.calc="Error"}}
 function updChat(){const c=$("#chatbox");if(c&&S.app==="messages"&&S.sub){c.innerHTML=chatBody();c.scrollTop=c.scrollHeight}else if(S.app==="messages"&&!S.sub||S.app==="contacts")render()}
 async function act(a,v){
-  S.err="";
+  S.err="";if(a!=="clr")S.clr=false;
   if(a==="key"){S.pin=v==="⌫"?S.pin.slice(0,-1):(S.pin+v).slice(0,5);if(S.pin.length===5){if(S.pin===PASS){S.locked=false;S.pin="";render()}else{render();const d=$("#dots");d.classList.add("shake");S.pin="";setTimeout(render,400)}}else render();return}
   if(a==="home"){S.app=null;S.sub=null;render()}
-  else if(a==="open"){S.app=v;S.sub=null;render()}
+  else if(a==="open"){S.app=v;S.sub=null;if(v==="photos")await loadPh();render()}
   else if(a==="lock"){S.locked=true;S.app=null;render()}
   else if(a==="inst"||a==="uninst"){S.inst=a==="inst"?[...S.inst,v]:S.inst.filter(x=>x!==v);ls.s("mp_inst",S.inst);render()}
   else if(a==="preset"){const p=PRESETS[v];setWp({t:"g",c1:p[0],c2:p[1],a:p[2]});render()}
@@ -133,17 +143,61 @@ async function act(a,v){
     if(!u||u===S.me){S.err="Enter someone else’s username.";return render()}
     try{const d=await db.doc("accounts/"+u).get();const ex=typeof d.exists==="function"?d.exists():d.exists;
       if(!ex){S.err="No user called “"+u+"”.";return render()}
-      await db.doc("contacts/"+S.me+"__"+u).set({owner:S.me,user:u})}catch(e){S.err="Couldn’t add contact. Did you spell it right?"}
+      await db.doc("contacts/"+S.me+"__"+u).set({owner:S.me,user:u})}catch(e){S.err="Couldn’t add contact."}
     render()}
   else if(a==="delc"){try{await db.doc("contacts/"+S.me+"__"+v).delete()}catch(e){}}
+  else if(a==="delm"){try{await db.doc("msgs/"+v).delete()}catch(e){}}
+  else if(a==="clr"){if(!S.clr){S.clr=true;render()}else{S.clr=false;try{const b=db.batch();msgs().filter(x=>x.convo===key(S.me,S.sub)).forEach(x=>b.delete(db.doc("msgs/"+x.id)));await b.commit()}catch(e){}render()}}
+  else if(a==="gnew"){gnew();gdraw()}
+  else if(a==="pview"){S.sub=v;render()}
+  else if(a==="pclose"){S.sub=null;render()}
+  else if(a==="pdel"){try{await tx("readwrite",q=>q.delete(+v))}catch(e){}S.sub=null;await loadPh();render()}
+  else if(a==="pset"){const p=S.ph.find(x=>x.id==v);if(p){setWp({t:"i",u:await toData(p.blob,900,.8)});S.app=null;S.sub=null;render()}}
+  else if(a==="vgo"||a==="vno"){const u=($("#vu").value||"").trim().toLowerCase();if(u)try{a==="vgo"?await db.doc("verified/"+u).set({t:1}):await db.doc("verified/"+u).delete()}catch(e){}}
   else if(a==="send"){const i=$("#msg"),t=i.value.trim();if(!t)return;i.value="";try{await db.collection("msgs").add({convo:key(S.me,S.sub),from:S.me,to:S.sub,text:t.slice(0,1000),ts:Date.now()})}catch(e){i.value=t}}
 }
 $("#scr").addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t||t.tagName==="INPUT")return;act(t.dataset.a,t.dataset.v)});
 $("#scr").addEventListener("input",e=>{if(e.target.dataset.a==="wp")setWp({t:"g",c1:$("#c1").value,c2:$("#c2").value,a:+$("#ang").value});if(e.target.id==="note")ls.s("mp_note",e.target.value)});
 $("#scr").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="msg")act("send");if(e.key==="Enter"&&e.target.id==="cu")act("addc");if(e.key==="Enter"&&e.target.id==="un")act("signup")});
 $("#scr").addEventListener("change",e=>{if(e.target.id!=="img"||!e.target.files[0])return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);setWp({t:"i",u:c.toDataURL("image/jpeg",.8)})};im.src=r.result};r.readAsDataURL(e.target.files[0])});
+const TICK='<svg class="vt" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const nm=u=>esc(u)+(S.ver[u]?TICK:"");
+const rd=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.readAsDataURL(f)});
+const toData=(f,max,q)=>new Promise(async r=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",q))};im.src=await rd(f)});
+const idb=()=>new Promise((r,j)=>{const q=indexedDB.open("mp",1);q.onupgradeneeded=()=>q.result.createObjectStore("ph",{keyPath:"id"});q.onsuccess=()=>r(q.result);q.onerror=()=>j()});
+const tx=async(m,f)=>{const d=await idb();return new Promise((r,j)=>{const q=f(d.transaction("ph",m).objectStore("ph"));q.onsuccess=()=>r(q.result);q.onerror=()=>j()})};
+async function loadPh(){try{S.ph=(await tx("readonly",q=>q.getAll())).sort((a,b)=>b.id-a.id).map(p=>({...p,u:URL.createObjectURL(p.blob)}))}catch(e){S.ph=[]}}
+function pview(){const p=S.ph.find(x=>x.id==S.sub);if(!p)return head("Photos",`<button data-a="pclose">‹ Back</button>`);const v=p.type.startsWith("video");return head("Photo",`<button data-a="pclose">‹ Back</button>`,`<button data-a="pdel" data-v="${p.id}">Delete</button>`)+`<div class="body" style="text-align:center">${v?`<video controls playsinline src="${p.u}" style="max-width:100%"></video>`:`<img src="${p.u}" style="max-width:100%">`}${v?"":`<button class="btn" data-a="pset" data-v="${p.id}">Set as wallpaper</button>`}</div>`}
+$("#scr").addEventListener("change",async e=>{const t=e.target,f=t.files&&t.files[0];
+  if(t.id==="phin"&&f){for(const [i,x] of [...t.files].entries())try{await tx("readwrite",q=>q.put({id:Date.now()+i,type:x.type,blob:x}))}catch(_){}t.value="";await loadPh();render()}
+  if(t.id==="att"&&f){t.value="";const er=$("#terr");er.textContent="";try{const mt=f.type.startsWith("video")?"video":"image";let d;
+    if(mt==="image"&&f.type!=="image/gif")d=await toData(f,900,.72);else{if(f.size>600*1024){er.textContent="GIFs and videos must be under 600 KB to send.";return}d=await rd(f)}
+    if(d.length>950000){er.textContent="That file is too big to send.";return}
+    await db.collection("msgs").add({convo:key(S.me,S.sub),from:S.me,to:S.sub,text:"",media:d,mt,ts:Date.now()})}catch(x){er.textContent="Couldn’t send that file."}}});
+const SH=[[[1]],[[1,1]],[[1],[1]],[[1,1,1]],[[1],[1],[1]],[[1,1],[1,1]],[[1,1,1],[1,0,0]],[[1,1,1],[0,0,1]],[[1,0],[1,1]],[[1,1],[1,0]],[[1,1,1,1]],[[1],[1],[1],[1]],[[1,1,1],[1,1,1],[1,1,1]],[[0,1],[1,1]],[[1,1],[0,1]]];
+const COL=["#ff453a","#ff9f0a","#ffd60a","#30d158","#64d2ff","#bf5af2"];let G=null;
+function gpieces(){G.p=[0,1,2].map(()=>({s:SH[Math.random()*SH.length|0],c:1+(Math.random()*6|0)}))}
+function gnew(){G={b:Array(64).fill(0),sc:0,best:ls.g("mp_best",0),over:false,p:[]};gpieces()}
+const fits=(s,r,c)=>r>=0&&c>=0&&r+s.length<=8&&c+s[0].length<=8&&s.every((w,i)=>w.every((v,j)=>!v||!G.b[(r+i)*8+c+j]));
+const anyFit=()=>G.p.some(p=>p&&[...Array(64).keys()].some(k=>fits(p.s,k>>3,k&7)));
+function gplace(i,r,c){const p=G.p[i],K=[...Array(8).keys()];p.s.forEach((w,a)=>w.forEach((v,b)=>{if(v)G.b[(r+a)*8+c+b]=p.c}));
+  const rows=K.filter(k=>K.every(j=>G.b[k*8+j])),cols=K.filter(k=>K.every(j=>G.b[j*8+k])),L=rows.length+cols.length;
+  rows.forEach(k=>K.forEach(j=>G.b[k*8+j]=0));cols.forEach(k=>K.forEach(j=>G.b[j*8+k]=0));
+  G.sc+=p.s.flat().filter(Boolean).length+L*L*10;G.p[i]=null;if(G.p.every(x=>!x))gpieces();
+  if(G.sc>G.best){G.best=G.sc;ls.s("mp_best",G.best)}if(!anyFit())G.over=true}
+function gdraw(){const b=$("#gb");if(!b)return;if(!G)gnew();
+  b.innerHTML=G.b.map(v=>`<i${v?` style="background:${COL[v-1]}"`:""}></i>`).join("");
+  $("#gt").innerHTML=G.p.map((p,i)=>p?`<div class="gp" data-i="${i}" style="grid-template-columns:repeat(${p.s[0].length},22px)">${p.s.flat().map(v=>`<i style="background:${v?COL[p.c-1]:"transparent"}"></i>`).join("")}</div>`:`<div class="gp"></div>`).join("");
+  $("#gs").textContent=G.sc;$("#gbst").textContent=G.best;$("#go").style.display=G.over?"flex":"none"}
+document.addEventListener("pointerdown",e=>{const el=e.target.closest(".gp[data-i]");if(!el||!G||G.over)return;const i=+el.dataset.i,p=G.p[i];if(!p)return;e.preventDefault();
+  const st=$("#gb").getBoundingClientRect().width/8,g=document.createElement("div");g.className="gh";g.style.setProperty("--n",p.s[0].length);g.style.setProperty("--s",(st-2)+"px");
+  g.innerHTML=p.s.flat().map(v=>`<i style="background:${v?COL[p.c-1]:"transparent"}"></i>`).join("");document.body.appendChild(g);
+  const pos=ev=>{g.style.left=ev.clientX-g.offsetWidth/2+"px";g.style.top=ev.clientY-g.offsetHeight-50+"px"};pos(e);
+  const up=ev=>{document.removeEventListener("pointermove",pos);document.removeEventListener("pointerup",up);const r=g.getBoundingClientRect(),br=$("#gb").getBoundingClientRect(),c=Math.round((r.left-br.left)/st),w=Math.round((r.top-br.top)/st);g.remove();if(fits(p.s,w,c)){gplace(i,w,c);gdraw()}};
+  document.addEventListener("pointermove",pos);document.addEventListener("pointerup",up)});
 let subbed=false;
 function subs(){if(subbed||!db||!S.me)return;subbed=true;
+  db.collection("verified").onSnapshot(q=>{S.ver={};docs(q).forEach(x=>S.ver[x.id]=1);updChat();if(!S.app)render()},()=>{});
   db.collection("contacts").where("owner","==",S.me).onSnapshot(s=>{S.contacts=docs(s).map(x=>x.user);updChat()},()=>{});
   db.collection("msgs").where("to","==",S.me).onSnapshot(s=>{S.inbox={};docs(s).forEach(x=>S.inbox[x.id]=x);updChat()},()=>{});
   db.collection("msgs").where("from","==",S.me).onSnapshot(s=>{S.outbox={};docs(s).forEach(x=>S.outbox[x.id]=x);updChat()},()=>{});}
