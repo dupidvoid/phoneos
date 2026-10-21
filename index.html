@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyPhone | MP </title><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MyPhone</title><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><meta name="color-scheme" content="light dark">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#e6e8ee;--fg:#111;--card:#fff;--line:#d9dbe1;--mut:#777;--blue:#0a84ff}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0d11;--fg:#eee;--card:#1c1d22;--line:#2d2e35;--mut:#999}}
@@ -56,11 +56,16 @@ h4{margin:16px 0 4px;font-size:13px;color:var(--mut);text-transform:uppercase;le
 .gt{display:flex;justify-content:space-around;align-items:center;min-height:100px}.gp{display:grid;gap:2px;grid-auto-rows:22px;touch-action:none;cursor:grab;min-width:30px}.gp i{border-radius:4px}
 .gh{position:fixed;display:grid;gap:2px;grid-template-columns:repeat(var(--n),var(--s));grid-auto-rows:var(--s);pointer-events:none;z-index:99;opacity:.9}.gh i{border-radius:5px}
 .go{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.65);color:#fff}
+.tk{position:relative;flex:1;background:#000;color:#fff;min-height:0}
+.tkf{position:absolute;inset:0;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}.tkf::-webkit-scrollbar{display:none}
+.tv{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always}.tv canvas{width:100%;height:100%;display:block}
+.tr{position:absolute;right:8px;bottom:70px;display:flex;flex-direction:column;gap:14px;align-items:center}.tr button{background:none;font-size:30px;display:flex;flex-direction:column;align-items:center;color:#fff}.tr small{font-size:12px}
+.tb{position:absolute;left:12px;right:70px;bottom:14px;text-shadow:0 1px 3px #000;font-size:14px}
+.tkh{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:8px 14px;z-index:2;text-shadow:0 1px 3px #000}.tkh button{font-size:22px;background:none;color:#fff}
 </style></head><body>
 <div class="phone"><div class="notch"></div><div class="scr" id="scr"></div></div>
 <script>
 const PASS="19723";
-const ADMIN="owner"; // your own username: only this account can verify people
 // 1) Paste your Firebase web config here (see README.md)
 const FIREBASE_CONFIG={apiKey:"AIzaSyAJMqSu4uKXkwYVyBFDoj2y8RxgI9A6Sgw",authDomain:"phoneosmy-8336d.firebaseapp.com",projectId:"phoneosmy-8336d",appId:"1:218936377234:web:b5ed3895099473b9338b4b"};
 const $=s=>document.querySelector(s);
@@ -68,7 +73,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const PRESETS=[["#4facfe","#00f2fe",160],["#ff6a88","#ff99ac",135],["#7f00ff","#e100ff",150],["#232526","#414345",160],["#f7971e","#ffd200",135],["#11998e","#38ef7d",150]];
 const STORE=[{id:"blast",n:"Block Smash",e:"🧱",c:"#bf5af2",d:"Drag blocks, clear lines"},{id:"calc",n:"Calculator",e:"🧮",c:"#ff9f0a",d:"Quick maths"},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down"},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything"}];
-let S={ver:{},clr:false,ph:[],locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
+let S={adm:undefined,ver:{},clr:false,ph:[],locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
 let db=null,auth=null,uid=null,swT=null;
 const bg=w=>w.t==="img"?`url("${w.u}") center/cover`:`linear-gradient(${w.a}deg,${w.c1},${w.c2})`;
 const docs=r=>(r.docs||[]).map(x=>({id:x.id,...x.data()}));
@@ -85,20 +90,21 @@ function render(){
     el.innerHTML=`${bar()}<div class="fill lock"><div class="t">${hm()}</div><div class="d">${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"long"})}</div><div style="margin-top:50px">Enter Passcode</div><div class="dots" id="dots">${[0,1,2,3,4].map(i=>`<i class="${i<S.pin.length?"on":""}"></i>`).join("")}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(k=>k===""?"<span></span>":`<button data-a="key" data-v="${k}">${k}</button>`).join("")}</div></div>`;return}
   if(!S.app){
     const extra=S.inst.map(id=>STORE.find(a=>a.id===id)).filter(Boolean);
-    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${nm(S.me)}</div>`:""}</div><div class="grid">${ic("store","App Store","🅰️","#0a84ff")}${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👤","#8e8e93")}${ic("photos","Photos","🖼️","#ff375f")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
+    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${nm(S.me)}</div>`:""}</div><div class="grid">${ic("store","App Store","🅰️","#0a84ff")}${ic("tok","TokTok","🎵","#111")}${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👤","#8e8e93")}${ic("photos","Photos","🖼️","#ff375f")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
   const A=S.app,back=`<button data-a="home">‹ Home</button>`;let inner="";
   if(["messages","contacts"].includes(A)&&!S.me)inner=gate(back);
   else if(A==="messages")inner=S.sub?chatView():msgList(back);
   else if(A==="contacts")inner=contactsView(back);
   else if(A==="store")inner=head("App Store",back)+`<div class="body">${STORE.map(a=>`<div class="row"><div class="av" style="background:${a.c}">${a.e}</div><div class="grow"><b>${a.n}</b><div class="mut">${a.d}</div></div>${S.inst.includes(a.id)?`<button class="btn s g" data-a="uninst" data-v="${a.id}">Remove</button>`:`<button class="btn s" data-a="inst" data-v="${a.id}">Get</button>`}</div>`).join("")}</div>`;
   else if(A==="settings")inner=settings(back);
+  else if(A==="tok")inner=`<div class="tk"><div class="tkh"><button data-a="home">‹</button><span style="opacity:.7">Following</span><b>For You</b><span>🔍</span></div><div class="tkf" id="tkf"></div></div>`;
   else if(A==="blast")inner=head("Block Smash",back,`<button data-a="gnew">New</button>`)+`<div class="body" style="text-align:center"><div>Score <b id="gs">0</b> · Best <b id="gbst">0</b></div><div class="gb" id="gb"></div><div class="gt" id="gt"></div><div class="go" id="go"><div><h2>Game over</h2><button class="btn" data-a="gnew">Play again</button></div></div></div>`;
   else if(A==="photos")inner=S.sub?pview():head("Photos",back,`<label style="color:var(--blue);cursor:pointer">＋ Add<input type="file" id="phin" accept="image/*,video/*" multiple hidden></label>`)+`<div class="body"><div class="pg">${S.ph.map(p=>p.type.startsWith("video")?`<video src="${p.u}" data-a="pview" data-v="${p.id}" muted></video>`:`<img src="${p.u}" data-a="pview" data-v="${p.id}">`).join("")}</div>${S.ph.length?"":`<p class="mut" style="text-align:center">No photos yet. Tap ＋ Add to upload photos, GIFs or videos from your files.</p>`}</div>`;
   else if(A==="calc")inner=head("Calculator",back)+`<div class="body"><div class="disp">${esc(S.calc||"0")}</div><div class="calc">${["7","8","9","/","4","5","6","*","1","2","3","-","0",".","=","+","C","(",")","⌫"].map(k=>`<button data-a="ck" data-v="${k}">${k}</button>`).join("")}</div></div>`;
   else if(A==="notes")inner=head("Notes",back)+`<div class="body"><textarea id="note" rows="16" placeholder="Write something…">${esc(ls.g("mp_note",""))}</textarea></div>`;
   else if(A==="watch")inner=head("Stopwatch",back)+`<div class="body"><div class="disp" id="swd">${fmt()}</div><button class="btn" data-a="swgo">${S.sw.on?"Stop":"Start"}</button><button class="btn g" data-a="swreset">Reset</button></div>`;
   el.innerHTML=`${bar()}<div class="app">${inner}</div>${pill()}`;
-  const c=$("#chatbox");if(c)c.scrollTop=c.scrollHeight;if(A==="blast")gdraw();
+  const c=$("#chatbox");if(c)c.scrollTop=c.scrollHeight;if(A==="blast")gdraw();if(A==="tok")tkInit();
 }
 const ic=(id,n,e,c)=>`<button class="ic" data-a="open" data-v="${id}"><b style="background:${c}">${e}</b>${n}</button>`;
 function gate(back){return head("Account",back)+`<div class="body"><p><b>Sign up or log in</b></p><p class="mut">${db?"Pick a username and password. Friends add you in Contacts by typing your username.":"Backend not set up yet. See the README."}</p>${db?`<input id="un" placeholder="username (a-z, 0-9, _)" maxlength="16" autocapitalize="off"><input id="pw" type="password" placeholder="password (6+ characters)"><div class="err">${esc(S.err)}</div><button class="btn" data-a="signup">Sign up</button><button class="btn g" data-a="login">Log in</button>`:""}</div>`}
@@ -109,7 +115,7 @@ function msgList(back){
 function chatBody(){return msgs().filter(x=>x.convo===key(S.me,S.sub)).map(x=>{const m=/^data:(image|video)\/[a-z0-9.+-]+;base64,[A-Za-z0-9+\/=]+$/.test(x.media||"")?x.media:"";return `<div class="b ${x.from===S.me?"me":"th"}">${m?(x.mt==="video"?`<video src="${m}" controls playsinline preload="metadata"></video>`:`<img src="${m}">`):""}${x.text?`<div>${esc(x.text)}</div>`:""}<span class="x" data-a="delm" data-v="${x.id}">🗑</span></div>`}).join("")||`<p class="mut" style="text-align:center">Say hi 👋</p>`}
 function chatView(){return head(nm(S.sub),`<button data-a="chats">‹ Chats</button>`,`<button data-a="clr">${S.clr?"Sure?":"Clear"}</button>`)+`<div class="body chat" id="chatbox">${chatBody()}</div><div class="err" id="terr" style="padding:0 14px"></div><div class="send"><label class="att">📎<input type="file" id="att" accept="image/*,video/*" hidden></label><input id="msg" placeholder="iMessage" autocomplete="off"><button data-a="send">↑</button></div>`}
 function contactsView(back){return head("Contacts",back)+`<div class="body"><input id="cu" placeholder="Add by username" autocapitalize="off"><div class="err">${esc(S.err)}</div><button class="btn" data-a="addc">Add contact</button>${S.contacts.sort().map(c=>`<div class="row"><div class="av">${esc(c[0].toUpperCase())}</div><div class="grow"><b>${nm(c)}</b></div><button class="btn s" data-a="chat" data-v="${esc(c)}">Message</button><button class="btn s g" data-a="delc" data-v="${esc(c)}">✕</button></div>`).join("")}</div>`}
-function settings(back){const w=S.wp;return head("Settings",back)+`<div class="body"><h4>Account</h4><div class="row"><div class="grow">${S.me?"@"+nm(S.me):"Not signed in"}</div></div>${S.me&&S.me===ADMIN?`<h4>Verification (admin)</h4><input id="vu" placeholder="username" autocapitalize="off"><div style="display:flex;gap:8px"><button class="btn" data-a="vgo">Verify ✓</button><button class="btn g" data-a="vno">Remove</button></div>`:""}<h4>Wallpaper</h4><div class="sw">${PRESETS.map((p,i)=>`<button data-a="preset" data-v="${i}" style="background:linear-gradient(${p[2]}deg,${p[0]},${p[1]})"></button>`).join("")}</div><h4>Custom gradient</h4><div style="display:flex;gap:10px;align-items:center"><input type="color" id="c1" value="${w.c1||"#4facfe"}" data-a="wp"><input type="color" id="c2" value="${w.c2||"#00f2fe"}" data-a="wp"></div><div class="mut">Angle</div><input type="range" id="ang" min="0" max="360" value="${w.a||160}" data-a="wp"><h4>Photo</h4><input type="file" id="img" accept="image/*"><button class="btn g" data-a="wpreset">Reset wallpaper</button><button class="btn" data-a="lock">Lock phone</button></div>`}
+function settings(back){const w=S.wp;return head("Settings",back)+`<div class="body"><h4>Account</h4><div class="row"><div class="grow">${S.me?"@"+nm(S.me):"Not signed in"}</div></div>${S.me?(S.adm===S.me?`<h4>Verification (admin)</h4><input id="vu" placeholder="username to verify" autocapitalize="off"><div class="err">${esc(S.err)}</div><button class="btn" data-a="vgo">Give blue tick ✓</button>${Object.keys(S.ver).sort().map(u=>`<div class="row"><div class="grow">${nm(u)}</div><button class="btn s g" data-a="vno" data-v="${esc(u)}">Remove</button></div>`).join("")}`:S.adm===null?`<h4>Admin</h4><div class="err">${esc(S.err)}</div><button class="btn" data-a="adm">Become admin</button><p class="mut">The first account to claim this controls who gets the blue tick.</p>`:S.adm===undefined?`<p class="mut">Verification unavailable: publish the updated Firestore rules from the README.</p>`:""):""}<h4>Wallpaper</h4><div class="sw">${PRESETS.map((p,i)=>`<button data-a="preset" data-v="${i}" style="background:linear-gradient(${p[2]}deg,${p[0]},${p[1]})"></button>`).join("")}</div><h4>Custom gradient</h4><div style="display:flex;gap:10px;align-items:center"><input type="color" id="c1" value="${w.c1||"#4facfe"}" data-a="wp"><input type="color" id="c2" value="${w.c2||"#00f2fe"}" data-a="wp"></div><div class="mut">Angle</div><input type="range" id="ang" min="0" max="360" value="${w.a||160}" data-a="wp"><h4>Photo</h4><input type="file" id="img" accept="image/*"><button class="btn g" data-a="wpreset">Reset wallpaper</button><button class="btn" data-a="lock">Lock phone</button></div>`}
 const fmt=()=>{const t=S.sw.t+(S.sw.on?Date.now()-S.sw.s:0);return (t/1000).toFixed(2)+"s"};
 function setWp(w){S.wp=w;ls.s("mp_wp",w);$("#scr").style.background=bg(w)}
 function evalCalc(){try{if(!/^[0-9+\-*/.() ]+$/.test(S.calc))return;const r=Function(`"use strict";return(${S.calc})`)();S.calc=String(+(+r).toPrecision(12))}catch(e){S.calc="Error"}}
@@ -147,12 +153,15 @@ async function act(a,v){
   else if(a==="delc"){try{await db.doc("contacts/"+S.me+"__"+v).delete()}catch(e){}}
   else if(a==="delm"){try{await db.doc("msgs/"+v).delete()}catch(e){}}
   else if(a==="clr"){if(!S.clr){S.clr=true;render()}else{S.clr=false;try{const b=db.batch();msgs().filter(x=>x.convo===key(S.me,S.sub)).forEach(x=>b.delete(db.doc("msgs/"+x.id)));await b.commit()}catch(e){}render()}}
+  else if(a==="tklike"){tkLike(+v)}
   else if(a==="gnew"){gnew();gdraw()}
   else if(a==="pview"){S.sub=v;render()}
   else if(a==="pclose"){S.sub=null;render()}
   else if(a==="pdel"){try{await tx("readwrite",q=>q.delete(+v))}catch(e){}S.sub=null;await loadPh();render()}
   else if(a==="pset"){const p=S.ph.find(x=>x.id==v);if(p){setWp({t:"i",u:await toData(p.blob,900,.8)});S.app=null;S.sub=null;render()}}
-  else if(a==="vgo"||a==="vno"){const u=($("#vu").value||"").trim().toLowerCase();if(u)try{a==="vgo"?await db.doc("verified/"+u).set({t:1}):await db.doc("verified/"+u).delete()}catch(e){}}
+  else if(a==="adm"){try{await db.doc("admin/owner").set({username:S.me})}catch(e){S.err="Couldn’t claim admin. Publish the new Firestore rules from the README."}render()}
+  else if(a==="vgo"||a==="vno"){const u=(v||($("#vu")?$("#vu").value:"")||"").trim().toLowerCase();if(!u){S.err="Enter a username.";return render()}
+    try{if(a==="vgo"){const d=await db.doc("accounts/"+u).get();if(!d.exists){S.err="No account called “"+u+"”.";return render()}await db.doc("verified/"+u).set({t:1})}else await db.doc("verified/"+u).delete()}catch(e){S.err="Permission denied. Publish the new Firestore rules."}render()}
   else if(a==="send"){const i=$("#msg"),t=i.value.trim();if(!t)return;i.value="";try{await db.collection("msgs").add({convo:key(S.me,S.sub),from:S.me,to:S.sub,text:t.slice(0,1000),ts:Date.now()})}catch(e){i.value=t}}
 }
 $("#scr").addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t||t.tagName==="INPUT")return;act(t.dataset.a,t.dataset.v)});
@@ -194,9 +203,34 @@ document.addEventListener("pointerdown",e=>{const el=e.target.closest(".gp[data-
   const pos=ev=>{g.style.left=ev.clientX-g.offsetWidth/2+"px";g.style.top=ev.clientY-g.offsetHeight-50+"px"};pos(e);
   const up=ev=>{document.removeEventListener("pointermove",pos);document.removeEventListener("pointerup",up);const r=g.getBoundingClientRect(),br=$("#gb").getBoundingClientRect(),c=Math.round((r.left-br.left)/st),w=Math.round((r.top-br.top)/st);g.remove();if(fits(p.s,w,c)){gplace(i,w,c);gdraw()}};
   document.addEventListener("pointermove",pos);document.addEventListener("pointerup",up)});
+const TN=["dance.with.mia","chef_marco","catchaos","gymbro_jay","pixel.pete","lunar.lila","skate.sam","no.context.clips","fitwithfi","zoo.keeper.zed","brainrot.daily","soft.sunsets"];
+const TC=["POV: you finally nailed it 😭","wait for the end 👀","this took 47 takes","no one asked but here it is","day 112 of doing this daily","trying the viral trend","okay this one’s actually crazy","tell me I’m not the only one"];
+const TH=["#fyp","#viral","#trending","#foryou","#satisfying","#pov","#relatable"],TM=["original sound","chill vibes – lofi beats","Summer Nights (sped up)","trending audio","Late Night Drive – remix"];
+const rnd=a=>a[Math.random()*a.length|0],tri=(v,m)=>{v=((v%(2*m))+2*m)%(2*m);return v>m?2*m-v:v};
+const tkn=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"K":n;
+const TKV=[
+(c,w,h,t,a)=>{c.fillStyle=`hsl(${a.h},60%,10%)`;c.fillRect(0,0,w,h);a.o.forEach(o=>{c.fillStyle=`hsl(${(a.h+o.u+t*30)%360},90%,60%)`;c.beginPath();c.arc(tri(o.x+t*o.vx,w),tri(o.y+t*o.vy,h),o.r,0,7);c.fill()})},
+(c,w,h,t,a)=>{c.fillStyle=`hsl(${a.h},50%,12%)`;c.fillRect(0,0,w,h);for(let k=0;k<6;k++){c.fillStyle=`hsla(${(a.h+k*25)%360},85%,60%,.55)`;c.beginPath();c.moveTo(0,h);for(let x=0;x<=w;x+=10)c.lineTo(x,h*(.25+.1*k)+Math.sin(x*.02+t*(1+k*.4))*30);c.lineTo(w,h);c.fill()}},
+(c,w,h,t,a)=>{c.fillStyle="#000";c.fillRect(0,0,w,h);c.lineWidth=3;for(let i=0;i<14;i++){const z=(i*30+t*50)%420;c.save();c.translate(w/2,h/2);c.rotate(t*.4+i*.25);c.strokeStyle=`hsl(${(a.h+i*25)%360},90%,${40+z/10}%)`;c.strokeRect(-z/2,-z/2,z,z);c.restore()}},
+(c,w,h,t,a)=>{c.fillStyle=`hsl(${a.h},40%,6%)`;c.fillRect(0,0,w,h);a.o.forEach(o=>{const k=(((o.z-t*.3)%1)+1)%1,s=1/(k+.08);c.fillStyle=`hsl(${(a.h+o.u)%360},90%,75%)`;c.fillRect(w/2+o.x*s*6,h/2+o.y*s*6,1+s*.5,1+s*.5)})}];
+let TK=[],tkRun=false;
+function tkMake(){const st=Math.random()*4|0,a={u:rnd(TN),c:rnd(TC)+" "+rnd(TH)+" "+rnd(TH),m:rnd(TM),l:Math.floor(Math.random()**3*900000)+200,cm:Math.floor(Math.random()**3*20000)+5,st,h:Math.random()*360,liked:false,ver:Math.random()<.3,vis:false,o:[]};
+  if(st===0)for(let i=0;i<10;i++)a.o.push({x:Math.random()*270,y:Math.random()*480,vx:(Math.random()<.5?-1:1)*(40+Math.random()*100),vy:(Math.random()<.5?-1:1)*(40+Math.random()*100),r:15+Math.random()*30,u:Math.random()*120});
+  if(st===3)for(let i=0;i<120;i++)a.o.push({x:Math.random()*10-5,y:Math.random()*16-8,z:Math.random(),u:Math.random()*80});
+  return a}
+const tkHtml=(a,i)=>`<div class="tv" data-i="${i}"><canvas width="270" height="480"></canvas><div class="tr"><button data-a="tklike" data-v="${i}">${a.liked?"❤️":"🤍"}<small>${tkn(a.l+(a.liked?1:0))}</small></button><button>💬<small>${tkn(a.cm)}</small></button><button>↪️<small>Share</small></button></div><div class="tb"><b>@${esc(a.u)}${a.ver?TICK:""}</b><div>${esc(a.c)}</div><div style="opacity:.8">🎵 ${esc(a.m)}</div></div></div>`;
+function tkLike(i){const a=TK[i];a.liked=!a.liked;const b=document.querySelector(`.tv[data-i="${i}"] .tr button`);if(b)b.innerHTML=`${a.liked?"❤️":"🤍"}<small>${tkn(a.l+(a.liked?1:0))}</small>`}
+function tkInit(){const f=$("#tkf");if(!f)return;if(!TK.length)for(let i=0;i<6;i++)TK.push(tkMake());
+  const io=new IntersectionObserver(es=>es.forEach(e=>{TK[+e.target.dataset.i].vis=e.isIntersecting}),{root:f,threshold:.5});
+  const mount=(from)=>{f.insertAdjacentHTML("beforeend",TK.slice(from).map((a,j)=>tkHtml(a,from+j)).join(""));[...f.querySelectorAll(".tv")].slice(from).forEach(el=>{TK[+el.dataset.i].x=el.querySelector("canvas").getContext("2d");io.observe(el)})};
+  mount(0);
+  f.addEventListener("scroll",()=>{if(f.scrollTop+f.clientHeight*2>f.scrollHeight){const n=TK.length;for(let i=0;i<4;i++)TK.push(tkMake());mount(n)}});
+  if(!tkRun){tkRun=true;const loop=t=>{if(!$("#tkf")){tkRun=false;return}TK.forEach(a=>{if(a.vis&&a.x)TKV[a.st](a.x,270,480,t/1000,a)});requestAnimationFrame(loop)};requestAnimationFrame(loop)}}
+$("#scr").addEventListener("dblclick",e=>{const v=e.target.closest(".tv");if(v&&!e.target.closest("button")){const i=+v.dataset.i;if(!TK[i].liked)tkLike(i)}});
 let subbed=false;
 function subs(){if(subbed||!db||!S.me)return;subbed=true;
-  db.collection("verified").onSnapshot(q=>{S.ver={};docs(q).forEach(x=>S.ver[x.id]=1);updChat();if(!S.app)render()},()=>{});
+  db.collection("verified").onSnapshot(q=>{S.ver={};docs(q).forEach(x=>S.ver[x.id]=1);updChat();if(!S.app||S.app==="settings")render()},()=>{});
+  db.doc("admin/owner").onSnapshot(d=>{S.adm=d.exists?d.data().username:null;if(S.app==="settings")render()},()=>{});
   db.collection("contacts").where("owner","==",S.me).onSnapshot(s=>{S.contacts=docs(s).map(x=>x.user);updChat()},()=>{});
   db.collection("msgs").where("to","==",S.me).onSnapshot(s=>{S.inbox={};docs(s).forEach(x=>S.inbox[x.id]=x);updChat()},()=>{});
   db.collection("msgs").where("from","==",S.me).onSnapshot(s=>{S.outbox={};docs(s).forEach(x=>S.outbox[x.id]=x);updChat()},()=>{});}
