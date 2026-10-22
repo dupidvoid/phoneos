@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyPhone</title><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><meta name="color-scheme" content="light dark">
-
+    
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#e6e8ee;--fg:#111;--card:#fff;--line:#d9dbe1;--mut:#777;--blue:#0a84ff}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0d11;--fg:#eee;--card:#1c1d22;--line:#2d2e35;--mut:#999}}
@@ -63,6 +63,9 @@ h4{margin:16px 0 4px;font-size:13px;color:var(--mut);text-transform:uppercase;le
 .tr{position:absolute;right:8px;bottom:70px;display:flex;flex-direction:column;gap:14px;align-items:center}.tr button{background:none;font-size:30px;display:flex;flex-direction:column;align-items:center;color:#fff}.tr small{font-size:12px}
 .tb{position:absolute;left:12px;right:70px;bottom:14px;text-shadow:0 1px 3px #000;font-size:14px}
 .tkh{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:8px 14px;z-index:2;text-shadow:0 1px 3px #000}.tkh button{font-size:22px;background:none;color:#fff}
+.tabs{display:flex;gap:8px;overflow:auto;margin:6px 0}.tabs button{padding:6px 14px;border-radius:16px;background:var(--line);color:var(--fg);white-space:nowrap}.tabs .on{background:var(--blue);color:#fff}
+.hero{border-radius:20px;padding:18px;color:#fff;margin:8px 0}.hero h2{margin:4px 0}.hero p{margin:0 0 10px;opacity:.9}.hero small{opacity:.8;letter-spacing:.06em}
+.dlb{width:80px;height:8px;border-radius:4px;background:var(--line);overflow:hidden}.dlb i{display:block;height:100%;background:var(--blue);width:0}.stb{display:flex;gap:6px;align-items:center}
 </style></head><body>
 <div class="phone"><div class="notch"></div><div class="scr" id="scr"></div></div>
 <script>
@@ -73,8 +76,9 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const PRESETS=[["#4facfe","#00f2fe",160],["#ff6a88","#ff99ac",135],["#7f00ff","#e100ff",150],["#232526","#414345",160],["#f7971e","#ffd200",135],["#11998e","#38ef7d",150]];
-const STORE=[{id:"blast",n:"Block Smash",e:"🧱",c:"#bf5af2",d:"Drag blocks, clear lines"},{id:"calc",n:"Calculator",e:"🧮",c:"#ff9f0a",d:"Quick maths"},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",d:"Jot things down"},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",d:"Time anything"}];
-let S={adm:undefined,ver:{},clr:false,ph:[],locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
+const STORE=[{id:"blast",n:"Block Smash",e:"🧱",c:"linear-gradient(135deg,#bf5af2,#5e5ce6)",cat:"Games",r:"4.8",d:"Drag blocks, clear lines, beat your best."},{id:"tok",n:"TokTok",e:"🎵",c:"#111",cat:"Social",r:"4.6",d:"Endless short videos made just for you."},{id:"chirp",n:"Chirper",e:"🐦",c:"#1d9bf0",cat:"Social",r:"4.5",d:"See what’s happening right now."},{id:"calc",n:"Calculator",e:"🧮",c:"#ff9f0a",cat:"Tools",r:"4.4",d:"Quick maths."},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",cat:"Tools",r:"4.3",d:"Jot things down."},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",cat:"Tools",r:"4.2",d:"Time anything."}];
+const ADMINS=["webowner2","owner"];
+let S={posts:[],groups:{},gm:{},ng:{name:"",sel:[]},dl:{},sq:"",stab:"Today",ver:{},clr:false,ph:[],locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
 let db=null,auth=null,uid=null,swT=null;
 const bg=w=>w.t==="img"?`url("${w.u}") center/cover`:`linear-gradient(${w.a}deg,${w.c1},${w.c2})`;
 const docs=r=>(r.docs||[]).map(x=>({id:x.id,...x.data()}));
@@ -91,13 +95,14 @@ function render(){
     el.innerHTML=`${bar()}<div class="fill lock"><div class="t">${hm()}</div><div class="d">${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"long"})}</div><div style="margin-top:50px">Enter Passcode</div><div class="dots" id="dots">${[0,1,2,3,4].map(i=>`<i class="${i<S.pin.length?"on":""}"></i>`).join("")}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(k=>k===""?"<span></span>":`<button data-a="key" data-v="${k}">${k}</button>`).join("")}</div></div>`;return}
   if(!S.app){
     const extra=S.inst.map(id=>STORE.find(a=>a.id===id)).filter(Boolean);
-    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${nm(S.me)}</div>`:""}</div><div class="grid">${ic("store","App Store","🅰️","#0a84ff")}${ic("tok","TokTok","🎵","#111")}${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👤","#8e8e93")}${ic("photos","Photos","🖼️","#ff375f")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
+    el.innerHTML=`${bar()}<div class="fill"><div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${nm(S.me)}</div>`:""}</div><div class="grid">${ic("store","App Store","🅰️","#0a84ff")}${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👤","#8e8e93")}${ic("photos","Photos","🖼️","#ff375f")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
   const A=S.app,back=`<button data-a="home">‹ Home</button>`;let inner="";
-  if(["messages","contacts"].includes(A)&&!S.me)inner=gate(back);
-  else if(A==="messages")inner=S.sub?chatView():msgList(back);
+  if(["messages","contacts","chirp"].includes(A)&&!S.me)inner=gate(back);
+  else if(A==="messages")inner=S.sub==="+"?newGroup():S.sub?chatView():msgList(back);
   else if(A==="contacts")inner=contactsView(back);
-  else if(A==="store")inner=head("App Store",back)+`<div class="body">${STORE.map(a=>`<div class="row"><div class="av" style="background:${a.c}">${a.e}</div><div class="grow"><b>${a.n}</b><div class="mut">${a.d}</div></div>${S.inst.includes(a.id)?`<button class="btn s g" data-a="uninst" data-v="${a.id}">Remove</button>`:`<button class="btn s" data-a="inst" data-v="${a.id}">Get</button>`}</div>`).join("")}</div>`;
+  else if(A==="store")inner=storeView(back);
   else if(A==="settings")inner=settings(back);
+  else if(A==="chirp")inner=head("Chirper",back)+`<div class="body"><textarea id="ptx" rows="3" maxlength="280" placeholder="What’s happening?"></textarea><button class="btn" data-a="ppost">Post</button><div id="pf">${chList()}</div></div>`;
   else if(A==="tok")inner=`<div class="tk"><div class="tkh"><button data-a="home">‹</button><span style="opacity:.7">Following</span><b>For You</b><span>🔍</span></div><div class="tkf" id="tkf"></div></div>`;
   else if(A==="blast")inner=head("Block Smash",back,`<button data-a="gnew">New</button>`)+`<div class="body" style="text-align:center"><div>Score <b id="gs">0</b> · Best <b id="gbst">0</b></div><div class="gb" id="gb"></div><div class="gt" id="gt"></div><div class="go" id="go"><div><h2>Game over</h2><button class="btn" data-a="gnew">Play again</button></div></div></div>`;
   else if(A==="photos")inner=S.sub?pview():head("Photos",back,`<label style="color:var(--blue);cursor:pointer">＋ Add<input type="file" id="phin" accept="image/*,video/*" multiple hidden></label>`)+`<div class="body"><div class="pg">${S.ph.map(p=>p.type.startsWith("video")?`<video src="${p.u}" data-a="pview" data-v="${p.id}" muted></video>`:`<img src="${p.u}" data-a="pview" data-v="${p.id}">`).join("")}</div>${S.ph.length?"":`<p class="mut" style="text-align:center">No photos yet. Tap ＋ Add to upload photos, GIFs or videos from your files.</p>`}</div>`;
@@ -111,12 +116,19 @@ const ic=(id,n,e,c)=>`<button class="ic" data-a="open" data-v="${id}"><b style="
 function gate(back){return head("Account",back)+`<div class="body"><p><b>Sign up or log in</b></p><p class="mut">${db?"Pick a username and password. Friends add you in Contacts by typing your username.":"Backend not set up yet. See the README."}</p>${db?`<input id="un" placeholder="username (a-z, 0-9, _)" maxlength="16" autocapitalize="off"><input id="pw" type="password" placeholder="password (6+ characters)"><div class="err">${esc(S.err)}</div><button class="btn" data-a="signup">Sign up</button><button class="btn g" data-a="login">Log in</button>`:""}</div>`}
 function msgList(back){
   const m=msgs(),partners=new Set(S.contacts);m.forEach(x=>partners.add(x.from===S.me?x.to:x.from));
-  const rows=[...partners].map(p=>{const l=m.filter(x=>x.convo===key(S.me,p)).pop();return {p,l}}).sort((a,b)=>(b.l?b.l.ts:0)-(a.l?a.l.ts:0));
-  return head("Messages",back)+`<div class="body">${rows.length?rows.map(({p,l})=>`<button class="row" data-a="chat" data-v="${esc(p)}"><div class="av">${esc(p[0].toUpperCase())}</div><div class="grow"><b>${nm(p)}</b><div class="mut ell">${l?(l.mt?(l.mt==="video"?"🎞️ Video":"📷 Photo"):esc(l.text)):"No messages yet"}</div></div></button>`).join(""):`<p class="mut">No chats yet. Add someone in Contacts first.</p>`}</div>`}
-function chatBody(){return msgs().filter(x=>x.convo===key(S.me,S.sub)).map(x=>{const m=/^data:(image|video)\/[a-z0-9.+-]+;base64,[A-Za-z0-9+\/=]+$/.test(x.media||"")?x.media:"";return `<div class="b ${x.from===S.me?"me":"th"}">${m?(x.mt==="video"?`<video src="${m}" controls playsinline preload="metadata"></video>`:`<img src="${m}">`):""}${x.text?`<div>${esc(x.text)}</div>`:""}<span class="x" data-a="delm" data-v="${x.id}">🗑</span></div>`}).join("")||`<p class="mut" style="text-align:center">Say hi 👋</p>`}
-function chatView(){return head(nm(S.sub),`<button data-a="chats">‹ Chats</button>`,`<button data-a="clr">${S.clr?"Sure?":"Clear"}</button>`)+`<div class="body chat" id="chatbox">${chatBody()}</div><div class="err" id="terr" style="padding:0 14px"></div><div class="send"><label class="att">📎<input type="file" id="att" accept="image/*,video/*" hidden></label><input id="msg" placeholder="iMessage" autocomplete="off"><button data-a="send">↑</button></div>`}
+  const rows=[...partners].map(p=>({id:p,t:nm(p),l:m.filter(x=>x.convo===key(S.me,p)).pop(),g:0})),gm=Object.values(S.gm);
+  Object.values(S.groups).forEach(g=>rows.push({id:"g:"+g.id,t:"👥 "+esc(g.name),l:gm.filter(x=>x.gid===g.id).sort((a,b)=>a.ts-b.ts).pop(),g:1}));
+  rows.sort((a,b)=>(b.l?b.l.ts:0)-(a.l?a.l.ts:0));
+  return head("Messages",back,`<button data-a="gnewv">＋ Group</button>`)+`<div class="body">${rows.length?rows.map(r=>`<button class="row" data-a="chat" data-v="${esc(r.id)}"><div class="av">${r.g?"👥":esc(r.id[0].toUpperCase())}</div><div class="grow"><b>${r.t}</b><div class="mut ell">${r.l?(r.l.mt?(r.l.mt==="video"?"🎞️ Video":"📷 Photo"):esc(r.l.text)):"No messages yet"}</div></div></button>`).join(""):`<p class="mut">No chats yet. Add someone in Contacts first.</p>`}</div>`}
+function newGroup(){return head("New group",`<button data-a="chats">‹ Back</button>`)+`<div class="body"><input id="gname" placeholder="Group name" maxlength="30" value="${esc(S.ng.name)}"><h4>Add members</h4>${S.contacts.sort().map(c=>`<button class="row" data-a="gsel" data-v="${esc(c)}"><div class="av">${esc(c[0].toUpperCase())}</div><div class="grow"><b>${nm(c)}</b></div><span>${S.ng.sel.includes(c)?"✅":"⬜"}</span></button>`).join("")||`<p class="mut">Add contacts first.</p>`}<div class="err">${esc(S.err)}</div><button class="btn" data-a="gmk">Create group</button></div>`}
+const thread=()=>S.sub.startsWith("g:")?Object.values(S.gm).filter(x=>x.gid===S.sub.slice(2)).sort((a,b)=>a.ts-b.ts):msgs().filter(x=>x.convo===key(S.me,S.sub));
+const mcol=()=>S.sub.startsWith("g:")?"gmsgs":"msgs";
+const ctitle=()=>S.sub.startsWith("g:")?"👥 "+esc((S.groups[S.sub.slice(2)]||{}).name||"Group"):nm(S.sub);
+async function sendM(o){const g=S.sub.startsWith("g:"),t=Date.now(),b=g?{gid:S.sub.slice(2),from:S.me,uids:S.groups[S.sub.slice(2)].uids,ts:t}:{convo:key(S.me,S.sub),from:S.me,to:S.sub,ts:t};await db.collection(g?"gmsgs":"msgs").add({...b,text:"",...o})}
+function chatBody(){const g=S.sub.startsWith("g:");return thread().map(x=>{const m=/^data:(image|video)\/[a-z0-9.+-]+;base64,[A-Za-z0-9+\/=]+$/.test(x.media||"")?x.media:"";return `<div class="b ${x.from===S.me?"me":"th"}">${g&&x.from!==S.me?`<small><b>${nm(x.from)}</b></small>`:""}${m?(x.mt==="video"?`<video src="${m}" controls playsinline preload="metadata"></video>`:`<img src="${m}">`):""}${x.text?`<div>${esc(x.text)}</div>`:""}<span class="x" data-a="delm" data-v="${x.id}">🗑</span></div>`}).join("")||`<p class="mut" style="text-align:center">Say hi 👋</p>`}
+function chatView(){return head(ctitle(),`<button data-a="chats">‹ Chats</button>`,`<button data-a="clr">${S.clr?"Sure?":"Clear"}</button>`)+`<div class="body chat" id="chatbox">${chatBody()}</div><div class="err" id="terr" style="padding:0 14px"></div><div class="send"><label class="att">📎<input type="file" id="att" accept="image/*,video/*" hidden></label><input id="msg" placeholder="iMessage" autocomplete="off"><button data-a="send">↑</button></div>`}
 function contactsView(back){return head("Contacts",back)+`<div class="body"><input id="cu" placeholder="Add by username" autocapitalize="off"><div class="err">${esc(S.err)}</div><button class="btn" data-a="addc">Add contact</button>${S.contacts.sort().map(c=>`<div class="row"><div class="av">${esc(c[0].toUpperCase())}</div><div class="grow"><b>${nm(c)}</b></div><button class="btn s" data-a="chat" data-v="${esc(c)}">Message</button><button class="btn s g" data-a="delc" data-v="${esc(c)}">✕</button></div>`).join("")}</div>`}
-function settings(back){const w=S.wp;return head("Settings",back)+`<div class="body"><h4>Account</h4><div class="row"><div class="grow">${S.me?"@"+nm(S.me):"Not signed in"}</div></div>${S.me?(S.adm===S.me?`<h4>Verification (admin)</h4><input id="vu" placeholder="username to verify" autocapitalize="off"><div class="err">${esc(S.err)}</div><button class="btn" data-a="vgo">Give blue tick ✓</button>${Object.keys(S.ver).sort().map(u=>`<div class="row"><div class="grow">${nm(u)}</div><button class="btn s g" data-a="vno" data-v="${esc(u)}">Remove</button></div>`).join("")}`:S.adm===null?`<h4>Admin</h4><div class="err">${esc(S.err)}</div><button class="btn" data-a="adm">Become admin</button><p class="mut">The first account to claim this controls who gets the blue tick.</p>`:S.adm===undefined?`<p class="mut">Verification unavailable: publish the updated Firestore rules from the README.</p>`:""):""}<h4>Wallpaper</h4><div class="sw">${PRESETS.map((p,i)=>`<button data-a="preset" data-v="${i}" style="background:linear-gradient(${p[2]}deg,${p[0]},${p[1]})"></button>`).join("")}</div><h4>Custom gradient</h4><div style="display:flex;gap:10px;align-items:center"><input type="color" id="c1" value="${w.c1||"#4facfe"}" data-a="wp"><input type="color" id="c2" value="${w.c2||"#00f2fe"}" data-a="wp"></div><div class="mut">Angle</div><input type="range" id="ang" min="0" max="360" value="${w.a||160}" data-a="wp"><h4>Photo</h4><input type="file" id="img" accept="image/*"><button class="btn g" data-a="wpreset">Reset wallpaper</button><button class="btn" data-a="lock">Lock phone</button></div>`}
+function settings(back){const w=S.wp;return head("Settings",back)+`<div class="body"><h4>Account</h4><div class="row"><div class="grow">${S.me?"@"+nm(S.me):"Not signed in"}</div></div>${ADMINS.includes(S.me)?`<h4>Admin: badges</h4><input id="vu" placeholder="username" autocapitalize="off"><div class="err">${esc(S.err)}</div><div style="display:flex;gap:6px"><button class="btn s" data-a="bg" data-v="|t">✓ Verified</button><button class="btn s" data-a="bg" data-v="|cc">★ Creator</button><button class="btn s" data-a="bg" data-v="|cr">👑 Crown</button></div>${Object.keys(S.ver).sort().map(u=>`<div class="row"><div class="grow">${nm(u)}</div>${[["t","✓"],["cc","★"],["cr","👑"]].map(([f,l])=>`<button class="btn s ${S.ver[u][f]?"":"g"}" data-a="bg" data-v="${esc(u)}|${f}">${l}</button>`).join("")}</div>`).join("")}`:""}<h4>Wallpaper</h4><div class="sw">${PRESETS.map((p,i)=>`<button data-a="preset" data-v="${i}" style="background:linear-gradient(${p[2]}deg,${p[0]},${p[1]})"></button>`).join("")}</div><h4>Custom gradient</h4><div style="display:flex;gap:10px;align-items:center"><input type="color" id="c1" value="${w.c1||"#4facfe"}" data-a="wp"><input type="color" id="c2" value="${w.c2||"#00f2fe"}" data-a="wp"></div><div class="mut">Angle</div><input type="range" id="ang" min="0" max="360" value="${w.a||160}" data-a="wp"><h4>Photo</h4><input type="file" id="img" accept="image/*"><button class="btn g" data-a="wpreset">Reset wallpaper</button><button class="btn" data-a="lock">Lock phone</button></div>`}
 const fmt=()=>{const t=S.sw.t+(S.sw.on?Date.now()-S.sw.s:0);return (t/1000).toFixed(2)+"s"};
 function setWp(w){S.wp=w;ls.s("mp_wp",w);$("#scr").style.background=bg(w)}
 function evalCalc(){try{if(!/^[0-9+\-*/.() ]+$/.test(S.calc))return;const r=Function(`"use strict";return(${S.calc})`)();S.calc=String(+(+r).toPrecision(12))}catch(e){S.calc="Error"}}
@@ -127,7 +139,9 @@ async function act(a,v){
   if(a==="home"){S.app=null;S.sub=null;render()}
   else if(a==="open"){S.app=v;S.sub=null;if(v==="photos")await loadPh();render()}
   else if(a==="lock"){S.locked=true;S.app=null;render()}
-  else if(a==="inst"||a==="uninst"){S.inst=a==="inst"?[...S.inst,v]:S.inst.filter(x=>x!==v);ls.s("mp_inst",S.inst);render()}
+  else if(a==="inst")dlStart(v);
+  else if(a==="uninst"){S.inst=S.inst.filter(x=>x!==v);ls.s("mp_inst",S.inst);render()}
+  else if(a==="stab"){S.stab=v;render()}
   else if(a==="preset"){const p=PRESETS[v];setWp({t:"g",c1:p[0],c2:p[1],a:p[2]});render()}
   else if(a==="wpreset"){setWp({t:"g",c1:"#4facfe",c2:"#00f2fe",a:160});render()}
   else if(a==="chat"){S.app="messages";S.sub=v;render()}
@@ -152,25 +166,34 @@ async function act(a,v){
       await db.doc("contacts/"+S.me+"__"+u).set({owner:S.me,user:u})}catch(e){S.err="Couldn’t add contact."}
     render()}
   else if(a==="delc"){try{await db.doc("contacts/"+S.me+"__"+v).delete()}catch(e){}}
-  else if(a==="delm"){try{await db.doc("msgs/"+v).delete()}catch(e){}}
-  else if(a==="clr"){if(!S.clr){S.clr=true;render()}else{S.clr=false;try{const b=db.batch();msgs().filter(x=>x.convo===key(S.me,S.sub)).forEach(x=>b.delete(db.doc("msgs/"+x.id)));await b.commit()}catch(e){}render()}}
+  else if(a==="delm"){try{await db.doc(mcol()+"/"+v).delete()}catch(e){}}
+  else if(a==="clr"){if(!S.clr){S.clr=true;render()}else{S.clr=false;try{const b=db.batch();thread().forEach(x=>b.delete(db.doc(mcol()+"/"+x.id)));await b.commit()}catch(e){}render()}}
   else if(a==="tklike"){tkLike(+v)}
   else if(a==="gnew"){gnew();gdraw()}
   else if(a==="pview"){S.sub=v;render()}
   else if(a==="pclose"){S.sub=null;render()}
   else if(a==="pdel"){try{await tx("readwrite",q=>q.delete(+v))}catch(e){}S.sub=null;await loadPh();render()}
   else if(a==="pset"){const p=S.ph.find(x=>x.id==v);if(p){setWp({t:"i",u:await toData(p.blob,900,.8)});S.app=null;S.sub=null;render()}}
-  else if(a==="adm"){try{await db.doc("admin/owner").set({username:S.me})}catch(e){S.err="Couldn’t claim admin. Publish the new Firestore rules from the README."}render()}
-  else if(a==="vgo"||a==="vno"){const u=(v||($("#vu")?$("#vu").value:"")||"").trim().toLowerCase();if(!u){S.err="Enter a username.";return render()}
-    try{if(a==="vgo"){const d=await db.doc("accounts/"+u).get();if(!d.exists){S.err="No account called “"+u+"”.";return render()}await db.doc("verified/"+u).set({t:1})}else await db.doc("verified/"+u).delete()}catch(e){S.err="Permission denied. Publish the new Firestore rules."}render()}
-  else if(a==="send"){const i=$("#msg"),t=i.value.trim();if(!t)return;i.value="";try{await db.collection("msgs").add({convo:key(S.me,S.sub),from:S.me,to:S.sub,text:t.slice(0,1000),ts:Date.now()})}catch(e){i.value=t}}
+  else if(a==="bg"){const [u0,f]=v.split("|"),u=(u0||($("#vu")?$("#vu").value:"")||"").trim().toLowerCase();if(!u){S.err="Enter a username.";return render()}
+    try{const {id,...cur}=S.ver[u]||{};if(!S.ver[u]){const d=await db.doc("accounts/"+u).get();if(!d.exists){S.err="No account called “"+u+"”.";return render()}}
+      const nw={...cur,[f]:!cur[f]};if(!nw.t&&!nw.cc&&!nw.cr)await db.doc("verified/"+u).delete();else await db.doc("verified/"+u).set(nw)}catch(e){S.err="Permission denied. Publish the updated Firestore rules."}render()}
+  else if(a==="gnewv"){S.ng={name:"",sel:[]};S.sub="+";render()}
+  else if(a==="gsel"){const i=S.ng.sel.indexOf(v);i<0?S.ng.sel.push(v):S.ng.sel.splice(i,1);render()}
+  else if(a==="gmk"){const n=S.ng.name.trim();if(!n||!S.ng.sel.length){S.err="Add a name and at least one member.";return render()}
+    try{const us=[uid];for(const c of S.ng.sel)us.push((await db.doc("accounts/"+c).get()).data().uid);
+      const r=await db.collection("groups").add({name:n.slice(0,30),members:[S.me,...S.ng.sel],uids:us,owner:S.me,ts:Date.now()});S.sub="g:"+r.id}catch(e){S.err="Couldn’t create the group."}render()}
+  else if(a==="ppost"){const i=$("#ptx"),t=i.value.trim();if(!t)return;i.value="";try{await db.collection("posts").add({user:S.me,text:t.slice(0,280),ts:Date.now(),likes:[]})}catch(e){i.value=t}}
+  else if(a==="plike"){const p=S.posts.find(x=>x.id===v);if(p){const F=firebase.firestore.FieldValue;try{await db.doc("posts/"+v).update({likes:(p.likes||[]).includes(S.me)?F.arrayRemove(S.me):F.arrayUnion(S.me)})}catch(e){}}}
+  else if(a==="pdl"){try{await db.doc("posts/"+v).delete()}catch(e){}}
+  else if(a==="send"){const i=$("#msg"),t=i.value.trim();if(!t)return;i.value="";try{await sendM({text:t.slice(0,1000)})}catch(e){i.value=t}}
 }
 $("#scr").addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t||t.tagName==="INPUT")return;act(t.dataset.a,t.dataset.v)});
 $("#scr").addEventListener("input",e=>{if(e.target.dataset.a==="wp")setWp({t:"g",c1:$("#c1").value,c2:$("#c2").value,a:+$("#ang").value});if(e.target.id==="note")ls.s("mp_note",e.target.value)});
 $("#scr").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="msg")act("send");if(e.key==="Enter"&&e.target.id==="cu")act("addc");if(e.key==="Enter"&&e.target.id==="un")act("signup")});
 $("#scr").addEventListener("change",e=>{if(e.target.id!=="img"||!e.target.files[0])return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);setWp({t:"i",u:c.toDataURL("image/jpeg",.8)})};im.src=r.result};r.readAsDataURL(e.target.files[0])});
 const TICK='<svg class="vt" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const nm=u=>esc(u)+(S.ver[u]?TICK:"");
+const CC='<svg class="vt" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#bf5af2"/><path d="M12 5.5l1.9 4.2 4.6.5-3.4 3.1.9 4.5-4-2.3-4 2.3.9-4.5-3.4-3.1 4.6-.5z" fill="#fff"/></svg>';
+const nm=u=>{const b=S.ver[u]||{};return esc(u)+(b.t?TICK:"")+(b.cc?CC:"")+(b.cr?'<span class="vt" style="font-size:13px;width:auto">👑</span>':"")};
 const rd=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.readAsDataURL(f)});
 const toData=(f,max,q)=>new Promise(async r=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",q))};im.src=await rd(f)});
 const idb=()=>new Promise((r,j)=>{const q=indexedDB.open("mp",1);q.onupgradeneeded=()=>q.result.createObjectStore("ph",{keyPath:"id"});q.onsuccess=()=>r(q.result);q.onerror=()=>j()});
@@ -182,7 +205,7 @@ $("#scr").addEventListener("change",async e=>{const t=e.target,f=t.files&&t.file
   if(t.id==="att"&&f){t.value="";const er=$("#terr");er.textContent="";try{const mt=f.type.startsWith("video")?"video":"image";let d;
     if(mt==="image"&&f.type!=="image/gif")d=await toData(f,900,.72);else{if(f.size>600*1024){er.textContent="GIFs and videos must be under 600 KB to send.";return}d=await rd(f)}
     if(d.length>950000){er.textContent="That file is too big to send.";return}
-    await db.collection("msgs").add({convo:key(S.me,S.sub),from:S.me,to:S.sub,text:"",media:d,mt,ts:Date.now()})}catch(x){er.textContent="Couldn’t send that file."}}});
+    await sendM({media:d,mt})}catch(x){er.textContent="Couldn’t send that file."}}});
 const SH=[[[1]],[[1,1]],[[1],[1]],[[1,1,1]],[[1],[1],[1]],[[1,1],[1,1]],[[1,1,1],[1,0,0]],[[1,1,1],[0,0,1]],[[1,0],[1,1]],[[1,1],[1,0]],[[1,1,1,1]],[[1],[1],[1],[1]],[[1,1,1],[1,1,1],[1,1,1]],[[0,1],[1,1]],[[1,1],[0,1]]];
 const COL=["#ff453a","#ff9f0a","#ffd60a","#30d158","#64d2ff","#bf5af2"];let G=null;
 function gpieces(){G.p=[0,1,2].map(()=>({s:SH[Math.random()*SH.length|0],c:1+(Math.random()*6|0)}))}
@@ -228,10 +251,23 @@ function tkInit(){const f=$("#tkf");if(!f)return;if(!TK.length)for(let i=0;i<6;i
   f.addEventListener("scroll",()=>{if(f.scrollTop+f.clientHeight*2>f.scrollHeight){const n=TK.length;for(let i=0;i<4;i++)TK.push(tkMake());mount(n)}});
   if(!tkRun){tkRun=true;const loop=t=>{if(!$("#tkf")){tkRun=false;return}TK.forEach(a=>{if(a.vis&&a.x)TKV[a.st](a.x,270,480,t/1000,a)});requestAnimationFrame(loop)};requestAnimationFrame(loop)}}
 $("#scr").addEventListener("dblclick",e=>{const v=e.target.closest(".tv");if(v&&!e.target.closest("button")){const i=+v.dataset.i;if(!TK[i].liked)tkLike(i)}});
+const CATS=["Today","Games","Social","Tools"];
+const stBtn=a=>S.inst.includes(a.id)?`<button class="btn s" data-a="open" data-v="${a.id}">Open</button><button class="btn s g" data-a="uninst" data-v="${a.id}">✕</button>`:S.dl[a.id]!=null?`<div class="dlb"><i class="dl-${a.id}" style="width:${S.dl[a.id]}%"></i></div>`:`<button class="btn s" data-a="inst" data-v="${a.id}">Get</button>`;
+function stList(){const q=(S.sq||"").toLowerCase(),t=S.stab||"Today";return STORE.filter(a=>(t==="Today"||a.cat===t)&&(!q||(a.n+a.d).toLowerCase().includes(q))).map(a=>`<div class="row"><div class="av" style="background:${a.c};border-radius:14px;width:54px;height:54px;font-size:28px">${a.e}</div><div class="grow"><b>${a.n}</b><div class="mut">${a.cat} · ★ ${a.r}</div><div class="mut ell">${a.d}</div></div><div class="stb">${stBtn(a)}</div></div>`).join("")||`<p class="mut">No apps found.</p>`}
+function storeView(back){const t=S.stab||"Today",f=STORE[0];return head("App Store",back)+`<div class="body"><input id="sq" placeholder="🔍 Search apps" value="${esc(S.sq||"")}"><div class="tabs">${CATS.map(c=>`<button class="${c===t?"on":""}" data-a="stab" data-v="${c}">${c}</button>`).join("")}</div>${t==="Today"&&!S.sq?`<div class="hero" style="background:${f.c}"><small>GAME OF THE DAY</small><h2>${f.e} ${f.n}</h2><p>${f.d}</p><div class="stb">${stBtn(f)}</div></div><h4>Top free apps</h4>`:""}<div id="stl">${stList()}</div></div>`}
+function dlStart(id){if(S.dl[id]!=null)return;S.dl[id]=0;document.querySelectorAll(`[data-a="inst"][data-v="${id}"]`).forEach(b=>b.parentElement.innerHTML=stBtn({id}));
+  const t=setInterval(()=>{S.dl[id]+=6+Math.random()*16;if(S.dl[id]>=100){clearInterval(t);delete S.dl[id];S.inst.push(id);ls.s("mp_inst",S.inst);render();return}document.querySelectorAll(".dl-"+id).forEach(e=>e.style.width=S.dl[id]+"%")},150)}
+const ago=t=>{const m=(Date.now()-t)/6e4|0;return m<1?"now":m<60?m+"m":m<1440?(m/60|0)+"h":(m/1440|0)+"d"};
+function chList(){return S.posts.map(p=>{const lk=(p.likes||[]).includes(S.me);return `<div class="row" style="align-items:flex-start"><div class="av">${esc(p.user[0].toUpperCase())}</div><div class="grow"><b>${nm(p.user)}</b> <span class="mut">@${esc(p.user)} · ${ago(p.ts)}</span><div style="white-space:pre-wrap;word-wrap:break-word">${esc(p.text)}</div><div style="margin-top:6px"><button data-a="plike" data-v="${p.id}" style="background:none;color:${lk?"#f91880":"var(--mut)"}">${lk?"❤️":"🤍"} ${(p.likes||[]).length}</button>${p.user===S.me||ADMINS.includes(S.me)?` <button data-a="pdl" data-v="${p.id}" style="background:none;color:var(--mut)">🗑</button>`:""}</div></div></div>`}).join("")||`<p class="mut">No posts yet. Be the first!</p>`}
+let psub=false;
+function pSub(){if(psub||!db)return;psub=true;db.collection("posts").orderBy("ts","desc").limit(60).onSnapshot(q=>{S.posts=docs(q);const f=$("#pf");if(f&&S.app==="chirp")f.innerHTML=chList()},()=>{})}
+$("#scr").addEventListener("input",e=>{const t=e.target;if(t.id==="sq"){S.sq=t.value;$("#stl").innerHTML=stList()}if(t.id==="gname")S.ng.name=t.value});
 let subbed=false;
 function subs(){if(subbed||!db||!S.me)return;subbed=true;
-  db.collection("verified").onSnapshot(q=>{S.ver={};docs(q).forEach(x=>S.ver[x.id]=1);updChat();if(!S.app||S.app==="settings")render()},()=>{});
-  db.doc("admin/owner").onSnapshot(d=>{S.adm=d.exists?d.data().username:null;if(S.app==="settings")render()},()=>{});
+  db.collection("verified").onSnapshot(q=>{S.ver={};docs(q).forEach(x=>S.ver[x.id]=x);updChat();if(!S.app||S.app==="settings")render()},()=>{});
+  db.collection("groups").where("uids","array-contains",uid).onSnapshot(q=>{S.groups={};docs(q).forEach(x=>S.groups[x.id]=x);updChat()},()=>{});
+  db.collection("gmsgs").where("uids","array-contains",uid).onSnapshot(q=>{S.gm={};docs(q).forEach(x=>S.gm[x.id]=x);updChat()},()=>{});
+  pSub();
   db.collection("contacts").where("owner","==",S.me).onSnapshot(s=>{S.contacts=docs(s).map(x=>x.user);updChat()},()=>{});
   db.collection("msgs").where("to","==",S.me).onSnapshot(s=>{S.inbox={};docs(s).forEach(x=>S.inbox[x.id]=x);updChat()},()=>{});
   db.collection("msgs").where("from","==",S.me).onSnapshot(s=>{S.outbox={};docs(s).forEach(x=>S.outbox[x.id]=x);updChat()},()=>{});}
@@ -241,4 +277,3 @@ render();
   auth.onAuthStateChanged(async u=>{if(!u||S.me)return;uid=u.uid;try{const d=docs(await db.collection("accounts").where("uid","==",uid).get());if(d.length){S.me=d[0].id;subs();render()}}catch(e){}});}}catch(e){}
   render()})();
 </script></body></html>
-
