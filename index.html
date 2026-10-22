@@ -47,4 +47,538 @@ input,textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px solid 
 .sw{display:flex;gap:8px;flex-wrap:wrap}.sw button{width:54px;height:54px;border-radius:12px;border:2px solid var(--line)}
 .err{color:#ff453a;font-size:13px;min-height:18px}.calc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.calc button{padding:16px;border-radius:14px;background:var(--line);font-size:20px;color:var(--fg)}
 .disp{font-size:38px;text-align:right;padding:16px 4px;min-height:80px;word-break:break-all}
-h4{margin:16px 0 
+h4{margin:16px 0 4px;font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.vt{width:15px;height:15px;vertical-align:-2px;margin-left:4px}
+.body{position:relative}.b img,.b video{max-width:100%;border-radius:12px;display:block}.b .x{opacity:.5;font-size:11px;cursor:pointer;display:block;text-align:right}
+.att{display:grid;place-items:center;width:38px;height:38px;cursor:pointer;font-size:20px}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}.pg img,.pg video{width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer}
+.gb{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;width:min(100%,300px);aspect-ratio:1;margin:12px auto}.gb i{background:rgba(128,128,128,.22);border-radius:5px}
+.gt{display:flex;justify-content:space-around;align-items:center;min-height:100px}.gp{display:grid;gap:2px;grid-auto-rows:22px;touch-action:none;cursor:grab;min-width:30px}.gp i{border-radius:4px}
+.gh{position:fixed;display:grid;gap:2px;grid-template-columns:repeat(var(--n),var(--s));grid-auto-rows:var(--s);pointer-events:none;z-index:99;opacity:.9}.gh i{border-radius:5px}
+.go{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.65);color:#fff}
+.tk{position:relative;flex:1;background:#000;color:#fff;min-height:0}
+.tkf{position:absolute;inset:0;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}.tkf::-webkit-scrollbar{display:none}
+.tv{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always}.tv canvas{width:100%;height:100%;display:block}
+.tr{position:absolute;right:8px;bottom:70px;display:flex;flex-direction:column;gap:14px;align-items:center}.tr button{background:none;font-size:30px;display:flex;flex-direction:column;align-items:center;color:#fff}.tr small{font-size:12px}
+.tb{position:absolute;left:12px;right:70px;bottom:14px;text-shadow:0 1px 3px #000;font-size:14px}
+.tkh{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:8px 14px;z-index:2;text-shadow:0 1px 3px #000}.tkh button{font-size:22px;background:none;color:#fff}
+.tabs{display:flex;gap:8px;overflow:auto;margin:6px 0}.tabs button{padding:6px 14px;border-radius:16px;background:var(--line);color:var(--fg);white-space:nowrap}.tabs .on{background:var(--blue);color:#fff}
+.hero{border-radius:20px;padding:18px;color:#fff;margin:8px 0}.hero h2{margin:4px 0}.hero p{margin:0 0 10px;opacity:.9}.hero small{opacity:.8;letter-spacing:.06em}
+.dlb{width:80px;height:8px;border-radius:4px;background:var(--line);overflow:hidden}.dlb i{display:block;height:100%;background:var(--blue);width:0}.stb{display:flex;gap:6px;align-items:center}
+.xa{flex:1;display:flex;flex-direction:column;background:#000;color:#e7e9ea;min-height:0;position:relative}
+.xh{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid #2f3336}.xh button{background:none;color:#e7e9ea;font-size:18px}.xl{font-size:22px}
+.xtabs{display:flex;border-bottom:1px solid #2f3336}.xtabs button{flex:1;padding:12px;background:none;color:#71767b;font-weight:600}.xtabs .on{color:#e7e9ea;box-shadow:inset 0 -3px #1d9bf0}
+.xs{flex:1;overflow:auto;min-height:0}.xp{display:flex;gap:10px;padding:12px 14px;border-bottom:1px solid #2f3336;cursor:pointer}.xb{flex:1;min-width:0}.xm{color:#71767b;font-size:13px}
+.xt{white-space:pre-wrap;word-wrap:break-word;margin:2px 0 6px}.xr{display:flex;justify-content:space-between;color:#71767b;font-size:13px;align-items:center}.xr button{background:none;color:#71767b}
+.xfab{position:absolute;right:16px;bottom:62px;width:52px;height:52px;border-radius:50%;background:#1d9bf0;font-size:22px;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.xn{display:flex;border-top:1px solid #2f3336;background:#000}.xn button{flex:1;padding:10px;background:none;font-size:20px;opacity:.5}.xn .on{opacity:1}
+.xc{padding:14px}.xc textarea,.xin{background:#16181c;color:#e7e9ea;border:0;font-size:16px;resize:none;border-radius:14px}.xprof{padding:14px;border-bottom:1px solid #2f3336}.xban{height:80px;background:linear-gradient(135deg,#1d9bf0,#7856ff);border-radius:12px}
+.sgrp{background:var(--bg);border-radius:12px;padding:0 12px;margin:10px 0}.sgrp .row:last-child{border-bottom:0}
+.gifp{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px;max-height:190px;overflow:auto;border-top:1px solid var(--line)}.gifp img{width:100%;border-radius:10px;cursor:pointer}.send .att{background:none}
+.aib{font-size:10px;border:1px solid #71767b;color:#71767b;border-radius:4px;padding:0 3px;margin-left:4px;vertical-align:1px}
+.reels{display:flex;gap:10px;justify-content:center;font-size:56px;margin:14px 0;min-height:72px}
+.term{background:#000;color:#30ff7a;font-family:ui-monospace,Menlo,monospace;font-size:12px;padding:10px;border-radius:10px;height:180px;overflow:auto;white-space:pre-wrap;margin-bottom:10px}
+.tg{display:inline-block;font-size:9px;font-weight:800;color:#fff;border-radius:5px;padding:1px 5px;margin-left:5px;vertical-align:1px;letter-spacing:.04em}
+.sw2{width:46px;height:28px;border-radius:14px;background:var(--line);position:relative;flex:none}.sw2 i{position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}.sw2.on{background:#30d158}.sw2.on i{left:21px}
+.azg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.azc{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.g48{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:min(100%,280px);aspect-ratio:1;margin:10px auto;background:var(--line);padding:6px;border-radius:12px}.g48 i{display:grid;place-items:center;font-style:normal;font-weight:800;border-radius:8px;background:rgba(128,128,128,.25);font-size:20px;color:#111}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="gv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4cb8ff"/><stop offset="1" stop-color="#0a66c2"/></linearGradient><linearGradient id="gc2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5fa2"/><stop offset="1" stop-color="#7c4dff"/></linearGradient><linearGradient id="gm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ddc97"/><stop offset="1" stop-color="#128a5a"/></linearGradient><linearGradient id="gk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff08a"/><stop offset="1" stop-color="#f0a800"/><linearGradient id="gp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b388ff"/><stop offset="1" stop-color="#6a1b9a"/></linearGradient></defs></svg><div class="phone"><div class="notch"></div><div class="scr" id="scr"></div></div>
+<script>
+const PASS="19723";
+// 1) Paste your Firebase web config here (see README.md)
+const FIREBASE_CONFIG={apiKey:"AIzaSyAJMqSu4uKXkwYVyBFDoj2y8RxgI9A6Sgw",authDomain:"phoneosmy-8336d.firebaseapp.com",projectId:"phoneosmy-8336d",appId:"1:218936377234:web:b5ed3895099473b9338b4b"};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const PRESETS=[["#4facfe","#00f2fe",160],["#ff6a88","#ff99ac",135],["#7f00ff","#e100ff",150],["#232526","#414345",160],["#f7971e","#ffd200",135],["#11998e","#38ef7d",150]];
+const STORE=[{id:"send",n:"SendCash",e:"💸",c:"linear-gradient(135deg,#30d158,#0a84ff)",cat:"Tools",r:"4.7",d:"Send fake money to friends instantly."},{id:"amazin",n:"Amazin",e:"📦",c:"linear-gradient(135deg,#ff9900,#232f3e)",cat:"Shopping",r:"4.6",d:"Shop for anything with your fake money."},{id:"g2048",n:"2048",e:"🔢",c:"linear-gradient(135deg,#f0a800,#ff7a00)",cat:"Games",r:"4.7",d:"Slide and merge tiles. Score earns cash."},{id:"snake",n:"Snake",e:"🐍",c:"linear-gradient(135deg,#30d158,#0a6b2d)",cat:"Games",r:"4.5",d:"Eat, grow, don’t crash. Score earns cash."},{id:"ttt",n:"Tic-Tac-Toe",e:"⭕",c:"linear-gradient(135deg,#0a84ff,#5e5ce6)",cat:"Games",r:"4.2",d:"Beat the CPU for $50."},{id:"memory",n:"Memory Match",e:"🧠",c:"linear-gradient(135deg,#bf5af2,#ff375f)",cat:"Games",r:"4.4",d:"Find all the pairs for $75."},{id:"casino",n:"Lucky 7 Casino",e:"🎰",c:"linear-gradient(135deg,#ff453a,#ff9f0a)",cat:"Games",r:"4.7",d:"Slots, coin flip and roulette with fake cash."},{id:"hacker",n:"HackSim",e:"💻",c:"#0b0b0b",cat:"Games",r:"4.5",d:"A fake hacking simulator. Earn pretend money."},{id:"wallet",n:"Wallet",e:"💰",c:"linear-gradient(135deg,#30d158,#0a84ff)",cat:"Tools",r:"4.6",d:"Your fake money, history and the richest players."},{id:"blast",n:"Block Smash",e:"🧱",c:"linear-gradient(135deg,#bf5af2,#5e5ce6)",cat:"Games",r:"4.8",d:"Drag blocks, clear lines, beat your best."},{id:"tok",n:"TokTok",e:"🎵",c:"#111",cat:"Social",r:"4.6",d:"Endless short videos made just for you."},{id:"chirp",n:"Chirper",e:"🐦",c:"#1d9bf0",cat:"Social",r:"4.5",d:"See what’s happening right now."},{id:"calc",n:"Calculator",e:"🧮",c:"#ff9f0a",cat:"Tools",r:"4.4",d:"Quick maths."},{id:"notes",n:"Notes",e:"📝",c:"#ffd60a",cat:"Tools",r:"4.3",d:"Jot things down."},{id:"watch",n:"Stopwatch",e:"⏱️",c:"#30d158",cat:"Tools",r:"4.2",d:"Time anything."}];
+const ADMINS=["webowner2","owner"];
+let S={cfg:{},al:null,ad:{u:[],w:{},posts:null,msg:""},ann:null,bans:{},cfm:"",trO:{},trI:{},sx:{to:"",amt:"",note:"",msg:""},pref:ls.g("mp_pref",{widget:true,h24:false}),fs:{},ssq:"",dmsg:"",fmsg:"",cart:{},az:{tab:"shop",cat:"All",q:"",msg:""},bal:1000,blog:[],bonus:0,cg:"Slots",bet:50,busy:0,hk:{t:null,log:""},rich:[],emsg:"",bp:[],pf:{},chk:[],gp:false,draft:"",cx:{tab:"home",feed:"foryou",th:null,cp:null,q:""},req:[],myreq:false,posts:[],groups:{},gm:{},ng:{name:"",sel:[]},dl:{},sq:"",stab:"Today",ver:{},clr:false,ph:[],locked:true,pin:"",app:null,sub:null,me:null,wp:ls.g("mp_wp",{t:"g",c1:"#4facfe",c2:"#00f2fe",a:160}),inst:ls.g("mp_inst",[]),contacts:[],inbox:{},outbox:{},err:"",online:false,calc:"",sw:{on:false,t:0,s:0}};
+let db=null,auth=null,uid=null,swT=null;
+const bg=w=>(w.t==="i"||w.t==="img")?`url("${w.u}") center/cover`:`linear-gradient(${w.a}deg,${w.c1},${w.c2})`;
+const docs=r=>(r.docs||[]).map(x=>({id:x.id,...x.data()}));
+const now=()=>new Date();
+const hm=()=>now().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:!S.pref.h24});
+const msgs=()=>Object.values({...S.inbox,...S.outbox}).sort((a,b)=>a.ts-b.ts);
+const key=(a,b)=>[a,b].sort().join("__");
+const bar=()=>`<div class="bar"><span class="clk">${hm()}</span><span>${S.online?"●":"○"} 5G</span></div>${annBar()}`;
+const pill=()=>`<div class="pill" data-a="home"></div>`;
+function head(t,left,right){return `<div class="h"><span>${left||""}</span><span>${t}</span><span>${right||""}</span></div>`}
+function render(){
+  const el=$("#scr");el.style.background=bg(S.wp);
+  if(S.locked){
+    el.innerHTML=`${bar()}<div class="fill lock"><div class="t">${hm()}</div><div class="d">${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"long"})}</div><div style="margin-top:50px">Enter Passcode</div><div class="dots" id="dots">${[0,1,2,3,4].map(i=>`<i class="${i<S.pin.length?"on":""}"></i>`).join("")}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(k=>k===""?"<span></span>":`<button data-a="key" data-v="${k}">${k}</button>`).join("")}</div></div>`;return}
+  const blk=blockMsg();if(blk){el.innerHTML=`${bar()}${blk}`;return}
+  if(!S.app){
+    const extra=S.inst.map(id=>STORE.find(a=>a.id===id)).filter(Boolean);
+    el.innerHTML=`${bar()}<div class="fill">${S.pref.widget?`<div class="widget"><div class="t">${hm()}</div><div>${now().toLocaleDateString([],{weekday:"long",day:"numeric",month:"short"})}</div>${S.me?`<div class="mut" style="color:#fffc">@${nm(S.me)}</div>`:""}</div>`:""}<div class="grid">${ic("store","App Store","🅰️","#0a84ff")}${extra.map(a=>ic(a.id,a.n,a.e,a.c)).join("")}</div><div class="dock">${ic("messages","Messages","💬","#30d158")}${ic("contacts","Contacts","👤","#8e8e93")}${ic("photos","Photos","🖼️","#ff375f")}${ic("settings","Settings","⚙️","#636366")}</div>${pill()}</div>`;return}
+  const A=S.app,back=`<button data-a="home">‹ Home</button>`;let inner="";
+  if(S.cfg.off&&S.cfg.off[A]&&!ADMINS.includes(S.me))inner=offView(back);
+  else if(["messages","contacts","chirp","wallet","casino","hacker","send"].includes(A)&&!S.me)inner=gate(back);
+  else if(A==="messages")inner=S.sub==="+"?newGroup():S.sub?chatView():msgList(back);
+  else if(A==="contacts")inner=contactsView(back);
+  else if(A==="store")inner=storeView(back);
+  else if(A==="settings")inner=settings(back);
+  else if(A==="amazin")inner=azView(back);
+  else if(A==="g2048")inner=g2View(back);
+  else if(A==="snake")inner=snView(back);
+  else if(A==="ttt")inner=ttView(back);
+  else if(A==="memory")inner=mmView(back);
+  else if(A==="send")inner=sendView(back);
+  else if(A==="wallet")inner=walletView(back);
+  else if(A==="casino")inner=casinoView(back);
+  else if(A==="hacker")inner=hackerView(back);
+  else if(A==="chirp")inner=chView(back);
+  else if(A==="tok")inner=`<div class="tk"><div class="tkh"><button data-a="home">‹</button><span style="opacity:.7">Following</span><b>For You</b><span>🔍</span></div><div class="tkf" id="tkf"></div></div>`;
+  else if(A==="blast")inner=head("Block Smash",back,`<button data-a="gnew">New</button>`)+`<div class="body" style="text-align:center"><div>Score <b id="gs">0</b> · Best <b id="gbst">0</b></div><div class="gb" id="gb"></div><div class="gt" id="gt"></div><div class="go" id="go"><div><h2>Game over</h2><button class="btn" data-a="gnew">Play again</button></div></div></div>`;
+  else if(A==="photos")inner=S.sub?pview():head("Photos",back,`<label style="color:var(--blue);cursor:pointer">＋ Add<input type="file" id="phin" accept="image/*,video/*" multiple hidden></label>`)+`<div class="body"><div class="pg">${S.ph.map(p=>p.type.startsWith("video")?`<video src="${p.u}" data-a="pview" data-v="${p.id}" muted></video>`:`<img src="${p.u}" data-a="pview" data-v="${p.id}">`).join("")}</div>${S.ph.length?"":`<p class="mut" style="text-align:center">No photos yet. Tap ＋ Add to upload photos, GIFs or videos from your files.</p>`}</div>`;
+  else if(A==="calc")inner=head("Calculator",back)+`<div class="body"><div class="disp">${esc(S.calc||"0")}</div><div class="calc">${["7","8","9","/","4","5","6","*","1","2","3","-","0",".","=","+","C","(",")","⌫"].map(k=>`<button data-a="ck" data-v="${k}">${k}</button>`).join("")}</div></div>`;
+  else if(A==="notes")inner=head("Notes",back)+`<div class="body"><textarea id="note" rows="16" placeholder="Write something…">${esc(ls.g("mp_note",""))}</textarea></div>`;
+  else if(A==="watch")inner=head("Stopwatch",back)+`<div class="body"><div class="disp" id="swd">${fmt()}</div><button class="btn" data-a="swgo">${S.sw.on?"Stop":"Start"}</button><button class="btn g" data-a="swreset">Reset</button></div>`;
+  el.innerHTML=`${bar()}<div class="app">${inner}</div>${pill()}`;
+  const c=$("#chatbox");if(c)c.scrollTop=c.scrollHeight;if(A==="blast")gdraw();if(A==="g2048")g2draw();if(A==="snake"){if(!snT)snNew();snDraw()}if(A==="ttt")ttDraw();if(A==="memory")mmDraw();if(A==="tok")tkInit();const wpp=$("#wpp");if(wpp)wpp.style.background=bg(S.wp);
+}
+const ic=(id,n,e,c)=>`<button class="ic" data-a="open" data-v="${id}"><b style="background:${c}">${e}</b>${n}</button>`;
+function gate(back){return head("Account",back)+`<div class="body"><p><b>Sign up or log in</b></p><p class="mut">${db?"Pick a username and password. Friends add you in Contacts by typing your username.":"Backend not set up yet. See the README."}</p>${db?`<input id="un" placeholder="username (a-z, 0-9, _)" maxlength="16" autocapitalize="off"><input id="pw" type="password" placeholder="password (6+ characters)"><div class="err">${esc(S.err)}</div><button class="btn" data-a="signup">Sign up</button><button class="btn g" data-a="login">Log in</button>`:""}</div>`}
+function msgList(back){
+  const m=msgs(),partners=new Set(S.contacts);m.forEach(x=>partners.add(x.from===S.me?x.to:x.from));
+  const rows=[...partners].map(p=>({id:p,t:nm(p),l:m.filter(x=>x.convo===key(S.me,p)).pop(),g:0})),gm=Object.values(S.gm);
+  Object.values(S.groups).forEach(g=>rows.push({id:"g:"+g.id,t:"👥 "+esc(g.name),l:gm.filter(x=>x.gid===g.id).sort((a,b)=>a.ts-b.ts).pop(),g:1}));
+  rows.sort((a,b)=>(b.l?b.l.ts:0)-(a.l?a.l.ts:0));
+  return head("Messages",back,`<button data-a="gnewv">＋ Group</button>`)+`<div class="body">${rows.length?rows.map(r=>`<button class="row" data-a="chat" data-v="${esc(r.id)}">${r.g?`<div class="av">👥</div>`:avt(r.id)}<div class="grow"><b>${r.t}</b><div class="mut ell">${r.l?(r.l.mt?(r.l.mt==="video"?"🎞️ Video":r.l.mt==="gif"?"GIF":"📷 Photo"):esc(r.l.text)):"No messages yet"}</div></div></button>`).join(""):`<p class="mut">No chats yet. Add someone in Contacts first.</p>`}</div>`}
+function newGroup(){return head("New group",`<button data-a="chats">‹ Back</button>`)+`<div class="body"><input id="gname" placeholder="Group name" maxlength="30" value="${esc(S.ng.name)}"><h4>Add members</h4>${S.contacts.sort().map(c=>`<button class="row" data-a="gsel" data-v="${esc(c)}">${avt(c)}<div class="grow"><b>${nm(c)}</b></div><span>${S.ng.sel.includes(c)?"✅":"⬜"}</span></button>`).join("")||`<p class="mut">Add contacts first.</p>`}<div class="err">${esc(S.err)}</div><button class="btn" data-a="gmk">Create group</button></div>`}
+const thread=()=>S.sub.startsWith("g:")?Object.values(S.gm).filter(x=>x.gid===S.sub.slice(2)).sort((a,b)=>a.ts-b.ts):msgs().filter(x=>x.convo===key(S.me,S.sub));
+const mcol=()=>S.sub.startsWith("g:")?"gmsgs":"msgs";
+const ctitle=()=>S.sub.startsWith("g:")?"👥 "+esc((S.groups[S.sub.slice(2)]||{}).name||"Group"):nm(S.sub);
+async function sendM(o){const g=S.sub.startsWith("g:"),t=Date.now(),b=g?{gid:S.sub.slice(2),from:S.me,uids:(S.groups[S.sub.slice(2)]||{}).uids,ts:t}:{convo:key(S.me,S.sub),from:S.me,to:S.sub,ts:t};await db.collection(g?"gmsgs":"msgs").add({...b,text:"",...o})}
+function chatBody(){const g=S.sub.startsWith("g:");return thread().map(x=>{const m=/^data:(image|video)\/[a-z0-9.+-]+;base64,[A-Za-z0-9+\/=]+$/.test(x.media||"")?x.media:"";return `<div class="b ${x.from===S.me?"me":"th"}">${g&&x.from!==S.me?`<small><b>${nm(x.from)}</b></small>`:""}${m?(x.mt==="video"?`<video src="${m}" controls playsinline preload="metadata"></video>`:`<img src="${m}">`):""}${x.text?`<div>${fmtT(x.text)}</div>`:""}<span class="x" data-a="delm" data-v="${x.id}">🗑</span></div>`}).join("")||`<p class="mut" style="text-align:center">Say hi 👋</p>`}
+function chatView(){return head(ctitle(),`<button data-a="chats">‹ Chats</button>`,`<button data-a="clr">${S.clr?"Sure?":"Clear"}</button>`)+`<div class="body chat" id="chatbox">${chatBody()}</div>${S.gp?`<div class="gifp">${GL.map((_,i)=>`<img src="${gifData(i)}" data-a="gif" data-v="${i}">`).join("")}</div>`:""}<div class="err" id="terr" style="padding:0 14px"></div><div class="send"><label class="att">📎<input type="file" id="att" accept="image/*,video/*" hidden></label><button class="att" data-a="gifp" style="font-size:13px;font-weight:800">GIF</button><input id="msg" placeholder="iMessage" autocomplete="off" value="${esc(S.draft||"")}"><button data-a="send">↑</button></div>`}
+function contactsView(back){return head("Contacts",back)+`<div class="body"><input id="cu" placeholder="Add by username" autocapitalize="off"><div class="err">${esc(S.err)}</div><button class="btn" data-a="addc">Add contact</button>${S.contacts.sort().map(c=>`<div class="row">${avt(c)}<div class="grow"><b>${nm(c)}</b></div><button class="btn s" data-a="chat" data-v="${esc(c)}">Message</button><button class="btn s g" data-a="delc" data-v="${esc(c)}">✕</button></div>`).join("")}</div>`}
+function adminPanel(){const BL=[["t","Verified"],["pv","Purple"],["cc","Creator"],["mod","Mod"],["pol","Politics"],["own","Owner"],["cr","Crown"]].filter(x=>x[0]!=="pv"||S.me==="owner");
+  return `${S.req.length?`<h4>Verification requests</h4>${S.req.map(r=>`<div class="row"><div class="grow">${nm(r.user)}</div><button class="btn s" data-a="rapp" data-v="${esc(r.user)}">Approve</button><button class="btn s g" data-a="rden" data-v="${esc(r.user)}">Deny</button></div>`).join("")}`:""}
+<h4>Followers</h4><input id="fu" placeholder="username (blank = yourself)" autocapitalize="off"><input id="fa" type="number" placeholder="amount"><div style="display:flex;gap:6px"><button class="btn s" data-a="fadd">Add followers</button><button class="btn s g" data-a="fset">Set followers</button></div><div class="mut">${esc(S.fmsg)}</div>
+<h4>Economy</h4><input id="mu" placeholder="username (blank = yourself)" autocapitalize="off"><input id="ma" type="number" placeholder="amount"><div style="display:flex;gap:6px"><button class="btn s" data-a="mgive">Give money</button><button class="btn s g" data-a="mset">Set balance</button></div><div class="mut">${esc(S.emsg)} Your balance: $${fm(S.bal)}</div>
+<h4>Badges</h4><input id="vu" placeholder="username" autocapitalize="off"><div class="err">${esc(S.err)}</div><div style="display:flex;gap:6px;flex-wrap:wrap">${BL.map(([f,l])=>`<button class="btn s g" data-a="bg" data-v="|${f}">${IC[f]} ${l}</button>`).join("")}</div>${S.me==="owner"?"":`<div class="mut">The purple badge can only be given by the owner account.</div>`}${Object.keys(S.ver).sort().map(u=>`<div class="row" style="flex-wrap:wrap"><div class="grow">${nm(u)}</div>${BL.map(([f])=>`<button class="btn s ${S.ver[u][f]?"":"g"}" data-a="bg" data-v="${esc(u)}|${f}">${IC[f]}</button>`).join("")}</div>`).join("")}`}
+const SROWS=[["profile","👤","#0a84ff","Profile & display name"],["wallpaper","🖼️","#bf5af2","Wallpaper"],["appearance","🌓","#1c1c1e","Appearance"],["home","📱","#30d158","Home screen"],["apps","📲","#ff9f0a","Apps"],["storage","💾","#8e8e93","Storage"],["admin","🛡️","#ff453a","Admin panel"],["check","🩺","#64d2ff","Setup check"],["about","ℹ️","#636366","About"]];
+const sList=()=>{const q=(S.ssq||"").toLowerCase();return SROWS.filter(r=>(r[0]!=="admin"||ADMINS.includes(S.me))&&r[3].toLowerCase().includes(q)).map(r=>`<button class="row" data-a="spg" data-v="${r[0]}"><div class="av" style="background:${r[2]};border-radius:9px;width:32px;height:32px;font-size:17px">${r[1]}</div><div class="grow">${r[3]}</div><span class="mut">›</span></button>`).join("")||`<div class="mut" style="padding:12px">No results.</div>`};
+const SWT=(k,on)=>`<button class="sw2 ${on?"on":""}" data-a="pref" data-v="${k}"><i></i></button>`;
+function settings(back){const p=S.sub||"",L=`<button data-a="sback">‹ Settings</button>`;
+  if(!p)return head("Settings",back)+`<div class="body"><input id="ssq" placeholder="🔍 Search settings" value="${esc(S.ssq||"")}"><button class="row" data-a="spg" data-v="profile" style="padding:14px 0">${avt(S.me||"?","width:56px;height:56px;font-size:24px")}<div class="grow"><b style="font-size:17px">${S.me?nm(S.me):"Not signed in"}</b><div class="mut">${S.me?"@"+esc(S.me)+" · $"+fm(S.bal):"Sign in through Messages"}</div></div><span class="mut">›</span></button><div class="sgrp" id="slist">${sList()}</div><button class="btn g" data-a="lock">Lock phone</button>${S.me?`<button class="btn g" data-a="out">Sign out</button>`:""}</div>`;
+  if(p==="profile"){const b=S.ver[S.me]||{},N={t:"Verified",pv:"Verified by Owner",cc:"Creator",mod:"Moderator",pol:"Politics",own:"Owner",cr:"Crown"},has=S.pf[S.me]&&S.pf[S.me].avatar,own=ADMINS.includes(S.me),keys=["t","pv","cc","mod","pol","own","cr"].filter(f=>b[f]||(f==="own"&&own));
+    return head("Profile",L)+`<div class="body" style="text-align:center">${S.me?`${avt(S.me,"width:96px;height:96px;font-size:40px;margin:10px auto")}<div style="font-size:20px;font-weight:700">${nm(S.me)}</div><div class="mut">@${esc(S.me)} · ${tkn(FOL(S.me))} followers</div><h4 style="text-align:left">Display name</h4><input id="dnm" maxlength="24" placeholder="${esc(S.me)}" value="${esc((S.pf[S.me]&&S.pf[S.me].name)||"")}"><button class="btn" data-a="dnsave">Save display name</button><div class="mut">${esc(S.dmsg)}</div><label class="btn g" style="display:block">Change photo<input type="file" id="avin" accept="image/*" hidden></label>${has?`<button class="btn g" data-a="avrm">Remove photo</button>`:""}<div class="err">${esc(S.err)}</div><h4 style="text-align:left">Your badges</h4><div style="text-align:left">${keys.map(f=>`<div class="row">${IC[f]}<div class="grow">${N[f]}</div></div>`).join("")||`<span class="mut">None yet. You can request verification in Chirper.</span>`}</div>`:`<p class="mut">Sign in through Messages first.</p>`}</div>`}
+  if(p==="wallpaper"){const w=S.wp;return head("Wallpaper",L)+`<div class="body"><div id="wpp" style="height:150px;border-radius:16px"></div><h4>Presets</h4><div class="sw">${PRESETS.map((q,i)=>`<button data-a="preset" data-v="${i}" style="background:linear-gradient(${q[2]}deg,${q[0]},${q[1]})"></button>`).join("")}</div><h4>Custom gradient</h4><div style="display:flex;gap:10px;align-items:center"><input type="color" id="c1" value="${w.c1||"#4facfe"}" data-a="wp"><input type="color" id="c2" value="${w.c2||"#00f2fe"}" data-a="wp"></div><div class="mut">Angle</div><input type="range" id="ang" min="0" max="360" value="${w.a||160}" data-a="wp"><h4>From your photos</h4><div class="pg">${S.ph.filter(x=>!x.type.startsWith("video")).map(x=>`<img src="${x.u}" data-a="wpph" data-v="${x.id}">`).join("")||`<span class="mut">No photos yet. Add some in the Photos app.</span>`}</div><h4>Upload an image</h4><input type="file" id="img" accept="image/*"><button class="btn g" data-a="wpreset">Reset wallpaper</button></div>`}
+  if(p==="appearance")return head("Appearance",L)+`<div class="body"><div class="sgrp">${[["auto","Automatic"],["light","Light"],["dark","Dark"]].map(([k,l])=>`<button class="row" data-a="theme" data-v="${k}"><div class="grow">${l}</div><b>${ls.g("mp_theme","auto")===k?"✓":""}</b></button>`).join("")}</div></div>`;
+  if(p==="home")return head("Home screen",L)+`<div class="body"><div class="sgrp"><div class="row"><div class="grow">Show clock widget</div>${SWT("widget",S.pref.widget)}</div><div class="row"><div class="grow">24-hour time</div>${SWT("h24",S.pref.h24)}</div></div></div>`;
+  if(p==="apps")return head("Apps",L)+`<div class="body"><h4>Built in</h4>${["💬 Messages","👤 Contacts","🖼️ Photos","⚙️ Settings","🅰️ App Store"].map(x=>`<div class="row">${x}</div>`).join("")}<h4>Installed</h4>${S.inst.map(id=>STORE.find(a=>a.id===id)).filter(Boolean).map(a=>`<div class="row"><div class="av" style="background:${a.c};border-radius:9px;width:32px;height:32px;font-size:17px">${a.e}</div><div class="grow">${a.n}</div><button class="btn s g" data-a="uninst" data-v="${a.id}">Remove</button></div>`).join("")||`<span class="mut">Nothing installed. Visit the App Store.</span>`}</div>`;
+  if(p==="storage")return head("Storage",L)+`<div class="body"><div class="sgrp"><div class="row"><div class="grow">Photos & videos</div><span class="mut">${S.ph.length}</span></div><div class="row"><div class="grow">Installed apps</div><span class="mut">${S.inst.length}</span></div><div class="row"><div class="grow">Amazin orders</div><span class="mut">${ls.g("mp_orders",[]).length}</span></div></div><button class="btn g" data-a="reset">Reset this phone’s saved data</button><p class="mut">Clears wallpaper, installed apps, notes and orders on this device. Your account and messages stay.</p></div>`;
+  if(p==="admin"&&ADMINS.includes(S.me))return head("Admin",L)+`<div class="body">${adminControl()}${adminTools()}${adminPanel()}</div>`;
+  if(p==="check")return head("Setup check",L)+`<div class="body"><p class="mut">Tests whether each part of your Firebase database is reachable. A ✗ with “permission-denied” means the latest rules from the README haven’t been published.</p><button class="btn" data-a="chk">Run checks</button>${S.chk.map(([n,r])=>`<div class="row"><div class="grow">${n}</div><b style="color:${r==="ok"?"#30d158":"#ff453a"}">${r==="ok"?"✓":"✗ "+esc(r)}</b></div>`).join("")}</div>`;
+  return head("About",L)+`<div class="body"><div class="row"><div class="grow">MyPhone</div><span class="mut">web phone</span></div><div class="row"><div class="grow">Backend</div><span class="mut">${db?"Firebase connected":"not connected"}</span></div><div class="row"><div class="grow">Signed in as</div><span class="mut">${S.me?"@"+esc(S.me):"nobody"}</span></div></div>`}
+const fmt=()=>{const t=S.sw.t+(S.sw.on?Date.now()-S.sw.s:0);return (t/1000).toFixed(2)+"s"};
+function setWp(w){S.wp=w;ls.s("mp_wp",w);$("#scr").style.background=bg(w);const p=$("#wpp");if(p)p.style.background=bg(w)}
+function evalCalc(){try{if(!/^[0-9+\-*/.() ]+$/.test(S.calc))return;const r=Function(`"use strict";return(${S.calc})`)();S.calc=String(+(+r).toPrecision(12))}catch(e){S.calc="Error"}}
+function updChat(){const c=$("#chatbox");if(c&&S.app==="messages"&&S.sub){c.innerHTML=chatBody();c.scrollTop=c.scrollHeight}else if(S.app==="messages"&&!S.sub||S.app==="contacts")render()}
+async function act(a,v){
+  S.err="";if(a!=="clr")S.clr=false;if(a!=="pclear")S.cfm="";
+  if(a==="key"){S.pin=v==="⌫"?S.pin.slice(0,-1):(S.pin+v).slice(0,5);if(S.pin.length===5){if(S.pin===PASS){S.locked=false;S.pin="";render()}else{render();const d=$("#dots");d.classList.add("shake");S.pin="";setTimeout(render,400)}}else render();return}
+  if(a==="home"){S.app=null;S.sub=null;render()}
+  else if(a==="open"){S.app=v;S.sub=null;if(v==="photos")await loadPh();if(v==="wallet")loadRich();if(v==="hacker"&&!S.hk.t)hkTargets();render()}
+  else if(a==="lock"){S.locked=true;S.app=null;render()}
+  else if(a==="inst")dlStart(v);
+  else if(a==="uninst"){S.inst=S.inst.filter(x=>x!==v);ls.s("mp_inst",S.inst);render()}
+  else if(a==="stab"){S.stab=v;render()}
+  else if(a==="preset"){const p=PRESETS[v];setWp({t:"g",c1:p[0],c2:p[1],a:p[2]});render()}
+  else if(a==="wpreset"){setWp({t:"g",c1:"#4facfe",c2:"#00f2fe",a:160});render()}
+  else if(a==="chat"){S.app="messages";S.sub=v;render()}
+  else if(a==="chats"){S.sub=null;render()}
+  else if(a==="ck"){if(v==="C")S.calc="";else if(v==="⌫")S.calc=S.calc.slice(0,-1);else if(v==="=")evalCalc();else S.calc=(S.calc==="Error"?"":S.calc)+v;render()}
+  else if(a==="swgo"){if(S.sw.on){S.sw.t+=Date.now()-S.sw.s;S.sw.on=false;clearInterval(swT)}else{S.sw.on=true;S.sw.s=Date.now();swT=setInterval(()=>{const d=$("#swd");d?d.textContent=fmt():clearInterval(swT)},50)}render()}
+  else if(a==="swreset"){S.sw={on:false,t:0,s:0};clearInterval(swT);render()}
+  else if(a==="signup"||a==="login"){
+    const u=($("#un").value||"").trim().toLowerCase(),p=$("#pw").value||"";
+    if(!/^[a-z0-9_]{3,16}$/.test(u)){S.err="Username: 3–16 letters, numbers or underscores.";return render()}
+    if(p.length<6){S.err="Password must be 6+ characters.";return render()}
+    try{const em=u+"@myphone.app";
+      if(a==="signup"){const c=await auth.createUserWithEmailAndPassword(em,p);uid=c.user.uid;await db.doc("accounts/"+u).set({uid,created:Date.now()})}
+      else{const c=await auth.signInWithEmailAndPassword(em,p);uid=c.user.uid}
+      S.me=u;subs()}catch(e){S.err=a==="signup"?"Couldn’t sign up. That username may be taken.":"Wrong username or password."}
+    render()}
+  else if(a==="addc"){
+    const u=($("#cu").value||"").trim().toLowerCase();
+    if(!u||u===S.me){S.err="Enter someone else’s username.";return render()}
+    try{const d=await db.doc("accounts/"+u).get();const ex=typeof d.exists==="function"?d.exists():d.exists;
+      if(!ex){S.err="No user called “"+u+"”.";return render()}
+      await db.doc("contacts/"+S.me+"__"+u).set({owner:S.me,user:u})}catch(e){S.err="Couldn’t add contact."}
+    render()}
+  else if(a==="delc"){try{await db.doc("contacts/"+S.me+"__"+v).delete()}catch(e){}}
+  else if(a==="delm"){try{await db.doc(mcol()+"/"+v).delete()}catch(e){}}
+  else if(a==="clr"){if(!S.clr){S.clr=true;render()}else{S.clr=false;try{const b=db.batch();thread().forEach(x=>b.delete(db.doc(mcol()+"/"+x.id)));await b.commit()}catch(e){}render()}}
+  else if(a==="tklike"){tkLike(+v)}
+  else if(a==="gnew"){gnew();gdraw()}
+  else if(a==="pview"){S.sub=v;render()}
+  else if(a==="pclose"){S.sub=null;render()}
+  else if(a==="pdel"){try{await tx("readwrite",q=>q.delete(+v))}catch(e){}S.sub=null;await loadPh();render()}
+  else if(a==="pset"){const p=S.ph.find(x=>x.id==v);if(p){setWp({t:"i",u:await toData(p.blob,900,.8)});S.app=null;S.sub=null;render()}}
+  else if(a==="bg"){const [u0,f]=v.split("|"),u=(u0||($("#vu")?$("#vu").value:"")||"").trim().toLowerCase();if(!u){S.err="Enter a username.";return render()}
+    try{const {id,...cur}=S.ver[u]||{};if(!S.ver[u]){const d=await db.doc("accounts/"+u).get();if(!d.exists){S.err="No account called “"+u+"”.";return render()}}
+      const nw={...cur,[f]:!cur[f]};if(f==="pv"&&S.me!=="owner")return;if(!["t","pv","cc","mod","pol","own","cr"].some(k=>nw[k]))await db.doc("verified/"+u).delete();else await db.doc("verified/"+u).set(nw)}catch(e){S.err="Permission denied. Publish the updated Firestore rules."}render()}
+  else if(a==="gifp"){const m=$("#msg");if(m)S.draft=m.value;S.gp=!S.gp;render()}
+  else if(a==="gif"){S.gp=false;try{await sendM({media:gifData(+v),mt:"gif"})}catch(e){S.err=ERR(e)}render()}
+  else if(a==="spg"){S.sub=v;if(v==="wallpaper"||v==="storage")await loadPh();render()}
+  else if(a==="sback"){S.sub=null;render()}
+  else if(a==="out"){try{await auth.signOut()}catch(e){}location.reload()}
+  else if(a==="avrm"){try{await db.doc("profiles/"+S.me).set({avatar:""},{merge:true})}catch(e){S.err=ERR(e)}render()}
+  else if(a==="wpph"){const p=S.ph.find(x=>x.id==v);if(p){setWp({t:"i",u:await toData(p.blob,900,.8)});render()}}
+  else if(a==="chk"){await runChecks()}
+  else if(a==="bonus"){if(S.bBusy)return;const left=864e5-(Date.now()-(S.bonus||0));
+    if(left>0){S.emsg="Come back in "+Math.floor(left/36e5)+"h "+Math.floor(left%36e5/6e4)+"m for your next bonus.";return render()}
+    S.bBusy=1;S.bonus=Date.now();try{await pay(S.cfg.bonus||500,"Daily bonus");S.emsg="+$"+fm(S.cfg.bonus||500)+" claimed!"}finally{S.bBusy=0}render()}
+  else if(a==="cgame"){S.cg=v;render()}
+  else if(a==="bet"){S.bet=v==="all"?"all":+v;if(!S.busy)render()}
+  else if(a==="spin")spin();
+  else if(a==="flip")flip(v);
+  else if(a==="rou")rou(v);
+  else if(a==="hack")hack(+v);
+  else if(a==="mgive"||a==="mset"){if(!ADMINS.includes(S.me))return;const u=($("#mu").value||"").trim().toLowerCase()||S.me,n=Math.round(+$("#ma").value);
+    if(!isFinite(n)||$("#ma").value===""||(a==="mset"&&n<0)){S.emsg="Enter a valid amount.";return render()}
+    try{if(u!==S.me&&!(await db.doc("accounts/"+u).get()).exists){S.emsg="No account called “"+u+"”.";return render()}
+      const d=await db.doc("wallets/"+u).get(),cur=d.exists?d.data().bal:1000,nb=a==="mgive"?Math.max(0,cur+n):n,old=d.exists?(d.data().log||[]):[];
+      await db.doc("wallets/"+u).set({bal:nb,log:[{d:nb-cur,l:a==="mgive"?"Admin gift":"Admin adjustment",ts:Date.now()},...old].slice(0,20)},{merge:true});S.emsg="Done: @"+u+" now has $"+fm(nb)+"."}catch(e){S.emsg=ERR(e)}render()}
+  else if(a==="g2"){if(G2&&!G2.over)g2mv(+v)}
+  else if(a==="g2r"){g2n();g2draw()}
+  else if(a==="snd"){if(SN)snDir(+v)}
+  else if(a==="snr"){snNew()}
+  else if(a==="tt"){ttMove(+v)}
+  else if(a==="ttr"){TT=null;render()}
+  else if(a==="mm"){mmTap(+v)}
+  else if(a==="mmr"){mmNew();render()}
+  else if(a==="pref"){S.pref[v]=!S.pref[v];ls.s("mp_pref",S.pref);render()}
+  else if(a==="theme"){ls.s("mp_theme",v);applyTheme();render()}
+  else if(a==="reset"){Object.keys(localStorage).filter(k=>k.startsWith("mp_")).forEach(k=>localStorage.removeItem(k));location.reload()}
+  else if(a==="dnsave"){const n=($("#dnm").value||"").trim().slice(0,24);try{await db.doc("profiles/"+S.me).set({name:n},{merge:true});S.dmsg=n?"Saved.":"Display name cleared."}catch(e){S.dmsg=ERR(e)}render()}
+  else if(a==="fadd"||a==="fset"){if(!ADMINS.includes(S.me))return;const u=($("#fu").value||"").trim().toLowerCase()||S.me,n=Math.round(+$("#fa").value);
+    if($("#fa").value===""||!isFinite(n)||(a==="fset"&&n<0)){S.fmsg="Enter a valid amount.";return render()}
+    try{if(u!==S.me&&!(await db.doc("accounts/"+u).get()).exists){S.fmsg="No account called “"+u+"”.";return render()}
+      const nv=a==="fadd"?Math.max(0,FOL(u)+n):n;await db.doc("stats/"+u).set({fol:nv});S.fs[u]={fol:nv};S.fmsg="Done: @"+u+" has "+fm(nv)+" followers."}catch(e){S.fmsg=ERR(e)}render()}
+  else if(a==="azt"){S.az.tab=v;S.az.msg="";render()}
+  else if(a==="azcat"){S.az.cat=v;render()}
+  else if(a==="aza"){S.cart[v]=(S.cart[v]||0)+1;if(S.az.tab==="cart")render();else{const t=document.querySelector('[data-a="azt"][data-v="cart"]');if(t)t.textContent="Cart ("+azCount()+")"}}
+  else if(a==="azm"){S.cart[v]=Math.max(0,(S.cart[v]||0)-1);render()}
+  else if(a==="azbuy"){const E=Object.entries(S.cart).filter(([,q])=>q>0),T=E.reduce((x,[i,q])=>x+AZ[i][2]*q,0);if(!E.length)return;
+    if(T>S.bal){S.az.msg="Not enough money! You need $"+fm(T-S.bal)+" more.";return render()}
+    await pay(-T,"Amazin order");const O=ls.g("mp_orders",[]);O.unshift({ts:Date.now(),total:T,items:E.map(([i,q])=>({e:AZ[i][0],n:AZ[i][1],q}))});ls.s("mp_orders",O.slice(0,30));S.cart={};S.az.tab="orders";render()}
+  else if(a==="tpick"){S.sx.to=v;render()}
+  else if(a==="tsend"){const u=($("#tu").value||"").trim().toLowerCase(),amt=Math.round(+$("#ta").value),note=($("#tn").value||"").trim().slice(0,60);S.sx={to:u,amt:$("#ta").value,note,msg:""};
+    if(!u||u===S.me){S.sx.msg="Enter another user’s username.";return render()}
+    if(!(amt>0)){S.sx.msg="Enter an amount.";return render()}
+    if(amt>S.bal){S.sx.msg="Not enough money.";return render()}
+    try{if(!(await db.doc("accounts/"+u).get()).exists){S.sx.msg="No account called “"+u+"”.";return render()}
+      await db.collection("transfers").add({from:S.me,to:u,amt,note,ts:Date.now(),claimed:false});await pay(-amt,"Sent to @"+u);S.sx={to:"",amt:"",note:"",msg:"Sent $"+fm(amt)+" to @"+u+" ✓"}}catch(e){S.sx.msg=ERR(e)}render()}
+  else if(a==="adload"){await adLoad();render()}
+  else if(a==="anset"){if(!ADMINS.includes(S.me))return;const t=($("#an").value||"").trim().slice(0,140);if(!t){S.ad.msg="Type a message first.";return render()}try{await db.doc("announce/current").set({text:t,ts:Date.now(),by:S.me});S.ad.msg="Broadcast sent."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="anclr"){if(!ADMINS.includes(S.me))return;try{await db.doc("announce/current").delete();S.ad.msg="Broadcast cleared."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="annx"){if(S.ann)ls.s("mp_ann",S.ann.ts);render()}
+  else if(a==="bmute"||a==="bunmute"){if(!ADMINS.includes(S.me))return;const u=(v||($("#bu")?$("#bu").value:"")||"").trim().toLowerCase();if(!u){S.ad.msg="Enter a username.";return render()}
+    if(ADMINS.includes(u)){S.ad.msg="Admins can’t be muted.";return render()}
+    try{if(a==="bmute"){if(!(await db.doc("accounts/"+u).get()).exists){S.ad.msg="No account called “"+u+"”.";return render()}await db.doc("bans/"+u).set({by:S.me,ts:Date.now()});S.ad.msg="@"+u+" is muted."}else{await db.doc("bans/"+u).delete();S.ad.msg="@"+u+" can post again."}}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="airdrop"){if(!ADMINS.includes(S.me))return;const n=Math.round(+$("#aa").value);if(!(n>0)){S.ad.msg="Enter an amount above 0.";return render()}
+    try{const ac=await db.collection("accounts").limit(300).get();for(const d of ac.docs)await wAdj(d.id,b=>b+n,"Admin airdrop");S.ad.msg="Gave $"+fm(n)+" to "+ac.size+" accounts.";await adLoad()}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="ug"||a==="ur"){if(!ADMINS.includes(S.me))return;try{await wAdj(v,a==="ug"?b=>b+1000:()=>1000,a==="ug"?"Admin gift":"Admin reset");S.ad.msg=a==="ug"?"Gave @"+v+" $1,000.":"Reset @"+v+" to $1,000.";await adLoad()}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="pclear"){if(!ADMINS.includes(S.me))return;if(S.cfm!=="pclear"){S.cfm="pclear";return render()}S.cfm="";
+    try{const q=await db.collection("posts").limit(400).get(),b=db.batch();q.docs.forEach(d=>b.delete(d.ref));await b.commit();S.ad.msg="Deleted "+q.size+" posts."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="alx"){if(S.al)ls.s("mp_al",S.al.ts);render()}
+  else if(a==="cfgl"){if(!ADMINS.includes(S.me))return;const on=v==="1";try{await db.doc("config/app").set({lock:on,lmsg:($("#lm").value||"").trim().slice(0,100)},{merge:true});alog(on?"Maintenance mode ON":"Maintenance mode OFF");S.ad.msg=on?"Everyone except admins is locked out.":"Phone unlocked for everyone."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="cfgm"){if(!ADMINS.includes(S.me))return;try{await db.doc("config/app").set({mult:+v},{merge:true});alog("Earnings multiplier x"+v);S.ad.msg="Earnings multiplier is now x"+v+"."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="cfgb"){if(!ADMINS.includes(S.me))return;const n=Math.round(+$("#bn").value);if(!(n>0)){S.ad.msg="Enter an amount above 0.";return render()}try{await db.doc("config/app").set({bonus:n},{merge:true});alog("Daily bonus set to $"+fm(n));S.ad.msg="Daily bonus is now $"+fm(n)+"."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="cfgo"){if(!ADMINS.includes(S.me))return;const was=(S.cfg.off||{})[v];try{await db.doc("config/app").set({off:{[v]:!was}},{merge:true});alog((was?"Enabled ":"Disabled ")+v);S.ad.msg=(was?"Enabled ":"Disabled ")+v+"."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="alsend"){if(!ADMINS.includes(S.me))return;const u=($("#alu").value||"").trim().toLowerCase(),t=($("#alt").value||"").trim().slice(0,120);if(!u||!t){S.ad.msg="Enter a username and a message.";return render()}
+    try{if(!(await db.doc("accounts/"+u).get()).exists){S.ad.msg="No account called “"+u+"”.";return render()}await db.doc("alerts/"+u).set({text:t,ts:Date.now(),by:S.me});alog("Alert sent to @"+u);S.ad.msg="Alert sent to @"+u+"."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="purge"){if(!ADMINS.includes(S.me))return;const u=($("#pgu").value||"").trim().toLowerCase();if(!u){S.ad.msg="Enter a username.";return render()}
+    try{const q=await db.collection("posts").where("user","==",u).limit(400).get(),b=db.batch();q.docs.forEach(d=>b.delete(d.ref));await b.commit();alog("Purged "+q.size+" posts by @"+u);S.ad.msg="Deleted "+q.size+" posts by @"+u+"."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="bsus"){if(!ADMINS.includes(S.me))return;const u=($("#bu")?$("#bu").value:"").trim().toLowerCase();if(!u||ADMINS.includes(u)){S.ad.msg=u?"Admins can’t be suspended.":"Enter a username.";return render()}
+    try{if(!(await db.doc("accounts/"+u).get()).exists){S.ad.msg="No account called “"+u+"”.";return render()}await db.doc("bans/"+u).set({by:S.me,ts:Date.now(),s:true});alog("Suspended @"+u);S.ad.msg="@"+u+" is suspended."}catch(e){S.ad.msg=ERR(e)}render()}
+  else if(a==="gnewv"){S.ng={name:"",sel:[]};S.sub="+";render()}
+  else if(a==="gsel"){const i=S.ng.sel.indexOf(v);i<0?S.ng.sel.push(v):S.ng.sel.splice(i,1);render()}
+  else if(a==="gmk"){const n=S.ng.name.trim();if(!n||!S.ng.sel.length){S.err="Add a name and at least one member.";return render()}
+    try{const us=[uid];for(const c of S.ng.sel)us.push((await db.doc("accounts/"+c).get()).data().uid);
+      const r=await db.collection("groups").add({name:n.slice(0,30),members:[S.me,...S.ng.sel],uids:us,owner:S.me,ts:Date.now()});S.groups[r.id]={id:r.id,name:n.slice(0,30),members:[S.me,...S.ng.sel],uids:us,owner:S.me};S.sub="g:"+r.id}catch(e){S.err=ERR(e)}render()}
+  else if(a==="ppost"){const i=$("#ptx"),t=i.value.trim();if(!t)return;const re=S.cx.cp&&S.cx.cp.re;if(re&&re[0]==="~"){S.bp.push({id:"~l"+Date.now(),user:S.me,text:t.slice(0,280),ts:Date.now(),likes:[],reposts:[],re});S.cx.cp=null;return render()}try{await db.collection("posts").add({user:S.me,text:t.slice(0,280),ts:Date.now(),likes:[],reposts:[],...(re?{re}:{})});S.cx.cp=null}catch(e){S.err=ERR(e)}render()}
+  else if(a==="xcp"){S.cx.cp={};render()}
+  else if(a==="xcx"){S.cx.cp=null;render()}
+  else if(a==="xrep"){const p=S.posts.concat(S.bp).find(x=>x.id===v);if(p){S.cx.cp={re:v,u:p.user};render()}}
+  else if(a==="xth"){S.cx.th=v;render()}
+  else if(a==="xthx"){S.cx.th=null;render()}
+  else if(a==="xtab"){S.cx.tab=v;S.cx.th=null;render()}
+  else if(a==="xfeed"){S.cx.feed=v;render()}
+  else if(a==="xrp"){if(v[0]==="~")return locTog(v,"reposts");const p=S.posts.find(x=>x.id===v);if(p){const F=firebase.firestore.FieldValue;try{await db.doc("posts/"+v).update({reposts:(p.reposts||[]).includes(S.me)?F.arrayRemove(S.me):F.arrayUnion(S.me)})}catch(e){}}}
+  else if(a==="xreq"){try{await db.doc("requests/"+S.me).set({user:S.me,ts:Date.now()});S.myreq=true}catch(e){}render()}
+  else if(a==="rapp"){try{const {id,...cur}=S.ver[v]||{};await db.doc("verified/"+v).set({...cur,t:true});await db.doc("requests/"+v).delete()}catch(e){S.err="Permission denied. Publish the updated Firestore rules."}render()}
+  else if(a==="rden"){try{await db.doc("requests/"+v).delete()}catch(e){}}
+  else if(a==="plike"){if(v[0]==="~")return locTog(v,"likes");const p=S.posts.find(x=>x.id===v);if(p){const F=firebase.firestore.FieldValue;try{await db.doc("posts/"+v).update({likes:(p.likes||[]).includes(S.me)?F.arrayRemove(S.me):F.arrayUnion(S.me)})}catch(e){}}}
+  else if(a==="pdl"){if(v[0]==="~"){S.bp=S.bp.filter(x=>x.id!==v&&x.re!==v);const f=$("#pf");if(f)f.innerHTML=chList();return}try{await db.doc("posts/"+v).delete()}catch(e){}}
+  else if(a==="send"){const i=$("#msg"),t=i.value.trim();if(!t)return;i.value="";S.draft="";try{await sendM({text:t.slice(0,1000)})}catch(e){i.value=t;const er=$("#terr");if(er)er.textContent=ERR(e)}}
+}
+$("#scr").addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t||t.tagName==="INPUT")return;act(t.dataset.a,t.dataset.v)});
+$("#scr").addEventListener("input",e=>{if(e.target.dataset.a==="wp")setWp({t:"g",c1:$("#c1").value,c2:$("#c2").value,a:+$("#ang").value});if(e.target.id==="note")ls.s("mp_note",e.target.value)});
+$("#scr").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="msg")act("send");if(e.key==="Enter"&&e.target.id==="cu")act("addc");if(e.key==="Enter"&&e.target.id==="un")act("signup")});
+$("#scr").addEventListener("change",e=>{if(e.target.id!=="img"||!e.target.files[0])return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);setWp({t:"i",u:c.toDataURL("image/jpeg",.8)})};im.src=r.result};r.readAsDataURL(e.target.files[0])});
+const TICK='<svg class="vt" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const pts=(n,a,b)=>[...Array(n*2)].map((_,i)=>{const r=i%2?b:a,t=Math.PI*i/n;return (12+r*Math.sin(t)).toFixed(2)+","+(12-r*Math.cos(t)).toFixed(2)}).join(" ");
+const seal=(g,inner)=>`<svg class="vt" viewBox="0 0 24 24"><polygon points="${pts(9,11,9.6)}" fill="url(#${g})" stroke="url(#${g})" stroke-width="1.4" stroke-linejoin="round"/>${inner}</svg>`;
+const BV=seal("gv",'<path d="M7.3 12.4l3.1 3.1 6.2-6.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>');
+const BC=seal("gc2",'<path d="M12 5.8l1.7 4.5 4.5 1.7-4.5 1.7L12 18.2l-1.7-4.5L5.8 12l4.5-1.7z" fill="#fff"/>');
+const BM='<svg class="vt" viewBox="0 0 24 24"><path d="M12 2.5l8 3.2v5.6c0 5-3.3 8.6-8 10.2-4.7-1.6-8-5.2-8-10.2V5.7z" fill="url(#gm)"/><path d="M8.2 12.2l2.7 2.7 5-5.4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CROWN='<svg class="vt" viewBox="0 0 24 24"><path d="M2.5 8l4.8 4.2L12 4.5l4.7 7.7L21.5 8 19.8 19H4.2z" fill="url(#gk)" stroke="#9a6200" stroke-width="1" stroke-linejoin="round"/><circle cx="2.5" cy="8" r="1.7" fill="#ffd84d"/><circle cx="12" cy="4.5" r="1.7" fill="#ffd84d"/><circle cx="21.5" cy="8" r="1.7" fill="#ffd84d"/><rect x="4.5" y="16.2" width="15" height="1.6" fill="#b87400" opacity=".5"/></svg>';
+const BP=seal("gp",'<path d="M7.3 12.4l3.1 3.1 6.2-6.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>');
+const PL='<span class="tg" style="background:#1f3a8a">📜 POLITICS</span>',OW='<span class="tg" style="background:linear-gradient(135deg,#f0a800,#ff453a)">OWNER</span>';
+const IC={t:BV,pv:BP,cc:BC,mod:BM,pol:PL,own:OW,cr:CROWN};
+const dn=u=>(S.pf[u]&&S.pf[u].name)||u;
+const nm=u=>{const b=S.ver[u]||{};return esc(dn(u))+(b.t?BV:"")+(b.pv?BP:"")+(b.cc?BC:"")+(b.mod?BM:"")+(b.pol?PL:"")+(b.cr?CROWN:"")+(b.own||ADMINS.includes(u)?OW:"")};
+const fmtT=t=>esc(t).replace(/#\w+/g,m=>`<span style="color:#1d9bf0">${m}</span>`).replace(/:crown:/g,CROWN);
+const rd=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.readAsDataURL(f)});
+const toData=(f,max,q)=>new Promise(async r=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",q))};im.src=await rd(f)});
+const idb=()=>new Promise((r,j)=>{const q=indexedDB.open("mp",1);q.onupgradeneeded=()=>q.result.createObjectStore("ph",{keyPath:"id"});q.onsuccess=()=>r(q.result);q.onerror=()=>j()});
+const tx=async(m,f)=>{const d=await idb();return new Promise((r,j)=>{const q=f(d.transaction("ph",m).objectStore("ph"));q.onsuccess=()=>r(q.result);q.onerror=()=>j()})};
+async function loadPh(){try{S.ph=(await tx("readonly",q=>q.getAll())).sort((a,b)=>b.id-a.id).map(p=>({...p,u:URL.createObjectURL(p.blob)}))}catch(e){S.ph=[]}}
+function pview(){const p=S.ph.find(x=>x.id==S.sub);if(!p)return head("Photos",`<button data-a="pclose">‹ Back</button>`);const v=p.type.startsWith("video");return head("Photo",`<button data-a="pclose">‹ Back</button>`,`<button data-a="pdel" data-v="${p.id}">Delete</button>`)+`<div class="body" style="text-align:center">${v?`<video controls playsinline src="${p.u}" style="max-width:100%"></video>`:`<img src="${p.u}" style="max-width:100%">`}${v?"":`<button class="btn" data-a="pset" data-v="${p.id}">Set as wallpaper</button>`}</div>`}
+$("#scr").addEventListener("change",async e=>{const t=e.target,f=t.files&&t.files[0];
+  if(t.id==="phin"&&f){for(const [i,x] of [...t.files].entries())try{await tx("readwrite",q=>q.put({id:Date.now()+i,type:x.type,blob:x}))}catch(_){}t.value="";await loadPh();render()}
+  if(t.id==="avin"&&f){t.value="";try{await db.doc("profiles/"+S.me).set({avatar:await toSq(f,96)},{merge:true})}catch(e){S.err=ERR(e)}render()}
+  if(t.id==="att"&&f){t.value="";const er=$("#terr");er.textContent="";try{const mt=f.type.startsWith("video")?"video":"image";let d;
+    if(mt==="image"&&f.type!=="image/gif")d=await toData(f,900,.72);else{if(f.size>600*1024){er.textContent="GIFs and videos must be under 600 KB to send.";return}d=await rd(f)}
+    if(d.length>950000){er.textContent="That file is too big to send.";return}
+    await sendM({media:d,mt})}catch(x){er.textContent="Couldn’t send that file."}}});
+const SH=[[[1]],[[1,1]],[[1],[1]],[[1,1,1]],[[1],[1],[1]],[[1,1],[1,1]],[[1,1,1],[1,0,0]],[[1,1,1],[0,0,1]],[[1,0],[1,1]],[[1,1],[1,0]],[[1,1,1,1]],[[1],[1],[1],[1]],[[1,1,1],[1,1,1],[1,1,1]],[[0,1],[1,1]],[[1,1],[0,1]]];
+const COL=["#ff453a","#ff9f0a","#ffd60a","#30d158","#64d2ff","#bf5af2"];let G=null;
+function gpieces(){G.p=[0,1,2].map(()=>({s:SH[Math.random()*SH.length|0],c:1+(Math.random()*6|0)}))}
+function gnew(){G={b:Array(64).fill(0),sc:0,best:ls.g("mp_best",0),over:false,p:[]};gpieces()}
+const fits=(s,r,c)=>r>=0&&c>=0&&r+s.length<=8&&c+s[0].length<=8&&s.every((w,i)=>w.every((v,j)=>!v||!G.b[(r+i)*8+c+j]));
+const anyFit=()=>G.p.some(p=>p&&[...Array(64).keys()].some(k=>fits(p.s,k>>3,k&7)));
+function gplace(i,r,c){const p=G.p[i],K=[...Array(8).keys()];p.s.forEach((w,a)=>w.forEach((v,b)=>{if(v)G.b[(r+a)*8+c+b]=p.c}));
+  const rows=K.filter(k=>K.every(j=>G.b[k*8+j])),cols=K.filter(k=>K.every(j=>G.b[j*8+k])),L=rows.length+cols.length;
+  rows.forEach(k=>K.forEach(j=>G.b[k*8+j]=0));cols.forEach(k=>K.forEach(j=>G.b[j*8+k]=0));
+  G.sc+=p.s.flat().filter(Boolean).length+L*L*10;G.p[i]=null;if(G.p.every(x=>!x))gpieces();
+  if(G.sc>G.best){G.best=G.sc;ls.s("mp_best",G.best)}if(!anyFit())G.over=true}
+function gdraw(){const b=$("#gb");if(!b)return;if(!G)gnew();
+  b.innerHTML=G.b.map(v=>`<i${v?` style="background:${COL[v-1]}"`:""}></i>`).join("");
+  $("#gt").innerHTML=G.p.map((p,i)=>p?`<div class="gp" data-i="${i}" style="grid-template-columns:repeat(${p.s[0].length},22px)">${p.s.flat().map(v=>`<i style="background:${v?COL[p.c-1]:"transparent"}"></i>`).join("")}</div>`:`<div class="gp"></div>`).join("");
+  $("#gs").textContent=G.sc;$("#gbst").textContent=G.best;$("#go").style.display=G.over?"flex":"none"}
+document.addEventListener("pointerdown",e=>{const el=e.target.closest(".gp[data-i]");if(!el||!G||G.over)return;const i=+el.dataset.i,p=G.p[i];if(!p)return;e.preventDefault();
+  const st=$("#gb").getBoundingClientRect().width/8,g=document.createElement("div");g.className="gh";g.style.setProperty("--n",p.s[0].length);g.style.setProperty("--s",(st-2)+"px");
+  g.innerHTML=p.s.flat().map(v=>`<i style="background:${v?COL[p.c-1]:"transparent"}"></i>`).join("");document.body.appendChild(g);
+  const pos=ev=>{g.style.left=ev.clientX-g.offsetWidth/2+"px";g.style.top=ev.clientY-g.offsetHeight-50+"px"};pos(e);
+  const up=ev=>{document.removeEventListener("pointermove",pos);document.removeEventListener("pointerup",up);const r=g.getBoundingClientRect(),br=$("#gb").getBoundingClientRect(),c=Math.round((r.left-br.left)/st),w=Math.round((r.top-br.top)/st);g.remove();if(fits(p.s,w,c)){gplace(i,w,c);gdraw()}};
+  document.addEventListener("pointermove",pos);document.addEventListener("pointerup",up)});
+const TN=["dance.with.mia","chef_marco","catchaos","gymbro_jay","pixel.pete","lunar.lila","skate.sam","no.context.clips","fitwithfi","zoo.keeper.zed","brainrot.daily","soft.sunsets"];
+const TC=["POV: you finally nailed it 😭","wait for the end 👀","this took 47 takes","no one asked but here it is","day 112 of doing this daily","trying the viral trend","okay this one’s actually crazy","tell me I’m not the only one"];
+const TH=["#fyp","#viral","#trending","#foryou","#satisfying","#pov","#relatable"],TM=["original sound","chill vibes – lofi beats","Summer Nights (sped up)","trending audio","Late Night Drive – remix"];
+const rnd=a=>a[Math.random()*a.length|0],tri=(v,m)=>{v=((v%(2*m))+2*m)%(2*m);return v>m?2*m-v:v};
+const tkn=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"K":n;
+const TKV=[
+(c,w,h,t,a)=>{c.fillStyle=`hsl(${a.h},60%,10%)`;c.fillRect(0,0,w,h);a.o.forEach(o=>{c.fillStyle=`hsl(${(a.h+o.u+t*30)%360},90%,60%)`;c.beginPath();c.arc(tri(o.x+t*o.vx,w),tri(o.y+t*o.vy,h),o.r,0,7);c.fill()})},
+(c,w,h,t,a)=>{c.fillStyle=`hsl(${a.h},50%,12%)`;c.fillRect(0,0,w,h);for(let k=0;k<6;k++){c.fillStyle=`hsla(${(a.h+k*25)%360},85%,60%,.55)`;c.beginPath();c.moveTo(0,h);for(let x=0;x<=w;x+=10)c.lineTo(x,h*(.25+.1*k)+Math.sin(x*.02+t*(1+k*.4))*30);c.lineTo(w,h);c.fill()}},
+(c,w,h,t,a)=>{c.fillStyle="#000";c.fillRect(0,0,w,h);c.lineWidth=3;for(let i=0;i<14;i++){const z=(i*30+t*50)%420;c.save();c.translate(w/2,h/2);c.rotate(t*.4+i*.25);c.strokeStyle=`hsl(${(a.h+i*25)%360},90%,${40+z/10}%)`;c.strokeRect(-z/2,-z/2,z,z);c.restore()}},
+(c,w,h,t,a)=>{c.fillStyle=`hsl(${a.h},40%,6%)`;c.fillRect(0,0,w,h);a.o.forEach(o=>{const k=(((o.z-t*.3)%1)+1)%1,s=1/(k+.08);c.fillStyle=`hsl(${(a.h+o.u)%360},90%,75%)`;c.fillRect(w/2+o.x*s*6,h/2+o.y*s*6,1+s*.5,1+s*.5)})}];
+let TK=[],tkRun=false;
+function tkMake(){const st=Math.random()*4|0,a={u:rnd(TN),c:rnd(TC)+" "+rnd(TH)+" "+rnd(TH),m:rnd(TM),l:Math.floor(Math.random()**3*900000)+200,cm:Math.floor(Math.random()**3*20000)+5,st,h:Math.random()*360,liked:false,ver:Math.random()<.3,vis:false,o:[]};
+  if(st===0)for(let i=0;i<10;i++)a.o.push({x:Math.random()*270,y:Math.random()*480,vx:(Math.random()<.5?-1:1)*(40+Math.random()*100),vy:(Math.random()<.5?-1:1)*(40+Math.random()*100),r:15+Math.random()*30,u:Math.random()*120});
+  if(st===3)for(let i=0;i<120;i++)a.o.push({x:Math.random()*10-5,y:Math.random()*16-8,z:Math.random(),u:Math.random()*80});
+  return a}
+const tkHtml=(a,i)=>`<div class="tv" data-i="${i}"><canvas width="270" height="480"></canvas><div class="tr"><button data-a="tklike" data-v="${i}">${a.liked?"❤️":"🤍"}<small>${tkn(a.l+(a.liked?1:0))}</small></button><button>💬<small>${tkn(a.cm)}</small></button><button>↪️<small>Share</small></button></div><div class="tb"><b>@${esc(a.u)}${a.ver?BV:""}</b><div>${esc(a.c)}</div><div style="opacity:.8">🎵 ${esc(a.m)}</div></div></div>`;
+function tkLike(i){const a=TK[i];a.liked=!a.liked;const b=document.querySelector(`.tv[data-i="${i}"] .tr button`);if(b)b.innerHTML=`${a.liked?"❤️":"🤍"}<small>${tkn(a.l+(a.liked?1:0))}</small>`}
+function tkInit(){const f=$("#tkf");if(!f)return;if(!TK.length)for(let i=0;i<6;i++)TK.push(tkMake());
+  const io=new IntersectionObserver(es=>es.forEach(e=>{TK[+e.target.dataset.i].vis=e.isIntersecting}),{root:f,threshold:.5});
+  const mount=(from)=>{f.insertAdjacentHTML("beforeend",TK.slice(from).map((a,j)=>tkHtml(a,from+j)).join(""));[...f.querySelectorAll(".tv")].slice(from).forEach(el=>{TK[+el.dataset.i].x=el.querySelector("canvas").getContext("2d");io.observe(el)})};
+  mount(0);
+  f.addEventListener("scroll",()=>{if(f.scrollTop+f.clientHeight*2>f.scrollHeight){const n=TK.length;for(let i=0;i<4;i++)TK.push(tkMake());mount(n)}});
+  if(!tkRun){tkRun=true;const loop=t=>{if(!$("#tkf")){tkRun=false;return}TK.forEach(a=>{if(a.vis&&a.x)TKV[a.st](a.x,270,480,t/1000,a)});requestAnimationFrame(loop)};requestAnimationFrame(loop)}}
+$("#scr").addEventListener("dblclick",e=>{const v=e.target.closest(".tv");if(v&&!e.target.closest("button")){const i=+v.dataset.i;if(!TK[i].liked)tkLike(i)}});
+const CATS=["Today","Games","Social","Tools","Shopping"];
+const stBtn=a=>S.inst.includes(a.id)?`<button class="btn s" data-a="open" data-v="${a.id}">Open</button><button class="btn s g" data-a="uninst" data-v="${a.id}">✕</button>`:S.dl[a.id]!=null?`<div class="dlb"><i class="dl-${a.id}" style="width:${S.dl[a.id]}%"></i></div>`:`<button class="btn s" data-a="inst" data-v="${a.id}">Get</button>`;
+function stList(){const q=(S.sq||"").toLowerCase(),t=S.stab||"Today";return STORE.filter(a=>(t==="Today"||a.cat===t)&&(!q||(a.n+a.d).toLowerCase().includes(q))).map(a=>`<div class="row"><div class="av" style="background:${a.c};border-radius:14px;width:54px;height:54px;font-size:28px">${a.e}</div><div class="grow"><b>${a.n}</b><div class="mut">${a.cat} · ★ ${a.r}</div><div class="mut ell">${a.d}</div></div><div class="stb">${stBtn(a)}</div></div>`).join("")||`<p class="mut">No apps found.</p>`}
+function storeView(back){const t=S.stab||"Today",f=STORE[0];return head("App Store",back)+`<div class="body"><input id="sq" placeholder="🔍 Search apps" value="${esc(S.sq||"")}"><div class="tabs">${CATS.map(c=>`<button class="${c===t?"on":""}" data-a="stab" data-v="${c}">${c}</button>`).join("")}</div>${t==="Today"&&!S.sq?`<div class="hero" style="background:${f.c}"><small>GAME OF THE DAY</small><h2>${f.e} ${f.n}</h2><p>${f.d}</p><div class="stb">${stBtn(f)}</div></div><h4>Top free apps</h4>`:""}<div id="stl">${stList()}</div></div>`}
+function dlStart(id){if(S.dl[id]!=null)return;S.dl[id]=0;document.querySelectorAll(`[data-a="inst"][data-v="${id}"]`).forEach(b=>b.parentElement.innerHTML=stBtn({id}));
+  const t=setInterval(()=>{S.dl[id]+=6+Math.random()*16;if(S.dl[id]>=100){clearInterval(t);delete S.dl[id];S.inst.push(id);ls.s("mp_inst",S.inst);render();return}document.querySelectorAll(".dl-"+id).forEach(e=>e.style.width=S.dl[id]+"%")},150)}
+const ago=t=>{const m=(Date.now()-t)/6e4|0;return m<1?"now":m<60?m+"m":m<1440?(m/60|0)+"h":(m/1440|0)+"d"};
+const hsh=id=>[...id].reduce((a,c)=>(a*31+c.charCodeAt(0))%100003,7),vw=p=>(hsh(p.id)%900+100)*(1+lkc(p));
+const xp=p=>{const lk=(p.likes||[]).includes(S.me),rp=(p.reposts||[]).includes(S.me),rc=S.posts.concat(S.bp).filter(x=>x.re===p.id).length;
+  return `<div class="xp" data-a="xth" data-v="${p.id}">${avt(p.user)}<div class="xb"><div><b>${nm(p.user)}</b> <span class="xm">@${esc(p.user)} · ${ago(p.ts)}</span></div><div class="xt">${fmtT(p.text)}</div><div class="xr"><button data-a="xrep" data-v="${p.id}">💬 ${rc||""}</button><button data-a="xrp" data-v="${p.id}" style="${rp?"color:#00ba7c":""}">🔁 ${rpc(p)||""}</button><button data-a="plike" data-v="${p.id}" style="${lk?"color:#f91880":""}">${lk?"❤️":"🤍"} ${lkc(p)||""}</button><span class="xm">📊 ${tkn(vw(p))}</span>${p.user===S.me||ADMINS.includes(S.me)?`<button data-a="pdl" data-v="${p.id}">🗑</button>`:""}</div></div></div>`};
+function chList(){const c=S.cx,P=allP();let L;
+  if(c.th)L=P.filter(x=>x.id===c.th).concat(P.filter(x=>x.re===c.th).sort((a,b)=>a.ts-b.ts));
+  else if(c.tab==="profile")L=P.filter(x=>x.user===S.me&&!x.re);
+  else if(c.tab==="search"){const q=(c.q||"").toLowerCase();L=q?P.filter(x=>(x.text+" "+x.user).toLowerCase().includes(q)):[]}
+  else L=P.filter(x=>!x.re&&(c.feed!=="following"||x.fol||x.user===S.me||S.contacts.includes(x.user)));
+  if(c.tab==="search"&&!c.q&&!c.th)return topList();return L.map(xp).join("")||`<p class="xm" style="padding:24px;text-align:center">${c.tab==="search"&&!c.q?"Search posts and people":"Nothing here yet."}</p>`}
+function profile(){const b=S.ver[S.me]||{},st=ADMINS.includes(S.me)?`<span class="xm">Admin account</span>`:b.t?`<span class="xm">Verified</span>`:S.myreq?`<span class="xm">Verification requested…</span>`:`<button class="btn s" data-a="xreq">Request verified badge</button>`;
+  return `<div class="xprof"><div class="xban"></div><div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:-30px">${avt(S.me,"width:64px;height:64px;font-size:28px;border:3px solid #000")}${st}</div><div style="font-size:20px;font-weight:700;margin-top:6px">${nm(S.me)}</div><div class="xm">@${esc(S.me)}</div><div style="margin-top:6px"><b>${tkn(S.contacts.length+6)}</b> <span class="xm">Following</span> &nbsp; <b>${tkn(FOL(S.me))}</b> <span class="xm">Followers</span></div></div>`}
+function chView(back){const c=S.cx,tabs=`<div class="xn">${[["home","🏠"],["search","🔍"],["profile","👤"]].map(([k,e])=>`<button data-a="xtab" data-v="${k}" class="${c.tab===k&&!c.th?"on":""}">${e}</button>`).join("")}</div>`;
+  if(c.cp)return `<div class="xa"><div class="xh"><button data-a="xcx">Cancel</button><button class="btn s" data-a="ppost">${c.cp.re?"Reply":"Post"}</button></div><div class="xc">${c.cp.re?`<div class="xm" style="margin-bottom:8px">Replying to @${esc(c.cp.u)}</div>`:""}<textarea id="ptx" maxlength="280" rows="7" placeholder="${c.cp.re?"Post your reply":"What is happening?!"}"></textarea><div class="xm" id="pcnt">0/280</div><div class="xm" style="margin-top:6px">Tip: type :crown: for the custom crown.</div><div class="err">${esc(S.err)}</div></div></div>`;
+  let top,body;
+  if(c.th){top=`<div class="xh"><button data-a="xthx">‹</button><b>Post</b><span style="width:24px"></span></div>`;body=`<div class="xs" id="pf">${chList()}</div><div style="padding:8px 14px;border-top:1px solid #2f3336"><button class="btn" data-a="xrep" data-v="${c.th}" style="margin:0">Post your reply</button></div>`}
+  else{top=`<div class="xh"><button data-a="home">‹</button><span class="xl">🐦</span><span style="width:24px"></span></div>`;
+    const mid=c.tab==="home"?`<div class="xtabs">${[["foryou","For you"],["following","Following"]].map(([k,l])=>`<button data-a="xfeed" data-v="${k}" class="${c.feed===k?"on":""}">${l}</button>`).join("")}</div>`:c.tab==="search"?`<div style="padding:10px 14px"><input id="xq" class="xin" placeholder="Search" value="${esc(c.q)}" style="margin:0"></div>`:profile();
+    body=`${mid}<div class="xs" id="pf">${chList()}</div>`}
+  return `<div class="xa">${top}${body}${c.th?"":`<button class="xfab" data-a="xcp">✎</button>`}${tabs}</div>`}
+let psub=false;
+function pSub(){if(psub||!db)return;psub=true;db.collection("posts").orderBy("ts","desc").limit(60).onSnapshot(q=>{S.posts=docs(q);const f=$("#pf");if(f&&S.app==="chirp")f.innerHTML=chList()},()=>{})}
+$("#scr").addEventListener("input",e=>{const t=e.target;if(t.id==="sq"){S.sq=t.value;$("#stl").innerHTML=stList()}if(t.id==="gname")S.ng.name=t.value;if(t.id==="ssq"){S.ssq=t.value;$("#slist").innerHTML=sList()}if(t.id==="azq"){S.az.q=t.value;$("#azl").innerHTML=azList()}if(t.id==="xq"){S.cx.q=t.value;$("#pf").innerHTML=chList()}if(t.id==="ptx"){const c=$("#pcnt");if(c)c.textContent=t.value.length+"/280"}});
+const ERR=e=>e&&e.code==="permission-denied"?(S.bans[S.me]?"You are muted by an admin.":"Not allowed. Publish the latest Firestore rules from the README."):"Failed ("+((e&&(e.code||e.message))||"error")+")";
+const avt=(u,st)=>{const B=BOTM[u];if(B)return `<div class="av" style="background:${B.c};${st||""}">${B.e}</div>`;const p=S.pf[u],ok=p&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(p.avatar||"");return `<div class="av" style="${ok?`background:url('${p.avatar}') center/cover;`:""}${st||""}">${ok?"":esc((u||"?")[0].toUpperCase())}</div>`};
+const toSq=(f,n)=>new Promise(async r=>{const im=new Image();im.onload=()=>{const m=Math.min(im.width,im.height),c=document.createElement("canvas");c.width=c.height=n;c.getContext("2d").drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,n,n);r(c.toDataURL("image/jpeg",.8))};im.src=await rd(f)});
+const GL=[["😂","LOL","bounce",330],["😮","OMG","shake",200],["🔥","FIRE","pulse",20],["💀","DEAD","shake",260],["😭","CRYING","bounce",210],["❤️","LOVE","pulse",340],["👋","HI","shake",190],["🎉","PARTY","spin",280],["👍","YES","bounce",140],["🙄","NO WAY","float",30],["😎","COOL","pulse",200],["🤯","WOW","pulse",300],["🥳","GG","bounce",50],["🫡","RESPECT","float",220],["🙏","THANKS","float",170],["😴","ZZZ","float",240],["💯","100","spin",0],["🤝","DEAL","shake",120]];
+const KF={bounce:"0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}",shake:"0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}",pulse:"0%,100%{transform:scale(1)}50%{transform:scale(1.3)}",spin:"to{transform:rotate(360deg)}",float:"0%,100%{transform:translate(0,0) rotate(-6deg)}50%{transform:translate(0,-14px) rotate(6deg)}"};
+const gifData=i=>{const [e,c,k,h]=GL[i],svg=`<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${h},85%,55%)"/><stop offset="1" stop-color="hsl(${(h+50)%360},85%,40%)"/></linearGradient></defs><style>@keyframes a{${KF[k]}}.e{animation:a ${k==="spin"?2:.8}s ${k==="spin"?"linear":"ease-in-out"} infinite;transform-box:fill-box;transform-origin:center}</style><rect width="160" height="160" rx="16" fill="url(#g)"/><text class="e" x="80" y="92" font-size="64" text-anchor="middle">${e}</text><text x="80" y="144" font-size="20" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif">${c}</text></svg>`;return "data:image/svg+xml;base64,"+btoa(unescape(encodeURIComponent(svg)))};
+async function runChecks(){const T=[["Accounts",()=>db.collection("accounts").limit(1).get()],["Chirper posts",()=>db.collection("posts").limit(1).get()],["Groups",()=>db.collection("groups").where("uids","array-contains",uid).limit(1).get()],["Group messages",()=>db.collection("gmsgs").where("uids","array-contains",uid).limit(1).get()],["Profile photos",()=>db.collection("profiles").limit(1).get()],["Badges",()=>db.collection("verified").limit(1).get()],["Verification requests",()=>db.doc("requests/"+S.me).get()]];
+  S.chk=[];for(const [n,f] of T){try{await f();S.chk.push([n,"ok"])}catch(e){S.chk.push([n,e.code||"error"])}}render()}
+const BOTS=[];
+BOTS.forEach((b,i)=>{if(b.fol===undefined)b.fol=1});
+const BOTM={};BOTS.forEach(b=>BOTM[b.u]=b);
+const BT=[(a,f,e,t)=>`Just ${a}. ${f} ${e} ${t}`,(a,f,e,t)=>`${f}\n\n(I ${a} today) ${e}`,(a,f,e,t)=>`POV: you ${a} and ${f.toLowerCase()} ${e}`,(a,f,e,t)=>`Update: ${a}. ${f} ${t}`,(a,f,e,t)=>`Hot take: ${f.toLowerCase()} once I ${a}. ${e} ${t}`,(a,f,e,t)=>`${e} ${a}. ${f}`,(a,f,e,t)=>`So I ${a}... ${f} ${e}`,(a,f,e,t)=>`Today I ${a}. ${f} ${t}`];
+const RPL=["This 😂","Same honestly","Facts.","Needed to hear this","Wait that’s actually crazy","W post","Ok but why is this so true","Following for more 🔥","Not me reading this at 3am","Sending this to my group chat"];
+let botN=0;
+const lkc=p=>(p.lc||0)+(p.likes||[]).length,rpc=p=>(p.rc||0)+(p.reposts||[]).length;
+function botPost(ts){const B=rnd(BOTS),id="~b"+(++botN),text=B.j&&Math.random()<.6?rnd(B.j):rnd(BT)(rnd(B.a),rnd(B.f),rnd(B.m),B.h);
+  S.bp.push({id,user:B.u,text,ts,likes:[],reposts:[],lc:Math.floor(Math.random()**2*900),rc:Math.floor(Math.random()**3*120),bot:1,fol:B.fol});
+  if(Math.random()<.45)for(let i=0,n=1+(Math.random()*3|0);i<n;i++){const R=rnd(BOTS);S.bp.push({id:"~b"+(++botN),user:R.u,text:rnd(RPL),ts:ts+60000*(i+1)*(1+Math.random()*4)|0,likes:[],reposts:[],lc:Math.floor(Math.random()*40),re:id,bot:1})}}
+function botInit(){if(S.bp.length)return;for(let i=0;i<22;i++)botPost(Date.now()-Math.random()*8*36e5);setTimeout(botTick,9000)}
+function botTick(){botPost(Date.now());for(let i=0;i<4;i++){const p=rnd(S.bp);p.lc=(p.lc||0)+1+(Math.random()*6|0)}
+  if(S.bp.length>110)S.bp=S.bp.sort((a,b)=>b.ts-a.ts).slice(0,90);
+  const f=$("#pf"),x=$(".xs");if(S.app==="chirp"&&f&&!S.cx.cp&&(!x||x.scrollTop<60))f.innerHTML=chList();
+  setTimeout(botTick,12000+Math.random()*22000)}
+const allP=()=>{return S.posts.concat(S.bp).sort((a,b)=>b.ts-a.ts)};
+function locTog(v,k){const p=S.bp.find(x=>x.id===v);if(!p)return;p[k]=p[k]||[];const i=p[k].indexOf(S.me);i<0?p[k].push(S.me):p[k].splice(i,1);const f=$("#pf");if(f)f.innerHTML=chList()}
+const fm=n=>Math.round(n).toLocaleString();
+function balUpd(){document.querySelectorAll(".balv").forEach(e=>e.textContent=fm(S.bal));if(S.app==="wallet"&&!S.busy)render()}
+async function pay(d,l){if(!S.me)return;if(d>0&&(S.cfg.mult||1)>1&&!/^(Admin|From @|Daily|Refund)/.test(l))d=Math.round(d*S.cfg.mult);const n=Math.max(0,Math.round(S.bal+d));S.blog=[{d:n-S.bal,l,ts:Date.now()},...S.blog].slice(0,20);S.bal=n;balUpd();try{await db.doc("wallets/"+S.me).set({bal:n,log:S.blog,bonus:S.bonus||0},{merge:true})}catch(e){}}
+const rich=()=>S.rich.map((r,i)=>`<div class="row"><div style="width:20px" class="mut">${i+1}</div>${avt(r.id)}<div class="grow"><b>${nm(r.id)}</b></div><b>$${fm(r.bal)}</b></div>`).join("")||`<span class="mut">Loading…</span>`;
+async function loadRich(){try{S.rich=docs(await db.collection("wallets").orderBy("bal","desc").limit(10).get());const e=$("#rich");if(e)e.innerHTML=rich()}catch(e){}}
+function walletView(back){return head("Wallet",back)+`<div class="body"><div class="hero" style="background:linear-gradient(135deg,#30d158,#0a84ff)"><small>BALANCE (fake money)</small><h2 style="font-size:34px">$<span class="balv">${fm(S.bal)}</span></h2><button class="btn s" data-a="bonus">Claim daily bonus +$${fm(S.cfg.bonus||500)}</button><div style="font-size:12px;margin-top:6px">${esc(S.emsg)}</div></div><h4>Recent</h4>${S.blog.map(x=>`<div class="row"><div class="grow">${esc(x.l)}<div class="mut">${ago(x.ts)}</div></div><b style="color:${x.d>=0?"#30d158":"#ff453a"}">${x.d>=0?"+":"-"}$${fm(Math.abs(x.d))}</b></div>`).join("")||`<span class="mut">No activity yet. Try the casino or HackSim.</span>`}<h4>Richest players</h4><div id="rich">${rich()}</div></div>`}
+const RED=[1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+function casinoView(back){const chips=[10,50,100,500,1000].map(b=>`<button class="btn s ${S.bet===b?"":"g"}" data-a="bet" data-v="${b}">$${b}</button>`).join("")+`<button class="btn s ${S.bet==="all"?"":"g"}" data-a="bet" data-v="all">All in</button>`;
+  const g=S.cg==="Slots"?`<div class="reels" id="reels"><span>🍒</span><span>🍋</span><span>🔔</span></div><button class="btn" data-a="spin">Spin 🎰</button><div class="mut" style="text-align:center">Three of a kind pays 5x to 100x. Any pair wins 1.5x.</div>`:S.cg==="Coin flip"?`<div class="reels" id="coin"><span>🪙</span></div><div style="display:flex;gap:8px"><button class="btn" data-a="flip" data-v="H">Heads</button><button class="btn" data-a="flip" data-v="T">Tails</button></div><div class="mut" style="text-align:center">Pays 2x.</div>`:`<div class="reels" id="coin"><span>🎡</span></div><div style="display:flex;gap:6px"><button class="btn" data-a="rou" data-v="R" style="background:#ff453a">Red 2x</button><button class="btn" data-a="rou" data-v="B" style="background:#222">Black 2x</button><button class="btn" data-a="rou" data-v="G" style="background:#30d158">Green 14x</button></div>`;
+  return head("Lucky 7",back,`<b>$<span class="balv">${fm(S.bal)}</span></b>`)+`<div class="body"><div class="tabs">${["Slots","Coin flip","Roulette"].map(t=>`<button class="${S.cg===t?"on":""}" data-a="cgame" data-v="${t}">${t}</button>`).join("")}</div><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">${chips}</div><div style="text-align:center;margin:8px 0">Bet: <b>${S.bet==="all"?"everything":"$"+fm(S.bet)}</b></div>${g}<div id="cres" style="text-align:center;font-weight:700;min-height:24px;margin-top:10px"></div></div>`}
+const betAmt=()=>S.bet==="all"?S.bal:Math.min(S.bet,S.bal);
+const cres=(t,c)=>{const e=$("#cres");if(e){e.textContent=t;e.style.color=c}};
+async function settle(net,l,msg){await pay(net,l);cres(msg,net>0?"#30d158":net<0?"#ff453a":"#ff9f0a");S.busy=0}
+function spin(){if(S.busy)return;const b=betAmt();if(b<=0)return cres("Out of cash! Claim your daily bonus in Wallet.","#ff453a");S.busy=1;
+  const R=$("#reels"),SY=["🍒","🍒","🍒","🍋","🍋","🔔","🔔","⭐","💎","7️⃣"],PAY={"🍒":5,"🍋":8,"🔔":12,"⭐":20,"💎":40,"7️⃣":100},fin=[0,1,2].map(()=>rnd(SY));let t=0;
+  const iv=setInterval(()=>{R.innerHTML=[0,1,2].map(i=>`<span>${t>12+i*4?fin[i]:rnd(SY)}</span>`).join("");if(++t>24){clearInterval(iv);const [x,y,z]=fin;let net=-b,msg="No luck. -$"+fm(b);
+    if(x===y&&y===z){net=b*PAY[x]-b;msg="JACKPOT! +$"+fm(net)}else if(x===y||y===z||x===z){net=Math.round(b*.5);msg="Pair! +$"+fm(net)}settle(net,"Slots",msg)}},70)}
+function flip(p){if(S.busy)return;const b=betAmt();if(b<=0)return cres("Out of cash! Claim your daily bonus in Wallet.","#ff453a");S.busy=1;$("#coin").innerHTML="<span>🌀</span>";
+  setTimeout(()=>{const r=Math.random()<.5?"H":"T",w=r===p;$("#coin").innerHTML=`<span>${r==="H"?"🙂":"🦅"}</span>`;settle(w?b:-b,"Coin flip",(r==="H"?"Heads":"Tails")+(w?" — you win +$":" — you lose -$")+fm(b))},800)}
+function rou(p){if(S.busy)return;const b=betAmt();if(b<=0)return cres("Out of cash! Claim your daily bonus in Wallet.","#ff453a");S.busy=1;$("#coin").innerHTML="<span>🌀</span>";
+  setTimeout(()=>{const n=Math.floor(Math.random()*37),c=n===0?"G":RED.includes(n)?"R":"B",w=c===p,net=w?(c==="G"?b*13:b):-b;$("#coin").innerHTML=`<span style="color:${c==="R"?"#ff453a":c==="G"?"#30d158":"inherit"}">${n}</span>`;settle(net,"Roulette",(w?"It’s "+n+"! +$":"It’s "+n+". -$")+fm(Math.abs(net)))},900)}
+const HN=["Orion","Juniper","Dax","Mirabel","Teddy","Zara","Kobe","Ivy","Rocco","Luna"],HD=["Pixel 9","Galaxy S24","Moto G","Nokia 3310","FruitPhone 15","Brick-o-Phone"],LOOT=["12 blurry photos of a sandwich","a playlist called ‘sad boi hours’","47 screenshots of memes","three unread messages from Mom","a notes app full of grocery lists","a fitness app with zero workouts"];
+function hkTargets(){S.hk.t=[0,1,2,3].map(()=>{const d=1+(Math.random()*3|0);return {n:rnd(HN)+"’s "+rnd(HD),ip:`10.${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}`,d,r:Math.round(d*150*(1+Math.random())/10)*10,p:[0,.8,.62,.45][d]}})}
+const hkRows=()=>S.hk.t.map((t,i)=>`<button class="row" data-a="hack" data-v="${i}"><div class="grow"><b>${esc(t.n)}</b><div class="mut">${t.ip} · ${"★".repeat(t.d)} · payout $${fm(t.r)} · ${Math.round(t.p*100)}% success</div></div><span class="btn s">Hack</span></button>`).join("");
+function hackerView(back){if(!S.hk.t)hkTargets();return head("HackSim",back,`<b>$<span class="balv">${fm(S.bal)}</span></b>`)+`<div class="body"><div class="term" id="term">${esc(S.hk.log||"> HackSim v1.0 (just a simulation)\n> Pick a target to begin…")}</div><div id="hkt">${hkRows()}</div></div>`}
+async function hack(i){if(S.busy)return;const T=S.hk.t[i];S.busy=1;const term=$("#term"),out=m=>{term.textContent+=m+"\n";term.scrollTop=term.scrollHeight},sl=ms=>new Promise(r=>setTimeout(r,ms));
+  term.textContent="";for(const m of [`> target: ${T.n}`,`> connecting to ${T.ip}…`,"> scanning ports… [22 80 443]","> bypassing firewall ▓▓▒▒▒","> injecting payload ▓▓▓▓▒","> cracking passcode…"]){out(m);await sl(650)}
+  if(Math.random()<T.p){out("> ACCESS GRANTED ✔");await sl(400);out("> found: "+rnd(LOOT));await sl(400);out("> stole $"+fm(T.r)+" (fake money!)");await pay(T.r,"Hacked "+T.n)}
+  else{const f=Math.min(S.bal,T.d*50);out("> !! TRACE DETECTED !! connection lost");out("> fined $"+fm(f));await pay(-f,"Caught hacking "+T.n)}
+  S.busy=0;S.hk.log=term.textContent;hkTargets();const h=$("#hkt");if(h)h.innerHTML=hkRows()}
+const FOL=u=>S.fs[u]?S.fs[u].fol:ADMINS.includes(u)?(u===ADMINS[0]?25400000:24100000):hsh(u)%250+3;
+function topList(){const U=[...new Set([...ADMINS,...BOTS.map(b=>b.u),S.me,...S.contacts].filter(Boolean))].sort((a,b)=>FOL(b)-FOL(a)).slice(0,12);
+  return `<div class="xm" style="padding:12px 14px">Most followed</div>`+U.map((u,i)=>`<div class="xp" style="cursor:default"><div class="xm" style="width:18px">${i+1}</div>${avt(u)}<div class="xb"><b>${nm(u)}</b><div class="xm">@${esc(u)} · ${tkn(FOL(u))} followers</div></div></div>`).join("")}
+function applyTheme(){const v=ls.g("mp_theme","auto");v==="auto"?document.documentElement.removeAttribute("data-theme"):document.documentElement.setAttribute("data-theme",v)}applyTheme();
+const AZ=[["🎧","Wireless Headphones",120,"Tech",4.6],["⌚","Smart Watch",199,"Tech",4.4],["📱","Phone Case",15,"Tech",4.2],["🔋","Power Bank",35,"Tech",4.5],["🎮","Game Console",450,"Tech",4.8],["🛋️","Comfy Sofa",800,"Home",4.3],["☕","Coffee Maker",70,"Home",4.4],["💡","Smart Lamp",40,"Home",4.1],["🧸","Giant Teddy Bear",55,"Fun",4.7],["🛹","Skateboard",90,"Fun",4.5],["🎸","Electric Guitar",350,"Fun",4.6],["🚁","Camera Drone",600,"Fun",4.5],["💍","Diamond Ring",9500,"Luxury",4.9],["🚗","Sports Car",85000,"Luxury",4.9],["🛥️","Yacht",750000,"Luxury",5],["🏰","Castle",5000000,"Luxury",5]];
+const AZC=["All","Tech","Home","Fun","Luxury"],azCount=()=>Object.values(S.cart).reduce((a,b)=>a+b,0);
+function azList(){const q=(S.az.q||"").toLowerCase();return `<div class="azg">${AZ.map((p,i)=>({p,i})).filter(({p})=>(S.az.cat==="All"||p[3]===S.az.cat)&&(!q||p[1].toLowerCase().includes(q))).map(({p,i})=>`<div class="azc"><div style="font-size:46px">${p[0]}</div><div style="font-weight:600;font-size:13px">${p[1]}</div><div class="mut">★ ${p[4]}</div><b>$${fm(p[2])}</b><button class="btn s" style="margin-top:6px;width:100%" data-a="aza" data-v="${i}">Add to cart</button></div>`).join("")}</div>`}
+function azView(back){const A=S.az,tb=[["shop","Shop"],["cart","Cart ("+azCount()+")"],["orders","Orders"]].map(([k,l])=>`<button class="${A.tab===k?"on":""}" data-a="azt" data-v="${k}">${l}</button>`).join("");let b="";
+  if(A.tab==="shop")b=`<input id="azq" placeholder="🔍 Search Amazin" value="${esc(A.q)}"><div class="tabs">${AZC.map(c=>`<button class="${A.cat===c?"on":""}" data-a="azcat" data-v="${c}">${c}</button>`).join("")}</div><div id="azl">${azList()}</div>`;
+  else if(A.tab==="cart"){const E=Object.entries(S.cart).filter(([,q])=>q>0),T=E.reduce((a,[i,q])=>a+AZ[i][2]*q,0);b=E.length?E.map(([i,q])=>`<div class="row"><div style="font-size:30px">${AZ[i][0]}</div><div class="grow"><b>${AZ[i][1]}</b><div class="mut">$${fm(AZ[i][2])} each</div></div><button class="btn s g" data-a="azm" data-v="${i}">−</button><b>${q}</b><button class="btn s g" data-a="aza" data-v="${i}">+</button></div>`).join("")+`<h3 style="text-align:right">Total: $${fm(T)}</h3><div class="err">${esc(A.msg)}</div><button class="btn" data-a="azbuy">Place order</button>`:`<p class="mut">Your cart is empty.</p>`}
+  else b=ls.g("mp_orders",[]).map(o=>{const age=Date.now()-o.ts,st=age<2e4?"Preparing…":age<6e4?"Shipped 🚚":"Delivered ✅";return `<div class="row"><div class="grow"><b>$${fm(o.total)}</b> · ${st}<div class="mut">${o.items.map(x=>x.e+" "+esc(x.n)+" ×"+x.q).join(", ")}</div><div class="mut">${ago(o.ts)} ago</div></div></div>`}).join("")||`<p class="mut">No orders yet.</p>`;
+  return head("Amazin",back,`<b>$<span class="balv">${fm(S.bal)}</span></b>`)+`<div class="body"><div class="tabs">${tb}</div>${b}</div>`}
+let G2=null;
+function g2n(){G2={b:Array(16).fill(0),s:0,over:0};g2add();g2add()}
+function g2add(){const e=G2.b.map((v,i)=>v?-1:i).filter(i=>i>=0);if(e.length)G2.b[rnd(e)]=Math.random()<.9?2:4}
+function g2can(){const b=G2.b;return b.some((v,i)=>!v||(i%4<3&&v===b[i+1])||(i<12&&v===b[i+4]))}
+function g2mv(d){const b=G2.b;let moved=false;for(let k=0;k<4;k++){const line=[0,1,2,3].map(j=>d<2?k*4+(d?3-j:j):(d===2?j:3-j)*4+k),vals=line.map(i=>b[i]).filter(v=>v),out=[];
+    for(let i=0;i<vals.length;i++){if(vals[i]===vals[i+1]){out.push(vals[i]*2);G2.s+=vals[i]*2;i++}else out.push(vals[i])}
+    while(out.length<4)out.push(0);line.forEach((ix,j)=>{if(b[ix]!==out[j]){moved=true;b[ix]=out[j]}})}
+  if(moved){g2add();if(!g2can()){G2.over=1;pay(Math.floor(G2.s/20),"2048 score "+G2.s)}}g2draw()}
+function g2draw(){const e=$("#g48");if(!e)return;e.innerHTML=G2.b.map(v=>`<i style="${v?`background:hsl(${40-Math.log2(v)*12},85%,${72-Math.log2(v)*3}%)`:""}">${v||""}</i>`).join("");$("#g2s").textContent=G2.s;$("#g2m").textContent=G2.over?"Game over! Earned $"+fm(G2.s/20):""}
+function g2View(back){if(!G2)g2n();return head("2048",back,`<button data-a="g2r">New</button>`)+`<div class="body" style="text-align:center"><div>Score <b id="g2s">0</b></div><div class="g48" id="g48"></div><div style="display:grid;grid-template-columns:repeat(3,56px);gap:6px;justify-content:center;margin-top:10px"><span></span><button class="btn s g" data-a="g2" data-v="2">↑</button><span></span><button class="btn s g" data-a="g2" data-v="0">←</button><button class="btn s g" data-a="g2" data-v="3">↓</button><button class="btn s g" data-a="g2" data-v="1">→</button></div><div class="mut" id="g2m" style="margin-top:8px"></div></div>`}
+let SN=null,snT=null;
+function snNew(){SN={s:[[7,7],[6,7],[5,7]],d:[1,0],nd:[1,0],f:[10,7],sc:0,over:0};clearInterval(snT);snT=setInterval(snTick,150)}
+function snTick(){if(!$("#snc")){clearInterval(snT);snT=null;return}if(SN.over)return;SN.d=SN.nd;const h=[SN.s[0][0]+SN.d[0],SN.s[0][1]+SN.d[1]];
+  if(h[0]<0||h[1]<0||h[0]>14||h[1]>14||SN.s.some(p=>p[0]===h[0]&&p[1]===h[1])){SN.over=1;pay(SN.sc*2,"Snake score "+SN.sc);snDraw();return}
+  SN.s.unshift(h);if(h[0]===SN.f[0]&&h[1]===SN.f[1]){SN.sc++;do{SN.f=[Math.random()*15|0,Math.random()*15|0]}while(SN.s.some(p=>p[0]===SN.f[0]&&p[1]===SN.f[1]))}else SN.s.pop();snDraw()}
+function snDraw(){const c=$("#snc");if(!c)return;const x=c.getContext("2d");x.fillStyle="#111";x.fillRect(0,0,300,300);x.fillStyle="#ff453a";x.fillRect(SN.f[0]*20+2,SN.f[1]*20+2,16,16);SN.s.forEach((p,i)=>{x.fillStyle=i?"#30d158":"#7dff9e";x.fillRect(p[0]*20+1,p[1]*20+1,18,18)});$("#sns").textContent="Score "+SN.sc+(SN.over?" — game over, earned $"+SN.sc*2:"")}
+const snDir=v=>{const D=[[-1,0],[1,0],[0,-1],[0,1]][v];if(D[0]!==-SN.d[0]||D[1]!==-SN.d[1])SN.nd=D};
+function snView(back){return head("Snake",back,`<button data-a="snr">New</button>`)+`<div class="body" style="text-align:center"><div id="sns">Score 0</div><canvas id="snc" width="300" height="300" style="width:min(100%,300px);border-radius:12px;margin:8px 0;touch-action:none"></canvas><div style="display:grid;grid-template-columns:repeat(3,56px);gap:6px;justify-content:center"><span></span><button class="btn s g" data-a="snd" data-v="2">↑</button><span></span><button class="btn s g" data-a="snd" data-v="0">←</button><button class="btn s g" data-a="snd" data-v="3">↓</button><button class="btn s g" data-a="snd" data-v="1">→</button></div></div>`}
+let TT=null;const TL=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const ttCells=()=>TT.b.map((v,i)=>`<i data-a="tt" data-v="${i}" style="font-size:36px;cursor:pointer;color:${v==="X"?"#0a84ff":"#ff453a"}">${v}</i>`).join("");
+function ttView(back){if(!TT)TT={b:Array(9).fill(""),end:""};return head("Tic-Tac-Toe",back,`<button data-a="ttr">New</button>`)+`<div class="body" style="text-align:center"><div class="mut">You are X. Win +$50, draw +$10.</div><div class="g48" style="grid-template-columns:repeat(3,1fr)" id="ttb">${ttCells()}</div><div id="ttm" style="font-weight:700;min-height:24px"></div></div>`}
+function ttEnd(){const w=TL.find(l=>TT.b[l[0]]&&TT.b[l[0]]===TT.b[l[1]]&&TT.b[l[1]]===TT.b[l[2]]);if(w){TT.end=TT.b[w[0]];if(TT.end==="X")pay(50,"Tic-Tac-Toe win");return 1}if(TT.b.every(x=>x)){TT.end="D";pay(10,"Tic-Tac-Toe draw");return 1}return 0}
+function ttAI(){const b=TT.b,pick=m=>{for(const l of TL){const v=l.map(i=>b[i]);if(v.filter(x=>x===m).length===2&&v.includes(""))return l[v.indexOf("")]}return -1};let k=pick("O");if(k<0)k=pick("X");if(k<0&&!b[4])k=4;if(k<0)k=rnd(b.map((v,i)=>v?-1:i).filter(i=>i>=0));b[k]="O"}
+function ttDraw(){const e=$("#ttb");if(!e)return;e.innerHTML=ttCells();$("#ttm").textContent=TT.end==="X"?"You win! +$50":TT.end==="O"?"CPU wins.":TT.end==="D"?"Draw. +$10":""}
+function ttMove(i){if(TT.end||TT.b[i])return;TT.b[i]="X";if(!ttEnd()){ttAI();ttEnd()}ttDraw()}
+let MM=null;
+function mmNew(){const E=["🍎","🐸","🚀","🎸","🍕","🌵","🦊","⚡"];MM={d:[...E,...E].sort(()=>Math.random()-.5),o:[],m:new Set(),mv:0,lock:0}}
+function mmView(back){if(!MM)mmNew();return head("Memory",back,`<button data-a="mmr">New</button>`)+`<div class="body" style="text-align:center"><div>Moves <b id="mmv">0</b> · win +$75</div><div class="g48" id="mmb"></div><div id="mmm" style="font-weight:700"></div></div>`}
+function mmDraw(){const e=$("#mmb");if(!e)return;e.innerHTML=MM.d.map((v,i)=>`<i data-a="mm" data-v="${i}" style="cursor:pointer;font-size:28px;${MM.m.has(i)||MM.o.includes(i)?"":"background:#5e5ce6;color:transparent"}">${v}</i>`).join("");$("#mmv").textContent=MM.mv}
+function mmTap(i){if(MM.lock||MM.m.has(i)||MM.o.includes(i))return;MM.o.push(i);mmDraw();if(MM.o.length===2){MM.mv++;const [a,b]=MM.o;
+  if(MM.d[a]===MM.d[b]){MM.m.add(a).add(b);MM.o=[];mmDraw();if(MM.m.size===16){const m=$("#mmm");if(m)m.textContent="You won! +$75";pay(75,"Memory win")}}else{MM.lock=1;setTimeout(()=>{MM.o=[];MM.lock=0;mmDraw()},700)}}}
+document.addEventListener("keydown",e=>{const m={ArrowLeft:0,ArrowRight:1,ArrowUp:2,ArrowDown:3}[e.key];if(m===undefined)return;if(S.app==="g2048"&&G2&&!G2.over){e.preventDefault();g2mv(m)}if(S.app==="snake"&&SN){e.preventDefault();snDir(m)}});
+let sw0=null;document.addEventListener("pointerdown",e=>{sw0=e.target.closest("#g48,#snc")?[e.clientX,e.clientY]:null});
+document.addEventListener("pointerup",e=>{if(!sw0)return;const dx=e.clientX-sw0[0],dy=e.clientY-sw0[1];sw0=null;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;const m=Math.abs(dx)>Math.abs(dy)?(dx<0?0:1):(dy<0?2:3);if(S.app==="g2048"&&G2&&!G2.over)g2mv(m);if(S.app==="snake"&&SN)snDir(m)});
+const claiming=new Set();
+async function trClaim(x){if(claiming.has(x.id))return;claiming.add(x.id);while(!S.wl)await new Promise(r=>setTimeout(r,300));
+  try{await db.doc("transfers/"+x.id).update({claimed:true});await pay(x.amt,"From @"+x.from)}catch(e){}}
+function trUpd(){const a=document.activeElement;if(S.app==="send"&&!(a&&a.tagName==="INPUT"))render()}
+$("#scr").addEventListener("input",e=>{const t=e.target;if(t.id==="tu")S.sx.to=t.value;if(t.id==="ta")S.sx.amt=t.value;if(t.id==="tn")S.sx.note=t.value});
+function sendView(back){const x=S.sx,H=[...Object.values(S.trO).map(t=>({...t,o:1})),...Object.values(S.trI)].sort((a,b)=>b.ts-a.ts).slice(0,15);
+  return head("SendCash",back,`<b>$<span class="balv">${fm(S.bal)}</span></b>`)+`<div class="body"><h4>Send money</h4><input id="tu" placeholder="Username" autocapitalize="off" value="${esc(x.to)}"><div style="display:flex;gap:6px;flex-wrap:wrap">${S.contacts.slice().sort().map(c=>`<button class="btn s g" data-a="tpick" data-v="${esc(c)}">${esc(c)}</button>`).join("")}</div><input id="ta" type="number" placeholder="Amount" value="${esc(String(x.amt))}"><input id="tn" placeholder="Note (optional)" maxlength="60" value="${esc(x.note)}"><div style="min-height:22px;font-weight:600;margin:4px 0">${esc(x.msg)}</div><button class="btn" data-a="tsend">Send</button><h4>Activity</h4>${H.map(t=>`<div class="row">${avt(t.o?t.to:t.from)}<div class="grow"><b>${nm(t.o?t.to:t.from)}</b><div class="mut">${t.note?esc(t.note)+" · ":""}${ago(t.ts)}${t.o?(t.claimed?" · Delivered":" · Pending"):""}</div></div><b style="color:${t.o?"#ff453a":"#30d158"}">${t.o?"-":"+"}$${fm(t.amt)}</b></div>`).join("")||`<span class="mut">No transfers yet.</span>`}</div>`}
+const annBar=()=>(S.ann&&S.ann.text&&ls.g("mp_ann",0)!==S.ann.ts?`<div data-a="annx" style="background:#ff9f0a;color:#000;font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer;display:flex;gap:8px;z-index:3"><span style="flex:1">📢 ${esc(S.ann.text)}</span><span>✕</span></div>`:"")+(S.al&&S.al.text&&ls.g("mp_al",0)!==S.al.ts?`<div data-a="alx" style="background:#64d2ff;color:#000;font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer;display:flex;gap:8px;z-index:3"><span style="flex:1">✉️ ${esc(S.al.text)}</span><span>✕</span></div>`:"")+(S.me&&S.bans[S.me]&&!S.bans[S.me].s?`<div style="background:#ff453a;color:#fff;font-size:12px;font-weight:600;padding:6px 14px;z-index:3">🔇 You are muted by an admin</div>`:"");
+async function wGet(u){const d=await db.doc("wallets/"+u).get();return d.exists?d.data():{bal:1000,log:[]}}
+async function wAdj(u,fn,l){const w=await wGet(u),old=w.bal==null?1000:w.bal,nb=Math.max(0,Math.round(fn(old)));await db.doc("wallets/"+u).set({bal:nb,log:[{d:nb-old,l,ts:Date.now()},...(w.log||[])].slice(0,20)},{merge:true});return nb}
+async function adLoad(){try{const [a,w,p,l]=await Promise.all([db.collection("accounts").limit(300).get(),db.collection("wallets").limit(300).get(),db.collection("posts").limit(500).get(),db.collection("audit").orderBy("ts","desc").limit(15).get()]);S.ad.u=docs(a).sort((x,y)=>x.id<y.id?-1:1);S.ad.w={};docs(w).forEach(x=>S.ad.w[x.id]=x);S.ad.posts=p.size;S.ad.log=docs(l)}catch(e){S.ad.msg=ERR(e)}}
+function adminTools(){const A=S.ad,tot=Object.values(A.w).reduce((x,w)=>x+(w.bal||0),0),row=(l,v)=>`<div class="row"><div class="grow">${l}</div><b>${v}</b></div>`;
+  return `<h4>Dashboard</h4>${row("Accounts",A.u.length||"–")}${row("Chirper posts",A.posts==null?"–":A.posts)}${row("Money in circulation","$"+fm(tot))}${row("Muted users",Object.keys(S.bans).length)}<button class="btn g" data-a="adload">Refresh stats and users</button>
+<h4>Broadcast message</h4><input id="an" maxlength="140" placeholder="Shown to everyone on their phone" value="${esc((S.ann&&S.ann.text)||"")}"><div style="display:flex;gap:6px"><button class="btn s" data-a="anset">Broadcast</button><button class="btn s g" data-a="anclr">Clear</button></div>
+<h4>Moderation</h4><input id="bu" placeholder="username" autocapitalize="off"><div style="display:flex;gap:6px"><button class="btn s" data-a="bmute">Mute user</button><button class="btn s g" data-a="bunmute">Unmute</button><button class="btn s" style="background:#ff453a" data-a="bsus">Suspend</button></div>${Object.keys(S.bans).map(u=>`<div class="row"><div class="grow">${S.bans[u].s?"⛔ suspended":"🔇 muted"} @${esc(u)}</div><button class="btn s g" data-a="bunmute" data-v="${esc(u)}">Unmute</button></div>`).join("")}
+<h4>Airdrop</h4><input id="aa" type="number" placeholder="Amount for every account"><button class="btn s" data-a="airdrop">Give everyone money</button>
+<h4>Users</h4>${A.u.map(a=>`<div class="row"><div class="grow"><b>@${esc(a.id)}</b><div class="mut">$${fm((A.w[a.id]||{bal:1000}).bal)} · ${tkn(FOL(a.id))} followers${S.bans[a.id]?" · muted":""}</div></div><button class="btn s g" data-a="ug" data-v="${esc(a.id)}">+$1k</button><button class="btn s g" data-a="ur" data-v="${esc(a.id)}">Reset</button></div>`).join("")||`<span class="mut">Tap Refresh to load users.</span>`}
+<h4>Danger zone</h4><button class="btn" style="background:#ff453a" data-a="pclear">${S.cfm==="pclear"?"Tap again to delete ALL posts":"Delete all Chirper posts"}</button>`}
+const sr=()=>{const a=document.activeElement;if(!(a&&/INPUT|TEXTAREA/.test(a.tagName)))render()};
+const alog=t=>{try{db.collection("audit").add({by:S.me,t,ts:Date.now()}).catch(()=>{})}catch(e){}};
+const bcard=(e,t,m)=>`<div class="app"><div class="body" style="text-align:center;padding-top:80px"><div style="font-size:64px">${e}</div><h2>${esc(t)}</h2><p class="mut">${esc(m)}</p><button class="btn g" data-a="lock">Lock phone</button></div></div>`;
+function blockMsg(){if(!S.me||ADMINS.includes(S.me))return "";const b=S.bans[S.me];if(b&&b.s)return bcard("⛔","Account suspended","An admin has suspended your account.");if(S.cfg.lock)return bcard("🛠️","Maintenance",S.cfg.lmsg||"The phone is temporarily locked by an admin.");return ""}
+const offView=back=>head("Unavailable",back)+`<div class="body" style="text-align:center;padding-top:60px"><div style="font-size:56px">🚫</div><p>This app has been switched off by an admin.</p></div>`;
+function adminControl(){const c=S.cfg,off=c.off||{},APPS=[["casino","Lucky 7 Casino"],["hacker","HackSim"],["amazin","Amazin"],["send","SendCash"],["chirp","Chirper"]];
+  return `<h4>Control center</h4><div style="min-height:20px;font-weight:600">${esc(S.ad.msg)}</div><div class="row"><div class="grow"><b>Maintenance mode</b><div class="mut">${c.lock?"ON: everyone except admins is locked out":"OFF"}</div></div><button class="btn s ${c.lock?"g":""}" data-a="cfgl" data-v="${c.lock?0:1}">${c.lock?"Unlock":"Lock all"}</button></div><input id="lm" maxlength="100" placeholder="Maintenance message (optional)" value="${esc(c.lmsg||"")}">
+<h4>Earnings multiplier</h4><div style="display:flex;gap:6px">${[1,2,5,10].map(n=>`<button class="btn s ${(c.mult||1)===n?"":"g"}" data-a="cfgm" data-v="${n}">x${n}</button>`).join("")}</div><div class="mut">Applies to casino, hacking and game winnings.</div>
+<h4>Daily bonus</h4><input id="bn" type="number" placeholder="Amount (now $${fm(c.bonus||500)})"><button class="btn s" data-a="cfgb">Set daily bonus</button>
+<h4>App switches</h4>${APPS.map(([k,n])=>`<div class="row"><div class="grow">${n}</div><button class="btn s ${off[k]?"g":""}" data-a="cfgo" data-v="${k}">${off[k]?"Off":"On"}</button></div>`).join("")}
+<h4>Private alert</h4><input id="alu" placeholder="username" autocapitalize="off"><input id="alt" maxlength="120" placeholder="Message"><button class="btn s" data-a="alsend">Send alert</button>
+<h4>Purge posts</h4><input id="pgu" placeholder="username" autocapitalize="off"><button class="btn s g" data-a="purge">Delete all their Chirper posts</button>
+<h4>Audit log</h4>${(S.ad.log||[]).map(l=>`<div class="row"><div class="grow">${esc(l.t)}<div class="mut">@${esc(l.by)} · ${ago(l.ts)}</div></div></div>`).join("")||`<span class="mut">Tap Refresh stats below to load the log.</span>`}`}
+let subbed=false;
+function subs(){if(subbed||!db||!S.me)return;subbed=true;
+  db.collection("verified").onSnapshot(q=>{S.ver={};docs(q).forEach(x=>S.ver[x.id]=x);updChat();if(!S.app||S.app==="settings")render()},()=>{});
+  db.collection("groups").where("uids","array-contains",uid).onSnapshot(q=>{S.groups={};docs(q).forEach(x=>S.groups[x.id]=x);updChat()},()=>{});
+  db.collection("gmsgs").where("uids","array-contains",uid).onSnapshot(q=>{S.gm={};docs(q).forEach(x=>S.gm[x.id]=x);updChat()},()=>{});
+  pSub();
+  db.doc("config/app").onSnapshot(d=>{S.cfg=d.exists?d.data():{};sr()},()=>{});
+  db.doc("alerts/"+S.me).onSnapshot(d=>{S.al=d.exists?d.data():null;sr()},()=>{});
+  db.collection("bans").onSnapshot(q=>{S.bans={};docs(q).forEach(x=>S.bans[x.id]=x);const a=document.activeElement;if(!(a&&/INPUT|TEXTAREA/.test(a.tagName)))render()},()=>{});
+  db.doc("announce/current").onSnapshot(d=>{S.ann=d.exists?d.data():null;const a=document.activeElement;if(!(a&&/INPUT|TEXTAREA/.test(a.tagName)))render()},()=>{});
+  db.collection("transfers").where("from","==",S.me).onSnapshot(q=>{S.trO={};docs(q).forEach(x=>S.trO[x.id]=x);trUpd()},()=>{});
+  db.collection("transfers").where("to","==",S.me).onSnapshot(q=>{S.trI={};const L=docs(q);L.forEach(x=>S.trI[x.id]=x);trUpd();L.filter(x=>!x.claimed).forEach(trClaim)},()=>{});
+  db.collection("stats").onSnapshot(q=>{S.fs={};docs(q).forEach(x=>S.fs[x.id]=x);const f=$("#pf");if(f&&S.app==="chirp"&&!S.cx.cp)f.innerHTML=chList()},()=>{});
+  db.doc("wallets/"+S.me).onSnapshot(d=>{const x=d.exists?d.data():{};S.bal=x.bal==null?1000:x.bal;S.blog=x.log||[];S.wl=1;S.bonus=Math.max(S.bonus||0,x.bonus||0);balUpd()},()=>{});
+  db.collection("profiles").onSnapshot(q=>{S.pf={};docs(q).forEach(x=>S.pf[x.id]=x);updChat();if(!S.app||(S.app==="settings"&&!S.sub))render()},()=>{});
+  if(ADMINS.includes(S.me))db.collection("requests").onSnapshot(q=>{S.req=docs(q);if(S.app==="settings")render()},()=>{});else db.doc("requests/"+S.me).onSnapshot(d=>{S.myreq=d.exists;if(S.app==="chirp"&&S.cx.tab==="profile"&&!S.cx.th)render()},()=>{});
+  db.collection("contacts").where("owner","==",S.me).onSnapshot(s=>{S.contacts=docs(s).map(x=>x.user);updChat()},()=>{});
+  db.collection("msgs").where("to","==",S.me).onSnapshot(s=>{S.inbox={};docs(s).forEach(x=>S.inbox[x.id]=x);updChat()},()=>{});
+  db.collection("msgs").where("from","==",S.me).onSnapshot(s=>{S.outbox={};docs(s).forEach(x=>S.outbox[x.id]=x);updChat()},()=>{});}
+setInterval(()=>{const c=$(".clk");if(c)c.textContent=hm()},15000);
+render();
+(async()=>{try{if(window.firebase&&FIREBASE_CONFIG.apiKey!=="YOUR_API_KEY"){firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.firestore();S.online=true;
+  auth.onAuthStateChanged(async u=>{if(!u||S.me)return;uid=u.uid;try{const d=docs(await db.collection("accounts").where("uid","==",uid).get());if(d.length){S.me=d[0].id;subs();render()}}catch(e){}});}}catch(e){}
+  render()})();
+</script>
+</body>
+</html>
