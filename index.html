@@ -335,7 +335,7 @@ const PL='<span class="tg" style="background:#c4b07b">📜 POLITICIAN</span>',OW
 const IC={t:BV,pv:BP,cc:BC,mod:BM,pol:PL,own:OW,cr:CROWN};
 const dn=u=>(S.pf[u]&&S.pf[u].name)||u;
 const nm=u=>{const b=S.ver[u]||{};return esc(dn(u))+(b.t?BV:"")+(b.pv?BP:"")+(b.cc?BC:"")+(b.mod?BM:"")+(b.pol?PL:"")+(b.cr?CROWN:"")+(b.own||ADMINS.includes(u)?OW:"")};
-const fmtT=t=>esc(t).replace(/#\w+/g,m=>`<span style="color:#1d9bf0">${m}</span>`).replace(/:crown:/g,CROWN) .replace(/:verified:/g,BV);
+const fmtT=t=>esc(t).replace(/#\w+/g,m=>`<span style="color:#1d9bf0">${m}</span>`).replace(/:crown:/g,CROWN) .replace(/:verified:/g,BV) .replace(/:mod:g,BM);
 const rd=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.readAsDataURL(f)});
 const toData=(f,max,q)=>new Promise(async r=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",q))};im.src=await rd(f)});
 const idb=()=>new Promise((r,j)=>{const q=indexedDB.open("mp",1);q.onupgradeneeded=()=>q.result.createObjectStore("ph",{keyPath:"id"});q.onsuccess=()=>r(q.result);q.onerror=()=>j()});
