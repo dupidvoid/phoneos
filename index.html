@@ -376,7 +376,7 @@ const BC=seal("gc2",'<path d="M12 5.8l1.7 4.5 4.5 1.7-4.5 1.7L12 18.2l-1.7-4.5L5
 const BM='<svg class="vt" viewBox="0 0 24 24"><path d="M12 2.5l8 3.2v5.6c0 5-3.3 8.6-8 10.2-4.7-1.6-8-5.2-8-10.2V5.7z" fill="url(#gm)"/><path d="M8.2 12.2l2.7 2.7 5-5.4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const CROWN='<svg class="vt" viewBox="0 0 24 24"><path d="M2.5 8l4.8 4.2L12 4.5l4.7 7.7L21.5 8 19.8 19H4.2z" fill="url(#gk)" stroke="#9a6200" stroke-width="1" stroke-linejoin="round"/><circle cx="2.5" cy="8" r="1.7" fill="#b6b0ff"/><circle cx="12" cy="4.5" r="1.7" fill="#b66dff"/><circle cx="21.5" cy="8" r="1.7" fill="#8250c4"/><rect x="4.5" y="16.2" width="15" height="1.6" fill="#750985" opacity=".5"/></svg>';
 const BP=seal("gp",'<path d="M7.3 12.4l3.1 3.1 6.2-6.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>');
-const PL='<span class="tg" style="background:#c4b07b">📜 Politician</span>',OW='<span class="tg" style="background:linear-gradient(b6b0ff,#b66dff,#8250c4)">Owner</span>';
+const PL='<span class="tg" style="background:#c4b07b">📜 Politician</span>',OW='<span class="tg" style="background:linear-gradient(135deg,#f0a800,#ff453a)">Owner</span>';
 const IC={t:BV,pv:BP,cc:BC,mod:BM,pol:PL,own:OW,cr:CROWN};
 const dn=u=>(S.pf[u]&&S.pf[u].name)||u;
 const nm=u=>{const b=S.ver[u]||{};return esc(dn(u))+(b.t?BV:"")+(b.pv?BP:"")+(b.cc?BC:"")+(b.mod?BM:"")+(b.pol?PL:"")+(b.cr?CROWN:"")+(b.own||ADMINS.includes(u)?OW:"")};
