@@ -699,7 +699,7 @@ function msgNotify(L){const o=NT();L.forEach(x=>{if(notified.has(x.id))return;no
   if(o.s)beep();if(o.n&&"Notification"in window&&Notification.permission==="granted"&&document.hidden)try{new Notification(who,{body})}catch(e){}})}
 const toastBar=()=>S.toast?`<div data-a="tst" style="background:#30d158;color:#000;font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer;z-index:3">💬 ${esc(S.toast.txt)}</div>`:"";
 function flash(t){const id=Date.now();S.toast={id,txt:t,cid:null};setTimeout(()=>{if(S.toast&&S.toast.id===id){S.toast=null;sr()}},4000);sr()}
-const FX={money:["💵","💰","💸","🪙"],party:["🎉","🎊","✨","🥳"],fire:["🔥","💥","⚡"],snow:["❄️","⛄","✨"]};
+const FX={money:["💵","💰","💸","🪙"],party:["🎉","🎊","✨","🥳"],fire:["🔥","💥","⚡"],snow:["❄️","⛄","🥶"]};
 function moneyRain(em){const el=$("#scr");if(!el)return;const W=el.clientWidth,H=el.clientHeight,k=Math.tan(37.8*Math.PI/180),d=H+120,w=document.createElement("div");
   w.style.cssText="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:60";
   for(let i=0;i<48;i++){const e=document.createElement("span");e.textContent=rnd(em||FX.money);e.style.cssText=`position:absolute;left:${Math.random()*(W+d*k)-d*k}px;top:-50px;font-size:${22+Math.random()*20|0}px;opacity:0;--dx:${d*k}px;--dy:${d}px;animation:rain ${2.2+Math.random()*1.8}s linear ${Math.random()*1.8}s forwards`;e.addEventListener("animationstart",()=>e.style.opacity=1);w.appendChild(e)}
